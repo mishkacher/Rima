@@ -10,11 +10,10 @@ OUT = Path(__file__).resolve().parents[1] / "assets" / "official"
 OUT.mkdir(parents=True, exist_ok=True)
 UA = "Mozilla/5.0 (RIMA preview asset importer)"
 
+# Only imagery that is intentionally used as imagery remains imported.
+# Hero, TAIGA, tariff cards and the final Sputnik mark are rendered natively
+# in each concept instead of reproducing source-site screenshots.
 ASSETS = {
-    "hero.png": (
-        "https://static.tildacdn.com/tild6264-3363-4164-b935-313764346135/hero.png",
-        "c039e0c947a575c1d2cb3eb891b48176a571b12a070653bbb2d54eeadb92fd75",
-    ),
     "team-dasha.png": (
         "https://static.tildacdn.com/tild3766-6161-4965-a132-663832376465/noroot.png",
         "b4a84bccddbcafdef64193e4a8e242e1a27a53a631e704c23ff9a98ff9ab5942",
@@ -47,22 +46,6 @@ ASSETS = {
         "https://static.tildacdn.com/tild3034-3436-4238-a232-303231393935/_.svg",
         "d34d793fd4471fde78f4a6f1453980647f87bd823c63f7a4716626a2240f5e8e",
     ),
-    "plan-start.png": (
-        "https://static.tildacdn.com/tild3536-3938-4837-b262-623336633565/2_2.png",
-        "5c4726e397d8d1449d0d6731bd7b53ce5566eff38a3f218966db3a71341f018a",
-    ),
-    "plan-orbit.png": (
-        "https://static.tildacdn.com/tild3438-3662-4065-b235-343838663539/2_3.png",
-        "46fa618add85b23de007d21ad1d3f9a877f07afafe5a6520e70e44120173f08f",
-    ),
-    "plan-galaxy.png": (
-        "https://static.tildacdn.com/tild3165-6538-4138-b938-656137626534/2_4.png",
-        "17f8e7881faad6686445f9524d6a69968df81090b9202f11b519b2b9d2688e29",
-    ),
-    "agency-mark.png": (
-        "https://static.tildacdn.com/tild3131-6366-4862-b634-656661643162/Frame_403.png",
-        "48db13d85a6c88c0357ac21d61fcf3323499b2677cdf1ec6722539ce60c2a0c1",
-    ),
 }
 
 
@@ -81,6 +64,12 @@ for name, (url, expected) in ASSETS.items():
         raise SystemExit(f"Checksum mismatch for {name}: {digest} != {expected}")
     target.write_bytes(body)
     manifest.append({"file": name, "source": url, "sha256": expected, "bytes": len(body)})
+
+# Remove stale assets from previous preview revisions when running locally.
+allowed = set(ASSETS) | {"manifest.json"}
+for target in OUT.iterdir():
+    if target.is_file() and target.name not in allowed:
+        target.unlink()
 
 (OUT / "manifest.json").write_text(
     json.dumps({"source_site": "https://xn--h1aehhjhg.agency/", "assets": manifest}, ensure_ascii=False, indent=2),
