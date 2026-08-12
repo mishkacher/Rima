@@ -24,7 +24,12 @@ function parseVariant(variant) {
 
 function hydrateOfficialMedia() {
   document.querySelectorAll('[data-official-src]').forEach((node) => {
-    if (!node.getAttribute('src')) node.setAttribute('src', node.dataset.officialSrc);
+    if (!node.getAttribute('src')) {
+      // The photo variant is an explicit user choice, so preload the complete visual layer.
+      // This also keeps screenshots and rapid concept switching deterministic.
+      node.loading = 'eager';
+      node.setAttribute('src', node.dataset.officialSrc);
+    }
   });
 }
 
