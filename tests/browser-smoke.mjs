@@ -30,6 +30,39 @@ async function exercisePage(page) {
   });
 }
 
+async function inspectOfficialMedia(page) {
+  await page.waitForFunction(
+    () => [...document.querySelectorAll('img.official-media')].every((img) => img.complete),
+    undefined,
+    { timeout: 20000 }
+  );
+
+  return page.evaluate(async () => {
+    const images = [...document.querySelectorAll('img.official-media')];
+    return Promise.all(images.map(async (img) => {
+      const rect = img.getBoundingClientRect();
+      let httpOk = false;
+      let status = 0;
+      try {
+        const response = await fetch(img.currentSrc || img.src, { cache: 'no-store' });
+        httpOk = response.ok;
+        status = response.status;
+      } catch {}
+      return {
+        src: img.getAttribute('src'),
+        complete: img.complete,
+        naturalWidth: img.naturalWidth,
+        naturalHeight: img.naturalHeight,
+        width: rect.width,
+        height: rect.height,
+        display: getComputedStyle(img).display,
+        httpOk,
+        status
+      };
+    }));
+  });
+}
+
 try {
   await waitForServer();
   await mkdir('artifacts/browser-qa', { recursive: true });
@@ -72,11 +105,12 @@ try {
       await exercisePage(page);
 
       if (photo) {
-        await page.waitForFunction(() => {
-          const visibleOfficialImages = [...document.querySelectorAll('img.official-media')]
-            .filter((img) => getComputedStyle(img).display !== 'none');
-          return visibleOfficialImages.length >= 13 && visibleOfficialImages.every((img) => img.complete && img.naturalWidth > 0);
-        }, { timeout: 20000 });
+        const media = await inspectOfficialMedia(page);
+        assert.equal(media.length, 13, `${variant} must hydrate exactly 13 official images`);
+        const broken = media.filter((img) => !img.complete || !img.httpOk || img.width <= 1 || img.height <= 1);
+        assert.deepEqual(broken, [], `${viewport.name}/${variant} has broken official media: ${JSON.stringify(broken)}`);
+        const brokenRaster = media.filter((img) => !img.src.endsWith('.svg') && (img.naturalWidth <= 0 || img.naturalHeight <= 0));
+        assert.deepEqual(brokenRaster, [], `${viewport.name}/${variant} has undecodable raster media: ${JSON.stringify(brokenRaster)}`);
         assert(await page.locator('.official-hero-img').isVisible(), `${variant} must show official hero art`);
         assert.equal(await page.locator('.official-person').count(), 3, 'three official team portraits must be present');
         assert.equal(await page.locator('.official-case-art').count(), 5, 'five official case artworks must be present');
