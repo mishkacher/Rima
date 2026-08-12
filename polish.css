@@ -13,6 +13,12 @@ body[data-concept='brutal']{--bg:#f3ef38;--fg:#111;--muted:#292914;--line:#111;-
 body[data-concept='luxe']{--bg:#f5e9dc;--fg:#281817;--muted:#69534b;--line:rgba(40,24,23,.22);--accent:#982945;--panel:#ead8ca}
 body[data-concept='swiss']{--bg:#f7f6f0;--fg:#101010;--muted:#4a4a46;--line:#101010;--accent:#ed5a23;--panel:#fff}
 
+/* Cosmos inherited the generic inverted contact color from the base sheet; keep it luminous on dark. */
+body[data-concept='cosmos'] .contact{color:var(--fg)}
+body[data-concept='cosmos'] .contact .kicker{color:color-mix(in srgb,var(--fg) 62%,transparent)}
+body[data-concept='cosmos'] .contact>p:not(.kicker){color:var(--fg);opacity:.68}
+body[data-concept='cosmos'] .contact-btn{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 12px 40px rgba(131,109,255,.28)}
+
 /* Rhythm audit: less dead space, more usable content per viewport. */
 .hero{min-height:740px;padding-top:34px}
 .about{padding:var(--section-space) 0}
