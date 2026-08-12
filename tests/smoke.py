@@ -11,6 +11,21 @@ PAGES = (ROOT / '.github/workflows/pages.yml').read_text(encoding='utf-8')
 CI = (ROOT / '.github/workflows/ci.yml').read_text(encoding='utf-8')
 IMPORTER = (ROOT / 'scripts/import_official_assets.py').read_text(encoding='utf-8')
 
+
+def luminance(value: str) -> float:
+    value = value.lstrip('#')
+    if len(value) == 3:
+        value = ''.join(ch * 2 for ch in value)
+    rgb = [int(value[i:i+2], 16) / 255 for i in (0, 2, 4)]
+    linear = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in rgb]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def contrast(a: str, b: str) -> float:
+    hi, lo = sorted((luminance(a), luminance(b)), reverse=True)
+    return (hi + 0.05) / (lo + 0.05)
+
+
 class AuditParser(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -59,6 +74,20 @@ assert 'https://www.behance.net/sputnikagency' in p.hrefs, 'studio Behance profi
 assert 'href="https://www.behance.net/"' not in HTML, 'generic Behance root must not be used for projects CTA'
 assert HTML.count('href="#contact"') >= 6, 'project CTA should be reachable from header, hero, mobile nav and plans'
 
+# Color-audit contract: primary body copy is AAA-level; normal-sized CTA copy is at least AA-level.
+color_contract = {
+    'editorial': {'fg': '#1a1b2c', 'bg': '#f4f0df', 'cta_fg': '#1a1b2c', 'cta_bg': '#ed7709'},
+    'cosmos': {'fg': '#f6f1df', 'bg': '#0b0d18', 'cta_fg': '#ffffff', 'cta_bg': '#7557ff'},
+    'brutal': {'fg': '#111111', 'bg': '#f3ef38', 'cta_fg': '#111111', 'cta_bg': '#ff4c2f'},
+    'luxe': {'fg': '#281817', 'bg': '#f5e9dc', 'cta_fg': '#ffffff', 'cta_bg': '#8d1836'},
+    'swiss': {'fg': '#101010', 'bg': '#f7f6f0', 'cta_fg': '#0a0a0a', 'cta_bg': '#ed5a23'},
+}
+for name, colors in color_contract.items():
+    assert contrast(colors['fg'], colors['bg']) >= 7.0, f'{name} body contrast below AAA: {contrast(colors["fg"], colors["bg"]):.2f}'
+    assert contrast(colors['cta_fg'], colors['cta_bg']) >= 4.5, f'{name} CTA contrast below AA: {contrast(colors["cta_fg"], colors["cta_bg"]):.2f}'
+    for value in colors.values():
+        assert value.lower() in CSS.lower(), f'{name} audited color {value} missing from CSS'
+
 assert len(p.official_sources) >= 13, f'not enough official image placements: {len(p.official_sources)}'
 for src in p.official_sources:
     assert src.startswith('assets/official/'), f'official asset must be local in deployed artifact: {src}'
@@ -72,4 +101,4 @@ assert 'actions/upload-pages-artifact@v4' in PAGES, 'Pages artifact action missi
 assert 'actions/deploy-pages@v4' in PAGES, 'Pages deploy action missing'
 assert 'pages: write' in PAGES and 'id-token: write' in PAGES, 'Pages permissions missing'
 assert not re.search(r'mailto:hello@example\.com', HTML), 'placeholder email leaked into preview'
-print('RIMA static QA: OK — 10 variants + audited palettes + pinned official image layer')
+print('RIMA static QA: OK — 10 variants + audited AA/AAA palettes + pinned official image layer')
