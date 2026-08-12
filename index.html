@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#f2f0e9" />
+  <meta name="theme-color" content="#f4f0df" />
   <meta name="description" content="RIMA — независимая дизайн-студия. Брендинг, сайты и дизайн-системы." />
   <title>RIMA — дизайн-концепции</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,17 +13,32 @@
   <link rel="stylesheet" href="enhancements.css" />
   <link rel="stylesheet" href="extra-concepts.css" />
   <link rel="stylesheet" href="ux.css" />
+  <link rel="stylesheet" href="polish.css" />
 </head>
-<body data-concept="editorial">
+<body data-concept="editorial" data-media="abstract" data-variant="editorial">
   <a class="skip-link" href="#main">К содержимому</a>
 
   <div class="concept-switcher" aria-label="Выбор дизайн-концепции">
-    <button type="button" data-set-concept="editorial" class="is-active">A · Editorial</button>
-    <button type="button" data-set-concept="cosmos">B · Cosmos</button>
-    <button type="button" data-set-concept="brutal">C · Brutal</button>
-    <button type="button" data-set-concept="luxe">D · Luxe</button>
-    <button type="button" data-set-concept="swiss">E · Swiss</button>
-    <button type="button" class="share-concept" data-share-concept aria-label="Скопировать ссылку на выбранный концепт">↗</button>
+    <div class="concept-switcher-head">
+      <span>Сравнение концепций</span>
+      <button type="button" class="share-concept" data-share-concept aria-label="Скопировать ссылку на выбранный концепт">↗</button>
+    </div>
+    <div class="concept-row concept-row-art" aria-label="Чистые арт-дирекшены">
+      <span class="concept-label">ART</span>
+      <button type="button" data-set-concept="editorial" class="is-active">A · Editorial</button>
+      <button type="button" data-set-concept="cosmos">B · Cosmos</button>
+      <button type="button" data-set-concept="brutal">C · Brutal</button>
+      <button type="button" data-set-concept="luxe">D · Luxe</button>
+      <button type="button" data-set-concept="swiss">E · Swiss</button>
+    </div>
+    <div class="concept-row concept-row-photo" aria-label="Те же концепции с изображениями официального сайта">
+      <span class="concept-label">ФОТО</span>
+      <button type="button" data-set-concept="editorial-photo">A · Editorial</button>
+      <button type="button" data-set-concept="cosmos-photo">B · Cosmos</button>
+      <button type="button" data-set-concept="brutal-photo">C · Brutal</button>
+      <button type="button" data-set-concept="luxe-photo">D · Luxe</button>
+      <button type="button" data-set-concept="swiss-photo">E · Swiss</button>
+    </div>
   </div>
   <div class="toast" role="status" aria-live="polite">Ссылка на концепт скопирована</div>
   <div class="noise"></div><div class="orb orb-a"></div><div class="orb orb-b"></div>
@@ -54,6 +69,7 @@
         </div>
       </div>
       <aside class="hero-art" aria-hidden="true">
+        <img class="official-hero-img official-media" data-official-src="assets/official/hero.png" alt="" decoding="async" />
         <div class="planet"><div class="planet-core">R</div><div class="ring ring-1"></div><div class="ring ring-2"></div><div class="satellite sat-1"></div><div class="satellite sat-2"></div></div>
         <div class="micro-label top">BRAND / WEB / SYSTEMS</div><div class="micro-label bottom">ORBIT 55.03° · 82.92°</div>
       </aside>
@@ -74,20 +90,20 @@
       </div>
       <div class="case-grid" id="case-grid">
         <article class="case case-wide theme-lake"><div class="case-top"><span>01</span><span>Сайт · Соцсети</span></div><div class="case-visual"><span class="visual-word">ТАЙГА</span><span class="visual-sub">Телецкое озеро</span></div><div class="case-bottom"><div><h3>Тайга Озеро</h3><p>Премиальный отдых на берегу Телецкого озера.</p></div><span class="case-arrow" aria-label="Кейс почти готов">99%</span></div></article>
-        <a class="case theme-digital" href="https://www.behance.net/gallery/241910957/razrabotka-brenda-dlja-masterskoj-dizajna" target="_blank" rel="noreferrer" aria-label="Открыть кейс Дизайнерская на Behance"><div class="case-top"><span>02</span><span>Сайт · Айдентика · Лого</span></div><div class="case-visual"><span class="visual-code">D&gt;</span></div><div class="case-bottom"><div><h3>Дизайнерская</h3><p>Мастерская digital-дизайна и коллектив профессионалов.</p></div><span class="case-arrow">↗</span></div></a>
-        <a class="case theme-blackwork" href="https://www.behance.net/gallery/234539475/Landing-page-Studio-Blackwork" target="_blank" rel="noreferrer" aria-label="Открыть кейс Studio Blackwork на Behance"><div class="case-top"><span>03</span><span>Айдентика · Лендинг</span></div><div class="case-visual"><span class="steel-line"></span><span class="steel-mark">SBW</span></div><div class="case-bottom"><div><h3>Studio Blackwork</h3><p>Мебель из металла и интерьерные решения.</p></div><span class="case-arrow">↗</span></div></a>
-        <a class="case theme-sofia" href="https://www.behance.net/gallery/232474425/Website-on-Tilda-Sofia-school" target="_blank" rel="noreferrer" aria-label="Открыть кейс Sofia School на Behance"><div class="case-top"><span>04</span><span>Сайт · Айдентика</span></div><div class="case-visual"><span class="sofia-s">S</span><span class="sofia-star">✦</span></div><div class="case-bottom"><div><h3>Sofia School</h3><p>Онлайн-школа репетиторства.</p></div><span class="case-arrow">↗</span></div></a>
-        <a class="case theme-dental" href="https://www.behance.net/gallery/243706249/DENTAL-CAD-logotip-firmennyj-stil" target="_blank" rel="noreferrer" aria-label="Открыть кейс DentalCAD на Behance"><div class="case-top"><span>05</span><span>Айдентика · Печать</span></div><div class="case-visual"><span class="dental-cross">+</span><span class="dental-name">DENTAL<br>CAD</span></div><div class="case-bottom"><div><h3>DentalCAD</h3><p>Клиника КТ-исследований.</p></div><span class="case-arrow">↗</span></div></a>
-        <a class="case theme-focus" href="https://www.behance.net/gallery/248397223/firmennyj-stil-dlja-mediacentra" target="_blank" rel="noreferrer" aria-label="Открыть кейс Фокус Медиа на Behance"><div class="case-top"><span>06</span><span>Лого · Айдентика · Печать</span></div><div class="case-visual"><span class="focus-ring"></span><span class="focus-dot"></span></div><div class="case-bottom"><div><h3>Фокус Медиа</h3><p>Современное медиа о жизни студентов.</p></div><span class="case-arrow">↗</span></div></a>
+        <a class="case theme-digital" href="https://www.behance.net/gallery/241910957/razrabotka-brenda-dlja-masterskoj-dizajna" target="_blank" rel="noreferrer" aria-label="Открыть кейс Дизайнерская на Behance"><div class="case-top"><span>02</span><span>Сайт · Айдентика · Лого</span></div><div class="case-visual"><img class="official-case-art official-media" data-official-src="assets/official/case-designerskaya.svg" alt="" loading="lazy" decoding="async" /><span class="visual-code">D&gt;</span></div><div class="case-bottom"><div><h3>Дизайнерская</h3><p>Мастерская digital-дизайна и коллектив профессионалов.</p></div><span class="case-arrow">↗</span></div></a>
+        <a class="case theme-blackwork" href="https://www.behance.net/gallery/234539475/Landing-page-Studio-Blackwork" target="_blank" rel="noreferrer" aria-label="Открыть кейс Studio Blackwork на Behance"><div class="case-top"><span>03</span><span>Айдентика · Лендинг</span></div><div class="case-visual"><img class="official-case-art official-media" data-official-src="assets/official/case-blackwork.svg" alt="" loading="lazy" decoding="async" /><span class="steel-line"></span><span class="steel-mark">SBW</span></div><div class="case-bottom"><div><h3>Studio Blackwork</h3><p>Мебель из металла и интерьерные решения.</p></div><span class="case-arrow">↗</span></div></a>
+        <a class="case theme-sofia" href="https://www.behance.net/gallery/232474425/Website-on-Tilda-Sofia-school" target="_blank" rel="noreferrer" aria-label="Открыть кейс Sofia School на Behance"><div class="case-top"><span>04</span><span>Сайт · Айдентика</span></div><div class="case-visual"><img class="official-case-art official-media" data-official-src="assets/official/case-sofia.svg" alt="" loading="lazy" decoding="async" /><span class="sofia-s">S</span><span class="sofia-star">✦</span></div><div class="case-bottom"><div><h3>Sofia School</h3><p>Онлайн-школа репетиторства.</p></div><span class="case-arrow">↗</span></div></a>
+        <a class="case theme-dental" href="https://www.behance.net/gallery/243706249/DENTAL-CAD-logotip-firmennyj-stil" target="_blank" rel="noreferrer" aria-label="Открыть кейс DentalCAD на Behance"><div class="case-top"><span>05</span><span>Айдентика · Печать</span></div><div class="case-visual"><img class="official-case-art official-media" data-official-src="assets/official/case-dental.svg" alt="" loading="lazy" decoding="async" /><span class="dental-cross">+</span><span class="dental-name">DENTAL<br>CAD</span></div><div class="case-bottom"><div><h3>DentalCAD</h3><p>Клиника КТ-исследований.</p></div><span class="case-arrow">↗</span></div></a>
+        <a class="case theme-focus" href="https://www.behance.net/gallery/248397223/firmennyj-stil-dlja-mediacentra" target="_blank" rel="noreferrer" aria-label="Открыть кейс Фокус Медиа на Behance"><div class="case-top"><span>06</span><span>Лого · Айдентика · Печать</span></div><div class="case-visual"><img class="official-case-art official-media" data-official-src="assets/official/case-focus.svg" alt="" loading="lazy" decoding="async" /><span class="focus-ring"></span><span class="focus-dot"></span></div><div class="case-bottom"><div><h3>Фокус Медиа</h3><p>Современное медиа о жизни студентов.</p></div><span class="case-arrow">↗</span></div></a>
       </div>
     </section>
 
     <section id="team" class="team shell">
       <div class="section-heading compact"><div class="section-index">03 — Команда</div><h2>Люди<br>за проектами.</h2></div>
       <div class="team-grid">
-        <article class="person"><div class="portrait"><span>R</span></div><div><h3>Римма</h3><p>Бренд-дизайнер<br>и основатель студии</p></div></article>
-        <article class="person"><div class="portrait"><span>V</span></div><div><h3>Виталий</h3><p>UX/UI дизайнер<br>и Tilda-разработчик</p></div></article>
-        <article class="person"><div class="portrait"><span>D</span></div><div><h3>Даша</h3><p>Digital- и<br>графический дизайнер</p></div></article>
+        <article class="person"><div class="portrait"><img class="official-person official-media" data-official-src="assets/official/team-rimma.png" alt="" loading="lazy" decoding="async" /><span>R</span></div><div><h3>Римма</h3><p>Бренд-дизайнер<br>и основатель студии</p></div></article>
+        <article class="person"><div class="portrait"><img class="official-person official-media" data-official-src="assets/official/team-vitaliy.png" alt="" loading="lazy" decoding="async" /><span>V</span></div><div><h3>Виталий</h3><p>UX/UI дизайнер<br>и Tilda-разработчик</p></div></article>
+        <article class="person"><div class="portrait"><img class="official-person official-media" data-official-src="assets/official/team-dasha.png" alt="" loading="lazy" decoding="async" /><span>D</span></div><div><h3>Даша</h3><p>Digital- и<br>графический дизайнер</p></div></article>
         <article class="person person-more"><div class="portrait"><span>+∞</span></div><div><h3>И многие другие</h3><p>Подключаем сильных специалистов под задачу.</p></div></article>
       </div>
     </section>
@@ -95,14 +111,15 @@
     <section id="plans" class="plans shell">
       <div class="section-heading"><div class="section-index">04 — Форматы работы</div><h2>Выберите<br>свою орбиту.</h2></div>
       <div class="plan-list">
-        <article class="plan"><div class="plan-no">01</div><div><h3>Старт</h3><p>Для новых проектов</p></div><p class="plan-desc">Разработка базового бренда и стартового набора материалов.</p><a href="#contact">Обсудить ↘</a></article>
-        <article class="plan featured"><div class="plan-no">02</div><div><h3>Орбита</h3><p>Для бизнеса, готового к росту</p></div><p class="plan-desc">Сайт и полный набор фирменных материалов для уверенной работы.</p><a href="#contact">Обсудить ↘</a></article>
-        <article class="plan"><div class="plan-no">03</div><div><h3>Галактика</h3><p>Для комплексных задач</p></div><p class="plan-desc">Работаем как ваш дизайн-партнёр на постоянной основе.</p><a href="#contact">Обсудить ↘</a></article>
+        <article class="plan"><div class="plan-no">01</div><div><h3>Старт</h3><p>Для новых проектов</p></div><p class="plan-desc">Разработка базового бренда и стартового набора материалов.</p><img class="plan-media official-media" data-official-src="assets/official/plan-start.png" alt="" loading="lazy" decoding="async" /><a href="#contact">Обсудить ↘</a></article>
+        <article class="plan featured"><div class="plan-no">02</div><div><h3>Орбита</h3><p>Для бизнеса, готового к росту</p></div><p class="plan-desc">Сайт и полный набор фирменных материалов для уверенной работы.</p><img class="plan-media official-media" data-official-src="assets/official/plan-orbit.png" alt="" loading="lazy" decoding="async" /><a href="#contact">Обсудить ↘</a></article>
+        <article class="plan"><div class="plan-no">03</div><div><h3>Галактика</h3><p>Для комплексных задач</p></div><p class="plan-desc">Работаем как ваш дизайн-партнёр на постоянной основе.</p><img class="plan-media official-media" data-official-src="assets/official/plan-galaxy.png" alt="" loading="lazy" decoding="async" /><a href="#contact">Обсудить ↘</a></article>
       </div>
     </section>
 
     <section id="contact" class="contact shell">
       <div class="contact-orbit" aria-hidden="true"><span></span></div>
+      <img class="contact-brand official-media" data-official-src="assets/official/agency-mark.png" alt="" loading="lazy" decoding="async" />
       <p class="kicker">Есть задача?</p>
       <h2>Расскажите<br>о своём деле.</h2>
       <p>А мы поможем понять, с чего начать, и предложим оптимальное решение.</p>
