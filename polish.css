@@ -1,0 +1,131 @@
+/* Final design/color audit layer. Loaded last on purpose. */
+:root{
+  --brand-cream:#f1edd2;
+  --brand-navy:#1a1b2c;
+  --brand-orange:#ed7709;
+  --section-space:112px;
+}
+
+/* Palette audit: keep five identities, give them cleaner contrast and a shared brand anchor. */
+body[data-concept='editorial']{--bg:#f4f0df;--fg:#1a1b2c;--muted:#656255;--line:rgba(26,27,44,.16);--accent:#ed7709;--panel:#ebe6d2}
+body[data-concept='cosmos']{--bg:#0b0d18;--fg:#f6f1df;--muted:#a09dac;--line:rgba(246,241,223,.16);--accent:#836dff;--panel:#141827}
+body[data-concept='brutal']{--bg:#f3ef38;--fg:#111;--muted:#292914;--line:#111;--accent:#ff4c2f;--panel:#fffef1}
+body[data-concept='luxe']{--bg:#f5e9dc;--fg:#281817;--muted:#69534b;--line:rgba(40,24,23,.22);--accent:#982945;--panel:#ead8ca}
+body[data-concept='swiss']{--bg:#f7f6f0;--fg:#101010;--muted:#4a4a46;--line:#101010;--accent:#ed5a23;--panel:#fff}
+
+/* Rhythm audit: less dead space, more usable content per viewport. */
+.hero{min-height:740px;padding-top:34px}
+.about{padding:var(--section-space) 0}
+.work,.team,.plans{padding:var(--section-space) 0}
+.section-heading{margin-bottom:48px}
+.case{min-height:520px}
+.case-wide{min-height:610px}
+.contact{min-height:610px;margin-bottom:28px}
+.team-grid,.case-grid{gap:16px}
+.plan{padding:30px 0}
+body[data-concept='luxe'] .hero{min-height:780px;padding-top:44px}
+body[data-concept='swiss'] .hero{min-height:720px}
+body[data-concept='swiss'] .case{min-height:500px}
+body[data-concept='swiss'] .case-wide{min-height:580px}
+
+/* Never make important content depend on IntersectionObserver/JS to be visible. */
+.reveal,.reveal.in-view{opacity:1!important;transform:none!important}
+
+/* Two-level chooser: first row = pure art direction, second row = official imagery. */
+.concept-switcher{
+  right:18px;left:auto;bottom:18px;
+  width:min(610px,calc(100vw - 36px));max-width:none;
+  display:grid;gap:5px;padding:8px;
+  border-radius:18px;
+  background:color-mix(in srgb,var(--bg) 91%,transparent);
+  box-shadow:0 14px 50px rgba(0,0,0,.13);
+}
+.concept-switcher-head{display:flex;align-items:center;justify-content:space-between;padding:0 4px 2px 8px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.concept-switcher-head .share-concept{min-height:30px!important;padding:7px 10px!important;font-size:13px}
+.concept-row{display:grid;grid-template-columns:50px repeat(5,minmax(0,1fr));align-items:center;gap:4px}
+.concept-row .concept-label{font:700 9px/1 var(--font);letter-spacing:.12em;color:var(--muted);padding-left:8px}
+.concept-row-photo .concept-label{color:var(--accent)}
+.concept-switcher .concept-row button{min-height:38px;padding:10px 8px;font-size:10px;white-space:nowrap}
+.concept-switcher .concept-row-photo button.is-active{box-shadow:inset 0 0 0 2px var(--accent)}
+
+/* Official image layer is opt-in and hydrated by app.js only for *-photo variants. */
+.official-media{display:none!important}
+body[data-media='official'] .official-media{display:block!important}
+body[data-media='official'] .hero-art{isolation:isolate}
+body[data-media='official'] .hero-art .planet{display:none}
+.official-hero-img{
+  position:absolute;inset:7% 0 7%;width:100%;height:86%;object-fit:cover;
+  border:1px solid var(--line);border-radius:calc(var(--radius) + 4px);
+  box-shadow:0 28px 80px rgba(0,0,0,.16);z-index:2;
+}
+body[data-concept='brutal'][data-media='official'] .official-hero-img{border:3px solid #111;box-shadow:12px 12px 0 #111;border-radius:0}
+body[data-concept='swiss'][data-media='official'] .official-hero-img{border:2px solid #101010;border-radius:0;box-shadow:none}
+body[data-concept='cosmos'][data-media='official'] .official-hero-img{box-shadow:0 24px 90px rgba(131,109,255,.24)}
+
+body[data-media='official'] .case-visual>:not(.official-media){display:none}
+.official-case-art{width:100%;height:100%;object-fit:contain;object-position:center;border-radius:calc(var(--radius) * .55)}
+body[data-concept='brutal'][data-media='official'] .official-case-art,
+body[data-concept='swiss'][data-media='official'] .official-case-art{border-radius:0}
+body[data-media='official'] .case-visual{padding:28px 16px}
+body[data-media='official'] .theme-lake .case-visual{padding:0}
+body[data-media='official'] .theme-lake .case-visual::before{
+  content:'TAIGA / CASE 01';display:grid;place-items:center;width:min(72%,520px);aspect-ratio:2.1;
+  border:1px solid currentColor;font:700 clamp(28px,5vw,74px)/.9 var(--display);letter-spacing:-.05em;
+}
+
+body[data-media='official'] .portrait>span{display:none}
+.official-person{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 18px 18px rgba(0,0,0,.12))}
+body[data-media='official'] .portrait{background:linear-gradient(145deg,var(--panel),color-mix(in srgb,var(--accent) 13%,var(--panel)))}
+body[data-concept='cosmos'][data-media='official'] .portrait{background:linear-gradient(145deg,#181c2b,#30284b)}
+body[data-concept='brutal'][data-media='official'] .portrait{background:#fff8c2}
+
+body[data-media='official'] .plan{grid-template-columns:70px minmax(180px,1.2fr) minmax(260px,2fr) 108px 120px;align-items:center}
+.plan-media{width:92px;height:116px;object-fit:cover;object-position:top center;justify-self:end;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+body[data-concept='brutal'][data-media='official'] .plan-media,
+body[data-concept='swiss'][data-media='official'] .plan-media{border-radius:0;border-width:2px}
+body[data-media='official'] .plan a{justify-self:end}
+
+.contact-brand{position:relative;z-index:2;width:min(310px,62%);height:auto;margin:0 auto 20px;border-radius:14px;border:1px solid color-mix(in srgb,var(--bg) 22%,transparent)}
+body[data-concept='brutal'][data-media='official'] .contact-brand,
+body[data-concept='swiss'][data-media='official'] .contact-brand{border-radius:0}
+
+/* Photo mode gets a small brand-orange cue without flattening each theme. */
+body[data-media='official'] .brand-dot{box-shadow:0 0 0 4px color-mix(in srgb,var(--brand-orange) 18%,transparent)}
+body[data-media='official'] .section-index::after{content:' · OFFICIAL IMAGES';color:var(--brand-orange);font-size:.78em}
+
+@media(max-width:1100px){
+  :root{--section-space:96px}
+  body[data-media='official'] .plan{grid-template-columns:60px 1.2fr 1.8fr 94px}
+  body[data-media='official'] .plan-media{grid-column:4;width:80px;height:100px}
+  body[data-media='official'] .plan a{grid-column:2/4;justify-self:start}
+}
+
+@media(max-width:900px){
+  :root{--section-space:78px}
+  body{padding-bottom:142px}
+  .hero{padding-top:16px}
+  .about,.work,.team,.plans{padding-top:var(--section-space);padding-bottom:var(--section-space)}
+  .case,.case-wide{min-height:460px}
+  .concept-switcher{left:10px;right:10px;bottom:10px;width:auto;max-width:none;padding:6px;overflow:visible}
+  .concept-switcher-head{padding-left:6px}
+  .concept-row{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
+  .concept-row::-webkit-scrollbar{display:none}
+  .concept-row .concept-label{flex:0 0 46px;padding-left:6px}
+  .concept-switcher .concept-row button{flex:0 0 auto!important;min-width:70px;padding-inline:10px}
+  .official-hero-img{position:relative;inset:auto;width:100%;height:auto;aspect-ratio:1140/535;margin-top:16px}
+  body[data-media='official'] .hero-art{min-height:0}
+  body[data-media='official'] .plan{grid-template-columns:52px 1fr;align-items:start}
+  body[data-media='official'] .plan-media{grid-column:2;width:92px;height:116px;justify-self:start;margin-top:10px}
+  body[data-media='official'] .plan a{grid-column:2;justify-self:start}
+}
+
+@media(max-width:560px){
+  :root{--section-space:64px}
+  .section-heading{margin-bottom:36px}
+  .case,.case-wide{min-height:430px}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .contact{min-height:540px}
+  .concept-switcher .concept-row button{min-width:66px;font-size:9px}
+  .concept-row .concept-label{flex-basis:42px}
+  body[data-media='official'] .case-visual{padding:14px 6px}
+}
