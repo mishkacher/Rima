@@ -85,24 +85,40 @@ color_contract = {
 for name, colors in color_contract.items():
     assert contrast(colors['fg'], colors['bg']) >= 7.0, f'{name} body contrast below AAA: {contrast(colors["fg"], colors["bg"]):.2f}'
     assert contrast(colors['cta_fg'], colors['cta_bg']) >= 4.5, f'{name} CTA contrast below AA: {contrast(colors["cta_fg"], colors["cta_bg"]):.2f}'
-    # Foreground token may use CSS shorthand (#fff/#111), so pin the theme-specific palette tokens here.
     for key in ('fg', 'bg', 'cta_bg'):
         value = colors[key]
         if value in {'#ffffff', '#111111', '#0a0a0a'}:
             continue
         assert value.lower() in CSS.lower(), f'{name} audited color {value} missing from CSS'
 
-assert len(p.official_sources) >= 13, f'not enough official image placements: {len(p.official_sources)}'
+# Real imagery is now intentionally limited to 3 team portraits + 5 completed case artworks.
+assert len(p.official_sources) == 8, f'photo mode must use exactly 8 official image placements: {len(p.official_sources)}'
 for src in p.official_sources:
     assert src.startswith('assets/official/'), f'official asset must be local in deployed artifact: {src}'
+for removed in ['hero.png', 'plan-start.png', 'plan-orbit.png', 'plan-galaxy.png', 'agency-mark.png']:
+    assert removed not in HTML, f'removed source image leaked into HTML: {removed}'
 assert 'ASSETS = {' in IMPORTER and 'sha256' in IMPORTER, 'pinned official asset importer missing'
-assert IMPORTER.count('static.tildacdn.com') >= 13, 'official importer must pin all selected public assets'
+assert IMPORTER.count('static.tildacdn.com') == 8, 'official importer must pin only the 8 intentionally retained assets'
 assert 'scripts/import_official_assets.py' in PAGES, 'Pages must import official assets before deploy'
 assert 'scripts/import_official_assets.py' in CI, 'browser QA must import official assets before rendering'
+
+# Generated photo-mode replacements must preserve the useful source-card information.
+for cls in ['taiga-progress', 'plan-visual', 'sputnik-signature', 'photo-generated']:
+    assert cls in p.classes, f'missing generated photo-mode module: {cls}'
+for text in [
+    '99', 'Почти готово', 'Логотип', 'Фирменный стиль', 'Цветовая палитра',
+    'Шрифтовая система', 'Графические элементы', 'Руководство',
+    'Сайт / лендинг под ключ', 'Посты-знакомства', 'Печатная продукция',
+    'Мерчендайз', 'Презентации', 'Шаблоны для соцсетей', 'Долгосрочное сопровождение',
+    'СПУТНИК', 'дизайнерское агентство'
+]:
+    assert text in HTML, f'missing source-derived content in native design: {text}'
+assert "body[data-media='official'] .hero-art .planet{display:grid}" in CSS, 'photo mode must retain the native orbit hero'
+assert "body[data-media='official'] .photo-generated{display:block!important}" in CSS, 'generated photo modules must be visible in photo mode'
 
 assert 'actions/configure-pages@v5' in PAGES, 'Pages configure action missing'
 assert 'actions/upload-pages-artifact@v4' in PAGES, 'Pages artifact action missing'
 assert 'actions/deploy-pages@v4' in PAGES, 'Pages deploy action missing'
 assert 'pages: write' in PAGES and 'id-token: write' in PAGES, 'Pages permissions missing'
 assert not re.search(r'mailto:hello@example\.com', HTML), 'placeholder email leaked into preview'
-print('RIMA static QA: OK — 10 variants + audited AA/AAA palettes + pinned official image layer')
+print('RIMA static QA: OK — 10 variants + native photo-mode modules + 8 pinned official images')
