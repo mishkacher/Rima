@@ -14,19 +14,20 @@ const themeColors = {
 
 function parseVariant(variant) {
   const photo = variant.endsWith('-photo');
-  const base = photo ? variant.slice(0, -6) : variant;
+  const motion = variant.endsWith('-motion');
+  const base = photo ? variant.slice(0, -6) : motion ? variant.slice(0, -7) : variant;
+  const valid = variants.includes(variant) && baseConcepts.includes(base);
   return {
-    variant: variants.includes(variant) && baseConcepts.includes(base) ? variant : 'editorial',
-    base: baseConcepts.includes(base) ? base : 'editorial',
-    media: photo && baseConcepts.includes(base) ? 'official' : 'abstract'
+    variant: valid ? variant : 'editorial',
+    base: valid ? base : 'editorial',
+    media: valid && (photo || motion) ? 'official' : 'abstract',
+    motion: valid && motion ? 'on' : 'off'
   };
 }
 
 function hydrateOfficialMedia() {
   document.querySelectorAll('[data-official-src]').forEach((node) => {
     if (!node.getAttribute('src')) {
-      // The photo variant is an explicit user choice, so preload the complete visual layer.
-      // This also keeps screenshots and rapid concept switching deterministic.
       node.loading = 'eager';
       node.setAttribute('src', node.dataset.officialSrc);
     }
@@ -37,6 +38,7 @@ function setConcept(variant, { updateUrl = false } = {}) {
   const parsed = parseVariant(variant);
   body.dataset.concept = parsed.base;
   body.dataset.media = parsed.media;
+  body.dataset.motion = parsed.motion;
   body.dataset.variant = parsed.variant;
 
   buttons.forEach((button) => {
@@ -54,6 +56,8 @@ function setConcept(variant, { updateUrl = false } = {}) {
     url.searchParams.set('concept', parsed.variant);
     history.replaceState({}, '', url);
   }
+
+  window.dispatchEvent(new CustomEvent('rima:conceptchange', { detail: parsed }));
 }
 
 const fromUrl = new URLSearchParams(window.location.search).get('concept');
