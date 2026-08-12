@@ -63,6 +63,27 @@ async function inspectOfficialMedia(page) {
   });
 }
 
+async function inspectMobileChooser(page, viewportWidth) {
+  return page.evaluate((width) => {
+    const switcher = document.querySelector('.concept-switcher');
+    const box = switcher.getBoundingClientRect();
+    const buttons = [...switcher.querySelectorAll('[data-set-concept]')].map((button) => {
+      const rect = button.getBoundingClientRect();
+      return { left: rect.left, right: rect.right, width: rect.width };
+    });
+    const rows = [...switcher.querySelectorAll('.concept-row')].map((row) => {
+      const rect = row.getBoundingClientRect();
+      return { left: rect.left, right: rect.right, width: rect.width, overflowX: getComputedStyle(row).overflowX };
+    });
+    return {
+      viewportWidth: width,
+      switcher: { left: box.left, right: box.right, width: box.width, overflowX: getComputedStyle(switcher).overflowX },
+      buttons,
+      rows
+    };
+  }, viewportWidth);
+}
+
 try {
   await waitForServer();
   await mkdir('artifacts/browser-qa', { recursive: true });
@@ -101,6 +122,22 @@ try {
         assert(await page.locator('.nav-cta').isVisible(), 'mobile menu must expose project CTA');
         await page.keyboard.press('Escape');
         assert(!(await page.locator('#site-nav').isVisible()), 'Escape must close mobile navigation');
+
+        const chooser = await inspectMobileChooser(page, viewport.width);
+        assert(chooser.switcher.left >= 0, `${variant} chooser starts off-screen: ${JSON.stringify(chooser)}`);
+        assert(chooser.switcher.right <= viewport.width + 0.5, `${variant} chooser ends off-screen: ${JSON.stringify(chooser)}`);
+        assert(chooser.switcher.width <= viewport.width, `${variant} chooser wider than viewport: ${JSON.stringify(chooser)}`);
+        for (const [index, button] of chooser.buttons.entries()) {
+          assert(button.left >= chooser.switcher.left - 0.5, `${variant} chooser button ${index} starts outside switcher: ${JSON.stringify(chooser)}`);
+          assert(button.right <= chooser.switcher.right + 0.5, `${variant} chooser button ${index} ends outside switcher: ${JSON.stringify(chooser)}`);
+          assert(button.width > 0, `${variant} chooser button ${index} collapsed: ${JSON.stringify(chooser)}`);
+        }
+        for (const [index, row] of chooser.rows.entries()) {
+          assert(row.left >= chooser.switcher.left - 0.5 && row.right <= chooser.switcher.right + 0.5, `${variant} chooser row ${index} escapes switcher: ${JSON.stringify(chooser)}`);
+          assert.notEqual(row.overflowX, 'scroll', `${variant} chooser row ${index} still uses horizontal scroll`);
+          assert.notEqual(row.overflowX, 'auto', `${variant} chooser row ${index} still uses horizontal auto-scroll`);
+        }
+        await page.screenshot({ path: `artifacts/browser-qa/mobile-ui-${variant}.png` });
       }
 
       await exercisePage(page);
@@ -140,7 +177,7 @@ try {
   }
 
   await browser.close();
-  console.log('RIMA browser QA: OK — 10 variants × desktop/mobile with native photo-mode replacements');
+  console.log('RIMA browser QA: OK — 10 variants × desktop/mobile with contained mobile chooser');
 } finally {
   server.kill('SIGTERM');
 }
