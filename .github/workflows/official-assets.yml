@@ -1,0 +1,32 @@
+name: Official RIMA asset audit
+
+on:
+  push:
+    branches:
+      - feat/image-rich-concepts
+    paths:
+      - 'scripts/scrape_official_assets.py'
+      - '.github/workflows/official-assets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Scrape official public assets
+        run: python scripts/scrape_official_assets.py
+      - name: Upload audit bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-rima-assets
+          path: artifacts/official-assets
+          retention-days: 7
