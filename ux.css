@@ -134,11 +134,13 @@ body[data-concept='swiss'] :is(.primary-btn>span,.secondary-btn>span,.projects-b
     width:auto!important;max-width:calc(100vw - 16px)!important;min-width:0!important;
     overflow:hidden!important;overflow-x:hidden!important;padding:7px!important;gap:5px!important;
     box-sizing:border-box!important;
+    transform:none!important;justify-content:stretch!important;grid-template-columns:minmax(0,1fr)!important;
   }
-  .concept-switcher-head{min-width:0!important;padding:0 4px 1px 6px!important}
+  .concept-switcher-head{min-width:0!important;padding:0 4px 1px 6px!important;justify-self:stretch!important;width:auto!important}
   .concept-row{
     display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;
-    gap:4px!important;min-width:0!important;width:100%!important;overflow:visible!important;padding:0!important;
+    gap:4px!important;min-width:0!important;width:auto!important;overflow:visible!important;padding:0!important;
+    justify-self:stretch!important;
   }
   .concept-row .concept-label{
     grid-column:1/-1!important;display:block!important;min-width:0!important;padding:2px 4px 0!important;
@@ -153,7 +155,7 @@ body[data-concept='swiss'] :is(.primary-btn>span,.secondary-btn>span,.projects-b
 }
 @media(max-width:380px){
   body{padding-bottom:170px!important}
-  .concept-switcher{left:6px!important;right:6px!important;max-width:calc(100vw - 12px)!important;padding:6px!important}
+  .concept-switcher{left:6px!important;right:6px!important;max-width:calc(100vw - 12px)!important;padding:6px!important;transform:none!important}
   .concept-row{gap:3px!important}
   .concept-switcher .concept-row button{font-size:7.2px!important;padding-inline:1px!important}
 }
