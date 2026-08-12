@@ -10,11 +10,7 @@ JS = (ROOT / 'app.js').read_text(encoding='utf-8')
 class AuditParser(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.ids = set()
-        self.hrefs = []
-        self.scripts = []
-        self.styles = []
-        self.buttons = []
+        self.ids = set(); self.hrefs = []; self.scripts = []; self.styles = []
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if 'id' in attrs:
@@ -23,7 +19,6 @@ class AuditParser(HTMLParser):
         if tag == 'a' and 'href' in attrs: self.hrefs.append(attrs['href'])
         if tag == 'script' and 'src' in attrs: self.scripts.append(attrs['src'])
         if tag == 'link' and attrs.get('rel') == 'stylesheet': self.styles.append(attrs.get('href'))
-        if tag == 'button': self.buttons.append(attrs)
 
 p = AuditParser(); p.feed(HTML)
 for required in ['top','about','work','team','plans','contact','main','site-nav']:
@@ -34,11 +29,13 @@ assert 'app.js' in p.scripts and (ROOT / 'app.js').exists(), 'missing app.js'
 for target in ['#about','#work','#team','#plans','#top']:
     assert target in p.hrefs, f'missing internal navigation target: {target}'
 for concept in ['editorial','cosmos','brutal']:
-    assert f'data-concept=\"{concept}\"' in HTML or f"data-set-concept=\"{concept}\"" in HTML, f'missing concept: {concept}'
-    assert concept in CSS, f'missing CSS for concept: {concept}'
+    assert f'data-set-concept="{concept}"' in HTML, f'missing concept control: {concept}'
     assert concept in JS, f'missing JS support for concept: {concept}'
+for themed in ['cosmos','brutal']:
+    assert themed in CSS, f'missing CSS theme: {themed}'
+assert ':root' in CSS and '--bg:' in CSS and '--accent:' in CSS, 'editorial base theme variables missing'
 assert 'prefers-reduced-motion' in CSS, 'reduced-motion support missing'
 assert 'aria-expanded' in HTML and 'aria-pressed' in JS, 'interactive accessibility state missing'
 assert 'URLSearchParams' in JS and 'searchParams.set' in JS, 'shareable concept URLs missing'
-assert not re.search(r'mailto:hello@example\.com', HTML), 'placeholder email leaked into production preview'
+assert not re.search(r'mailto:hello@example\.com', HTML), 'placeholder email leaked into preview'
 print('RIMA static smoke audit: OK')
