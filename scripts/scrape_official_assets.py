@@ -6,7 +6,6 @@ import html
 import json
 import mimetypes
 import re
-import sys
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -45,8 +44,7 @@ def ext_for(url: str, content_type: str) -> str:
     suffix = Path(urllib.parse.urlsplit(url).path).suffix.lower()
     if suffix in {".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"}:
         return suffix
-    guessed = mimetypes.guess_extension(content_type) or ".bin"
-    return guessed
+    return mimetypes.guess_extension(content_type) or ".bin"
 
 
 page, page_type = fetch(SOURCE)
@@ -84,5 +82,8 @@ for idx, url in enumerate(urls, 1):
     (OUT / name).write_bytes(body)
     manifest.append({"url": url, "file": name, "content_type": ctype, "bytes": len(body)})
 
-(OUT / "manifest.json").write_text(json.dumps({"source": SOURCE, "page_content_type": page_type, "assets": manifest}, ensure_ascii=False, indent=2), encoding="utf-8")
+(OUT / "manifest.json").write_text(
+    json.dumps({"source": SOURCE, "page_content_type": page_type, "assets": manifest}, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)
 print(f"Found {len(urls)} unique canonical Tilda asset URLs; downloaded {sum('file' in x for x in manifest)} files")
