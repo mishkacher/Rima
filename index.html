@@ -14,13 +14,14 @@
   <link rel="stylesheet" href="extra-concepts.css" />
   <link rel="stylesheet" href="ux.css" />
   <link rel="stylesheet" href="polish.css" />
+  <link rel="stylesheet" href="motion.css" />
 </head>
-<body data-concept="editorial" data-media="abstract" data-variant="editorial">
+<body data-concept="editorial" data-media="abstract" data-motion="off" data-variant="editorial">
   <a class="skip-link" href="#main">К содержимому</a>
 
   <div class="concept-switcher" aria-label="Выбор дизайн-концепции">
     <div class="concept-switcher-head">
-      <span>Сравнение концепций</span>
+      <button type="button" class="concept-toggle" data-concept-toggle aria-expanded="false" aria-label="Открыть выбор дизайн-концепции">Сравнение концепций <span aria-hidden="true"></span></button>
       <button type="button" class="share-concept" data-share-concept aria-label="Скопировать ссылку на выбранный концепт">↗</button>
     </div>
     <div class="concept-row concept-row-art" aria-label="Чистые арт-дирекшены">
@@ -38,6 +39,14 @@
       <button type="button" data-set-concept="brutal-photo">C · Brutal</button>
       <button type="button" data-set-concept="luxe-photo">D · Luxe</button>
       <button type="button" data-set-concept="swiss-photo">E · Swiss</button>
+    </div>
+    <div class="concept-row concept-row-motion" aria-label="Анимированные версии с изображениями и индивидуальной motion-системой">
+      <span class="concept-label">АНИМАЦИЯ</span>
+      <button type="button" data-set-concept="editorial-motion">A · Editorial</button>
+      <button type="button" data-set-concept="cosmos-motion">B · Cosmos</button>
+      <button type="button" data-set-concept="brutal-motion">C · Brutal</button>
+      <button type="button" data-set-concept="luxe-motion">D · Luxe</button>
+      <button type="button" data-set-concept="swiss-motion">E · Swiss</button>
     </div>
   </div>
   <div class="toast" role="status" aria-live="polite">Ссылка на концепт скопирована</div>
@@ -174,5 +183,6 @@
 
   <footer class="shell footer"><div class="brand"><span class="brand-dot"></span><span>RIMA</span></div><div>Design studio · 2026</div><div class="footer-links"><a href="#top">Наверх ↑</a><a href="https://www.behance.net/sputnikagency" target="_blank" rel="noreferrer">Behance ↗</a></div></footer>
   <script src="app.js"></script>
+  <script src="motion.js"></script>
 </body>
 </html>
