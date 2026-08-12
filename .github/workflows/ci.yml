@@ -1,4 +1,4 @@
-name: RIMA static QA
+name: RIMA QA
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  smoke:
+  static:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -18,3 +18,24 @@ jobs:
           python-version: '3.13'
       - name: Static smoke audit
         run: python tests/smoke.py
+
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install Playwright
+        run: |
+          npm install --no-save --no-audit --no-fund playwright
+          npx playwright install --with-deps chromium
+      - name: Browser smoke and visual captures
+        run: node tests/browser-smoke.mjs
+      - name: Upload concept captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rima-five-concepts
+          path: artifacts/browser-qa
+          if-no-files-found: ignore
