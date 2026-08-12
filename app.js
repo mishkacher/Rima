@@ -1,8 +1,36 @@
-const buttons = [...document.querySelectorAll('[data-set-concept]')];
 const body = document.body;
-const concepts = buttons.map((button) => button.dataset.setConcept);
 const themeMeta = document.querySelector('meta[name="theme-color"]');
 const toast = document.querySelector('.toast');
+const switcher = document.querySelector('.concept-switcher');
+
+const extraStyles = document.createElement('link');
+extraStyles.rel = 'stylesheet';
+extraStyles.href = 'extra-concepts.css';
+document.head.appendChild(extraStyles);
+
+const extraConcepts = [
+  ['luxe', 'D · Luxe'],
+  ['swiss', 'E · Swiss']
+];
+const shareButton = switcher?.querySelector('[data-share-concept]');
+extraConcepts.forEach(([id, label]) => {
+  if (switcher?.querySelector(`[data-set-concept="${id}"]`)) return;
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.dataset.setConcept = id;
+  button.textContent = label;
+  switcher?.insertBefore(button, shareButton || null);
+});
+
+const buttons = [...document.querySelectorAll('[data-set-concept]')];
+const concepts = buttons.map((button) => button.dataset.setConcept);
+const themeColors = {
+  editorial: '#f2f0e9',
+  cosmos: '#07070a',
+  brutal: '#fff331',
+  luxe: '#f3eadf',
+  swiss: '#f5f5f2'
+};
 
 function setConcept(concept, { updateUrl = false } = {}) {
   if (!concepts.includes(concept)) concept = 'editorial';
@@ -13,7 +41,7 @@ function setConcept(concept, { updateUrl = false } = {}) {
     button.setAttribute('aria-pressed', String(active));
   });
   localStorage.setItem('rima-concept', concept);
-  if (themeMeta) themeMeta.content = concept === 'cosmos' ? '#07070a' : concept === 'brutal' ? '#fff331' : '#f2f0e9';
+  if (themeMeta) themeMeta.content = themeColors[concept] || themeColors.editorial;
   if (updateUrl) {
     const url = new URL(window.location.href);
     url.searchParams.set('concept', concept);
