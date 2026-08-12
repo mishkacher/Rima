@@ -162,8 +162,13 @@ try {
         assert(await page.locator('.nav-cta').isVisible(), 'mobile menu must expose project CTA');
         await page.keyboard.press('Escape');
         assert(!(await page.locator('#site-nav').isVisible()), 'Escape must close mobile navigation');
+        assert.equal(await page.locator('[data-concept-toggle]').getAttribute('aria-expanded'), 'false', 'mobile chooser should start collapsed');
+        await page.locator('[data-concept-toggle]').click();
+        assert.equal(await page.locator('[data-concept-toggle]').getAttribute('aria-expanded'), 'true', 'mobile chooser must expand');
         await assertChooserContained(page, viewport.width, variant);
         await page.screenshot({ path: `artifacts/browser-qa/mobile-ui-${variant}.png` });
+        await page.locator('[data-concept-toggle]').click();
+        assert.equal(await page.locator('[data-concept-toggle]').getAttribute('aria-expanded'), 'false', 'mobile chooser must collapse again');
       }
 
       await exercisePage(page);
@@ -205,6 +210,7 @@ try {
       const variant = `${base}-motion`;
       await page.goto(`http://127.0.0.1:4173/?concept=${variant}`, { waitUntil: 'networkidle' });
       await page.waitForFunction(() => document.body.dataset.motionReady === 'true');
+      await page.locator('[data-concept-toggle]').click();
       await assertChooserContained(page, width, `${width}px/${variant}`);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       assert(overflow <= 2, `${width}px/${variant} has ${overflow}px horizontal overflow`);
@@ -226,7 +232,7 @@ try {
   }
 
   await browser.close();
-  console.log('RIMA browser QA: OK — 15 variants × desktop/mobile + 5-width chooser sweep + reduced-motion');
+  console.log('RIMA browser QA: OK — 15 variants × desktop/mobile + collapsible chooser + 5-width sweep + reduced-motion');
 } finally {
   server.kill('SIGTERM');
 }

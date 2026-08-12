@@ -113,18 +113,24 @@ body[data-concept='swiss'][data-motion='on'] .section-heading::after{content:'';
 @keyframes swissBlock{0%,100%{transform:rotate(45deg) translate(0,0)}25%{transform:rotate(45deg) translate(3px,-3px)}50%{transform:rotate(45deg) translate(0,-6px)}75%{transform:rotate(45deg) translate(-3px,-3px)}}
 
 @media(max-width:900px){
-  body{padding-bottom:224px!important}
-  .concept-switcher{max-height:min(214px,calc(100dvh - 18px))}
-  .concept-row-motion{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:4px!important;min-width:0!important;width:100%!important;overflow:visible!important}
-  .concept-row-motion .concept-label{grid-column:1/-1!important}
+  body{padding-bottom:74px!important}
+  .concept-switcher{max-height:calc(100dvh - 18px);transition:max-height .28s var(--motion-ease-soft),box-shadow .28s ease}
+  .concept-switcher-head{min-height:36px}
+  .concept-toggle{min-width:0!important;min-height:34px!important;padding:7px 8px!important;border:0!important;background:transparent!important;color:var(--fg)!important;font:700 9px/1 var(--font)!important;letter-spacing:.09em!important;text-transform:uppercase!important;display:flex!important;align-items:center!important;gap:7px!important;cursor:pointer}
+  .concept-toggle>span{width:9px;height:9px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s ease}
+  .concept-switcher.is-open .concept-toggle>span{transform:rotate(225deg) translate(-1px,-1px)}
+  .concept-switcher:not(.is-open) .concept-row{display:none!important}
+  .concept-switcher.is-open .concept-row-motion{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:4px!important;min-width:0!important;width:100%!important;overflow:visible!important}
+  .concept-switcher.is-open .concept-row-motion .concept-label{grid-column:1/-1!important}
+  body:has(.concept-switcher.is-open){padding-bottom:224px!important}
 }
-@media(max-width:380px){body{padding-bottom:218px!important}.concept-switcher .concept-label{font-size:7.4px!important}}
+@media(max-width:560px){body[data-concept='brutal'] .hero h1{font-size:clamp(40px,11vw,46px)!important;letter-spacing:-.075em!important}}
+@media(max-width:380px){.concept-switcher .concept-label{font-size:7.4px!important}}
 @media(max-height:680px) and (max-width:900px){
-  .concept-switcher-head>span{display:none}
-  .concept-switcher{gap:3px!important;padding:5px!important}
-  .concept-row .concept-label{padding-top:0!important}
-  .concept-switcher .concept-row button{min-height:30px!important;padding-block:5px!important}
-  body{padding-bottom:198px!important}
+  .concept-switcher.is-open{gap:3px!important;padding:5px!important}
+  .concept-switcher.is-open .concept-row .concept-label{padding-top:0!important}
+  .concept-switcher.is-open .concept-row button{min-height:30px!important;padding-block:5px!important}
+  body:has(.concept-switcher.is-open){padding-bottom:198px!important}
 }
 
 @media(prefers-reduced-motion:reduce){

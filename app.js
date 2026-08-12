@@ -2,6 +2,8 @@ const body = document.body;
 const themeMeta = document.querySelector('meta[name="theme-color"]');
 const toast = document.querySelector('.toast');
 const buttons = [...document.querySelectorAll('[data-set-concept]')];
+const conceptSwitcher = document.querySelector('.concept-switcher');
+const conceptToggle = document.querySelector('[data-concept-toggle]');
 const variants = buttons.map((button) => button.dataset.setConcept);
 const baseConcepts = ['editorial', 'cosmos', 'brutal', 'luxe', 'swiss'];
 const themeColors = {
@@ -64,8 +66,21 @@ const fromUrl = new URLSearchParams(window.location.search).get('concept');
 const saved = localStorage.getItem('rima-concept');
 setConcept(variants.includes(fromUrl) ? fromUrl : variants.includes(saved) ? saved : 'editorial');
 
+function setConceptChooserOpen(open) {
+  conceptSwitcher?.classList.toggle('is-open', open);
+  conceptToggle?.setAttribute('aria-expanded', String(open));
+  conceptToggle?.setAttribute('aria-label', open ? 'Закрыть выбор дизайн-концепции' : 'Открыть выбор дизайн-концепции');
+}
+
+conceptToggle?.addEventListener('click', () => {
+  setConceptChooserOpen(!conceptSwitcher?.classList.contains('is-open'));
+});
+
 buttons.forEach((button) => {
-  button.addEventListener('click', () => setConcept(button.dataset.setConcept, { updateUrl: true }));
+  button.addEventListener('click', () => {
+    setConcept(button.dataset.setConcept, { updateUrl: true });
+    if (window.innerWidth <= 900) setConceptChooserOpen(false);
+  });
 });
 
 document.querySelector('[data-share-concept]')?.addEventListener('click', async () => {
@@ -100,10 +115,15 @@ menu?.addEventListener('click', () => {
 nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
+    const chooserWasOpen = conceptSwitcher?.classList.contains('is-open');
     closeMenu();
-    menu?.focus();
+    setConceptChooserOpen(false);
+    (chooserWasOpen ? conceptToggle : menu)?.focus();
   }
 });
 window.addEventListener('resize', () => {
-  if (window.innerWidth > 900) closeMenu();
+  if (window.innerWidth > 900) {
+    closeMenu();
+    setConceptChooserOpen(false);
+  }
 });
