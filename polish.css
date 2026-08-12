@@ -42,7 +42,7 @@ body[data-concept='swiss'] .case-wide{min-height:580px}
 /* Never make important content depend on IntersectionObserver/JS to be visible. */
 .reveal,.reveal.in-view{opacity:1!important;transform:none!important}
 
-/* Two-level chooser: first row = pure art direction, second row = official imagery. */
+/* Two-level chooser: first row = pure art direction, second row = photo/content direction. */
 .concept-switcher{
   right:18px;left:auto;bottom:18px;
   width:min(610px,calc(100vw - 36px));max-width:none;
@@ -59,56 +59,115 @@ body[data-concept='swiss'] .case-wide{min-height:580px}
 .concept-switcher .concept-row button{min-height:38px;padding:10px 8px;font-size:10px;white-space:nowrap}
 .concept-switcher .concept-row-photo button.is-active{box-shadow:inset 0 0 0 2px var(--accent)}
 
-/* Official image layer is opt-in and hydrated by app.js only for *-photo variants. */
-.official-media{display:none!important}
+/* Photo mode: real people/case assets + generated modules for hero, TAIGA, tariffs and final agency mark. */
+.official-media,.photo-generated{display:none!important}
 body[data-media='official'] .official-media{display:block!important}
-body[data-media='official'] .hero-art{isolation:isolate}
-body[data-media='official'] .hero-art .planet{display:none}
-.official-hero-img{
-  position:absolute;inset:7% 0 7%;width:100%;height:86%;object-fit:cover;
-  border:1px solid var(--line);border-radius:calc(var(--radius) + 4px);
-  box-shadow:0 28px 80px rgba(0,0,0,.16);z-index:2;
-}
-body[data-concept='brutal'][data-media='official'] .official-hero-img{border:3px solid #111;box-shadow:12px 12px 0 #111;border-radius:0}
-body[data-concept='swiss'][data-media='official'] .official-hero-img{border:2px solid #101010;border-radius:0;box-shadow:none}
-body[data-concept='cosmos'][data-media='official'] .official-hero-img{box-shadow:0 24px 90px rgba(117,87,255,.24)}
+body[data-media='official'] .photo-generated{display:block!important}
+body[data-media='official'] .brand-dot{box-shadow:0 0 0 4px color-mix(in srgb,var(--brand-orange) 18%,transparent)}
+body[data-media='official'] .section-index::after{content:' · ФОТО / DESIGN';color:color-mix(in srgb,var(--brand-orange) 70%,var(--fg));font-size:.78em}
 
-body[data-media='official'] .case-visual>:not(.official-media){display:none}
+/* Hero always keeps the native orbit artwork — no imported source image here. */
+body[data-media='official'] .hero-art .planet{display:grid}
+body[data-media='official'] .hero-art::after{content:'NATIVE ORBIT / 01';position:absolute;right:0;bottom:42px;font:700 8px/1 var(--font);letter-spacing:.16em;color:var(--muted)}
+body[data-concept='cosmos'][data-media='official'] .planet{box-shadow:0 0 150px rgba(117,87,255,.5),inset -30px -30px 70px rgba(0,0,0,.7)}
+body[data-concept='brutal'][data-media='official'] .planet{box-shadow:18px 18px 0 #111}
+
+/* Keep official imagery for the five completed cases, but TAIGA becomes an intentional 99% loading state. */
+body[data-media='official'] .case:not(.theme-lake) .case-visual>:not(.official-media){display:none}
 .official-case-art{width:100%;height:100%;object-fit:contain;object-position:center;border-radius:calc(var(--radius) * .55)}
 body[data-concept='brutal'][data-media='official'] .official-case-art,
 body[data-concept='swiss'][data-media='official'] .official-case-art{border-radius:0}
-body[data-media='official'] .case-visual{padding:28px 16px}
-body[data-media='official'] .theme-lake .case-visual{padding:0}
-body[data-media='official'] .theme-lake .case-visual::before{
-  content:'TAIGA / CASE 01';display:grid;place-items:center;width:min(72%,520px);aspect-ratio:2.1;
-  border:1px solid currentColor;font:700 clamp(28px,5vw,74px)/.9 var(--display);letter-spacing:-.05em;
-}
+body[data-media='official'] .case:not(.theme-lake) .case-visual{padding:28px 16px}
+body[data-media='official'] .theme-lake .visual-word,
+body[data-media='official'] .theme-lake .visual-sub{display:none}
+body[data-media='official'] .theme-lake .case-visual{padding:30px}
+.taiga-progress{position:relative;width:min(88%,850px);min-height:330px;border:1px solid currentColor;padding:28px;overflow:hidden;background:color-mix(in srgb,var(--panel) 72%,transparent)}
+.taiga-progress::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.7%,color-mix(in srgb,currentColor 10%,transparent) 50%,transparent 50.3%),linear-gradient(transparent 49.7%,color-mix(in srgb,currentColor 10%,transparent) 50%,transparent 50.3%);background-size:48px 48px;opacity:.35;pointer-events:none}
+.taiga-progress-head,.taiga-progress-meta{position:relative;z-index:2;display:flex;justify-content:space-between;gap:20px;font:700 9px/1 var(--font);letter-spacing:.15em;text-transform:uppercase}
+.taiga-progress-value{position:relative;z-index:2;display:flex;align-items:flex-start;justify-content:center;margin:18px 0 8px;line-height:.75}
+.taiga-progress-value strong{font:600 clamp(120px,19vw,260px)/.75 var(--display);letter-spacing:-.09em}
+.taiga-progress-value span{font:700 clamp(24px,3vw,48px)/1 var(--font);margin:8px 0 0 10px;color:var(--accent)}
+.taiga-progress-track{position:relative;z-index:2;height:12px;border:1px solid currentColor;margin:18px 0 20px;overflow:hidden}
+.taiga-progress-track i{display:block;width:99%;height:100%;background:var(--accent)}
+.taiga-progress-meta span:last-child{color:var(--accent)}
+body[data-concept='editorial'][data-media='official'] .taiga-progress{background:#f7f3df;color:#1a1b2c;box-shadow:18px 18px 0 rgba(26,27,44,.08)}
+body[data-concept='cosmos'][data-media='official'] .taiga-progress{background:radial-gradient(circle at 72% 30%,rgba(117,87,255,.28),transparent 42%),#101321;color:#f6f1df;border-color:rgba(246,241,223,.45);box-shadow:0 0 80px rgba(117,87,255,.18)}
+body[data-concept='cosmos'][data-media='official'] .taiga-progress-track i{box-shadow:0 0 24px rgba(117,87,255,.8)}
+body[data-concept='brutal'][data-media='official'] .taiga-progress{background:#fff;border:3px solid #111;box-shadow:14px 14px 0 #111;color:#111;padding:24px}
+body[data-concept='brutal'][data-media='official'] .taiga-progress-track{height:18px;border:3px solid #111}
+body[data-concept='luxe'][data-media='official'] .taiga-progress{background:#f1dfd1;border-color:#7e283e;color:#281817;border-radius:48% 52% 42% 58%/10% 12% 88% 90%;padding:40px 46px}
+body[data-concept='luxe'][data-media='official'] .taiga-progress-value strong{font-family:Georgia,serif;font-weight:400}
+body[data-concept='swiss'][data-media='official'] .taiga-progress{background:#fff;border:2px solid #101010;color:#101010;box-shadow:none}
+body[data-concept='swiss'][data-media='official'] .taiga-progress::before{background-size:36px 36px}
 
+/* Team photos remain the place where real portrait photography does the work. */
 body[data-media='official'] .portrait>span{display:none}
 .official-person{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 18px 18px rgba(0,0,0,.12))}
 body[data-media='official'] .portrait{background:linear-gradient(145deg,var(--panel),color-mix(in srgb,var(--accent) 13%,var(--panel)))}
 body[data-concept='cosmos'][data-media='official'] .portrait{background:linear-gradient(145deg,#181c2b,#30284b)}
 body[data-concept='brutal'][data-media='official'] .portrait{background:#fff8c2}
 
-/* Tariff source images are portrait editorial cards, not tiny icons: keep them legible. */
-body[data-media='official'] .plan{grid-template-columns:70px minmax(170px,1.05fr) minmax(240px,1.55fr) 156px 118px;align-items:center;gap:20px}
-.plan-media{width:144px;height:180px;object-fit:cover;object-position:center;justify-self:end;border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:0 12px 28px rgba(0,0,0,.08)}
-body[data-concept='brutal'][data-media='official'] .plan-media,
-body[data-concept='swiss'][data-media='official'] .plan-media{border-radius:0;border-width:2px;box-shadow:none}
+/* Tariffs: source-card information is preserved as live HTML, but each concept renders its own visual system. */
+body[data-media='official'] .plan{grid-template-columns:70px minmax(160px,.8fr) minmax(230px,1fr) minmax(320px,1.35fr) 118px;align-items:center;gap:20px}
 body[data-media='official'] .plan a{justify-self:end}
+.plan-visual{position:relative;min-height:220px;border:1px solid var(--line);padding:20px 22px;overflow:hidden;background:var(--panel);isolation:isolate}
+.plan-visual-head{position:relative;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+.plan-visual-head span{font:700 9px/1 var(--font);letter-spacing:.14em;color:var(--muted)}
+.plan-visual-head strong{font:600 24px/.9 var(--display);letter-spacing:-.05em;color:var(--accent)}
+.plan-visual ul{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:9px 14px;list-style:none;padding:0;margin:0;font-size:11px;line-height:1.25}
+.plan-visual li{display:flex;align-items:flex-start;gap:7px}
+.plan-visual li::before{content:'•';color:var(--accent)}
+.plan-visual-orbit{position:absolute;right:-64px;bottom:-84px;width:220px;aspect-ratio:1;border:1px solid currentColor;border-radius:50%;opacity:.34;z-index:0}
+.plan-visual-orbit i{position:absolute;left:50%;top:50%;width:135%;height:42%;border:1px solid currentColor;border-radius:50%;transform:translate(-50%,-50%) rotate(-28deg)}
+.plan-visual-orbit i:nth-child(2){width:115%;height:65%;transform:translate(-50%,-50%) rotate(35deg)}
+.plan-visual-orbit b{position:absolute;left:7%;top:43%;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+body[data-concept='editorial'][data-media='official'] .plan-visual{background:#f1edd2;color:#1a1b2c;border-radius:18px}
+body[data-concept='editorial'][data-media='official'] .plan-visual::after{content:'';position:absolute;right:18px;top:18px;width:8px;height:8px;border-radius:50%;background:#ed7709;box-shadow:0 0 0 7px rgba(237,119,9,.12)}
+body[data-concept='cosmos'][data-media='official'] .plan-visual{background:linear-gradient(145deg,#111521,#1b1530);border-color:rgba(246,241,223,.2);border-radius:18px;box-shadow:inset 0 0 45px rgba(117,87,255,.08)}
+body[data-concept='cosmos'][data-media='official'] .plan-visual-orbit{color:#8d7cff;opacity:.58;box-shadow:0 0 40px rgba(117,87,255,.24)}
+body[data-concept='brutal'][data-media='official'] .plan-visual{background:#fff;border:3px solid #111;box-shadow:8px 8px 0 #111;padding:17px 19px}
+body[data-concept='brutal'][data-media='official'] .plan-visual-head strong{text-transform:uppercase;color:#111;background:var(--accent);padding:5px 7px;border:2px solid #111}
+body[data-concept='brutal'][data-media='official'] .plan-visual ul{font-weight:700;text-transform:uppercase;font-size:10px}
+body[data-concept='luxe'][data-media='official'] .plan-visual{background:#efe0d2;border:1px solid rgba(126,40,62,.28);border-radius:90px 18px 90px 18px;padding:24px 30px}
+body[data-concept='luxe'][data-media='official'] .plan-visual-head strong{font-family:Georgia,serif;font-weight:400;color:#8d1836}
+body[data-concept='luxe'][data-media='official'] .plan-visual-orbit{color:#8d1836;opacity:.24}
+body[data-concept='swiss'][data-media='official'] .plan-visual{background:#fff;border:2px solid #101010;padding:18px 20px}
+body[data-concept='swiss'][data-media='official'] .plan-visual-head{border-bottom:2px solid #101010;padding-bottom:12px}
+body[data-concept='swiss'][data-media='official'] .plan-visual-head strong{text-transform:uppercase;color:#101010}
+body[data-concept='swiss'][data-media='official'] .plan-visual li::before{content:'→';color:#ed5a23}
 
-.contact-brand{position:relative;z-index:2;width:min(310px,62%);height:auto;margin:0 auto 20px;border-radius:14px;border:1px solid color-mix(in srgb,var(--bg) 22%,transparent)}
-body[data-concept='brutal'][data-media='official'] .contact-brand,
-body[data-concept='swiss'][data-media='official'] .contact-brand{border-radius:0}
+/* Final Sputnik signature is rebuilt natively and changes character with every concept. */
+.sputnik-signature{position:relative;z-index:2;width:min(760px,78%);margin:0 auto 30px;padding:22px 26px;grid-template-columns:120px 1fr;align-items:center;gap:22px;border:1px solid color-mix(in srgb,currentColor 30%,transparent);background:color-mix(in srgb,var(--bg) 8%,transparent);text-align:left}
+body[data-media='official'] .sputnik-signature{display:grid!important}
+.sputnik-symbol{position:relative;width:100px;height:100px;display:grid;place-items:center}
+.sputnik-symbol::after{content:'';width:13px;height:13px;border-radius:50%;background:var(--accent);position:absolute;left:44px;top:44px}
+.sputnik-symbol i{position:absolute;left:50%;top:50%;width:92px;height:3px;background:currentColor;transform-origin:center}
+.sputnik-symbol i:nth-child(1){transform:translate(-50%,-50%) rotate(0deg)}
+.sputnik-symbol i:nth-child(2){transform:translate(-50%,-50%) rotate(30deg);width:72px}
+.sputnik-symbol i:nth-child(3){transform:translate(-50%,-50%) rotate(63deg);width:102px}
+.sputnik-symbol i:nth-child(4){transform:translate(-50%,-50%) rotate(105deg);width:68px}
+.sputnik-symbol i:nth-child(5){transform:translate(-50%,-50%) rotate(142deg);width:88px}
+.sputnik-symbol i:nth-child(6){transform:translate(-50%,-50%) rotate(168deg);width:55px}
+.sputnik-word{display:flex;flex-direction:column;gap:2px}
+.sputnik-word strong{font:500 clamp(48px,6vw,88px)/.85 var(--display);letter-spacing:-.07em}
+.sputnik-word span{font-size:17px;letter-spacing:.01em;opacity:.72}
+.sputnik-meta{grid-column:1/-1;display:flex;justify-content:space-between;border-top:1px solid color-mix(in srgb,currentColor 30%,transparent);padding-top:11px;font:700 8px/1 var(--font);letter-spacing:.16em;opacity:.55}
+body[data-concept='editorial'][data-media='official'] .sputnik-signature{color:#f1edd2;background:#1a1b2c;border-color:#1a1b2c;border-radius:22px;box-shadow:0 20px 55px rgba(0,0,0,.12)}
+body[data-concept='editorial'][data-media='official'] .sputnik-word strong{font-family:Georgia,serif;font-weight:400}
+body[data-concept='cosmos'][data-media='official'] .sputnik-signature{background:radial-gradient(circle at 15% 10%,rgba(117,87,255,.35),transparent 32%),rgba(10,12,21,.8);border-color:rgba(246,241,223,.25);border-radius:18px;box-shadow:0 0 80px rgba(117,87,255,.15)}
+body[data-concept='cosmos'][data-media='official'] .sputnik-symbol{filter:drop-shadow(0 0 14px rgba(117,87,255,.65))}
+body[data-concept='brutal'][data-media='official'] .sputnik-signature{background:#fff;color:#111;border:4px solid #111;box-shadow:12px 12px 0 #111;padding:18px 22px}
+body[data-concept='brutal'][data-media='official'] .sputnik-word strong{text-transform:uppercase;-webkit-text-stroke:1px #111}
+body[data-concept='brutal'][data-media='official'] .sputnik-word span{font-weight:800;text-transform:uppercase}
+body[data-concept='luxe'][data-media='official'] .sputnik-signature{background:#ead8ca;color:#281817;border-color:#8d1836;border-radius:110px 18px 110px 18px;padding:28px 38px}
+body[data-concept='luxe'][data-media='official'] .sputnik-word strong{font-family:Georgia,serif;font-weight:400;color:#8d1836}
+body[data-concept='swiss'][data-media='official'] .sputnik-signature{background:#fff;color:#101010;border:2px solid #101010;padding:18px 20px}
+body[data-concept='swiss'][data-media='official'] .sputnik-word strong{text-transform:uppercase;font-family:Inter,sans-serif;font-weight:700;letter-spacing:-.08em}
+body[data-concept='swiss'][data-media='official'] .sputnik-word span{text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.12em}
+body[data-concept='swiss'][data-media='official'] .sputnik-meta{border-top:2px solid #101010;opacity:1}
 
-/* Photo mode gets a small brand-orange cue without flattening each theme. */
-body[data-media='official'] .brand-dot{box-shadow:0 0 0 4px color-mix(in srgb,var(--brand-orange) 18%,transparent)}
-body[data-media='official'] .section-index::after{content:' · OFFICIAL IMAGES';color:color-mix(in srgb,var(--brand-orange) 70%,var(--fg));font-size:.78em}
-
-@media(max-width:1100px){
-  :root{--section-space:96px}
-  body[data-media='official'] .plan{grid-template-columns:60px 1.15fr 1.7fr 132px;gap:16px}
-  body[data-media='official'] .plan-media{grid-column:4;width:120px;height:150px}
+@media(max-width:1180px){
+  body[data-media='official'] .plan{grid-template-columns:60px 1fr 1.3fr minmax(280px,1.2fr);gap:16px}
   body[data-media='official'] .plan a{grid-column:2/4;justify-self:start}
 }
 
@@ -124,11 +183,17 @@ body[data-media='official'] .section-index::after{content:' · OFFICIAL IMAGES';
   .concept-row::-webkit-scrollbar{display:none}
   .concept-row .concept-label{flex:0 0 46px;padding-left:6px}
   .concept-switcher .concept-row button{flex:0 0 auto!important;min-width:70px;padding-inline:10px}
-  .official-hero-img{position:relative;inset:auto;width:100%;height:auto;aspect-ratio:1140/535;margin-top:16px}
-  body[data-media='official'] .hero-art{min-height:0}
+  body[data-media='official'] .theme-lake .case-visual{padding:18px 0}
+  .taiga-progress{width:94%;min-height:270px;padding:22px}
+  .taiga-progress-value strong{font-size:clamp(110px,26vw,190px)}
   body[data-media='official'] .plan{grid-template-columns:52px 1fr;align-items:start;gap:10px 12px}
-  body[data-media='official'] .plan-media{grid-column:2;width:120px;height:150px;justify-self:start;margin-top:10px}
+  body[data-media='official'] .plan-desc{grid-column:2}
+  body[data-media='official'] .plan-visual{grid-column:2;min-height:210px;width:100%;margin-top:10px}
   body[data-media='official'] .plan a{grid-column:2;justify-self:start}
+  .sputnik-signature{width:min(680px,88%);grid-template-columns:90px 1fr;padding:18px 20px}
+  .sputnik-symbol{width:78px;height:78px}
+  .sputnik-symbol i{width:72px}
+  .sputnik-symbol::after{left:33px;top:33px}
 }
 
 @media(max-width:560px){
@@ -139,6 +204,21 @@ body[data-media='official'] .section-index::after{content:' · OFFICIAL IMAGES';
   .contact{min-height:540px}
   .concept-switcher .concept-row button{min-width:66px;font-size:9px}
   .concept-row .concept-label{flex-basis:42px}
-  body[data-media='official'] .case-visual{padding:14px 6px}
-  body[data-media='official'] .plan-media{width:112px;height:140px}
+  body[data-media='official'] .case:not(.theme-lake) .case-visual{padding:14px 6px}
+  .taiga-progress{min-height:230px;padding:18px 16px}
+  .taiga-progress-value{margin:18px 0 12px}
+  .taiga-progress-value strong{font-size:34vw}
+  .taiga-progress-head,.taiga-progress-meta{font-size:7px}
+  .taiga-progress-track{height:9px;margin:10px 0 14px}
+  .plan-visual{padding:17px 16px;min-height:230px}
+  .plan-visual ul{grid-template-columns:1fr;font-size:10px;gap:6px}
+  body[data-concept='luxe'][data-media='official'] .plan-visual{padding:22px 24px;border-radius:56px 14px 56px 14px}
+  .sputnik-signature{width:calc(100% - 28px);grid-template-columns:1fr;text-align:center;justify-items:center;gap:8px;margin-bottom:24px;padding:16px}
+  .sputnik-symbol{width:70px;height:70px}
+  .sputnik-symbol i{width:62px;height:2px}
+  .sputnik-symbol::after{left:29px;top:29px;width:11px;height:11px}
+  .sputnik-word strong{font-size:13vw}
+  .sputnik-word span{font-size:12px}
+  .sputnik-meta{width:100%;font-size:6px}
+  body[data-concept='luxe'][data-media='official'] .sputnik-signature{padding:22px;border-radius:64px 14px 64px 14px}
 }

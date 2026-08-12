@@ -91,6 +91,7 @@ try {
       assert(await page.locator('.hero-actions .primary-btn').isVisible(), 'hero project CTA must stay visible');
       assert(await page.locator('.hero-actions .secondary-btn').isVisible(), 'hero cases CTA must stay visible');
       assert(await page.locator('#contact .contact-btn').isVisible(), 'final contact CTA must render');
+      assert(await page.locator('.hero-art .planet').isVisible(), `${variant} must keep the orbit hero`);
 
       if (viewport.name === 'desktop') {
         assert(await page.locator('.header-cta').isVisible(), 'desktop header CTA must be visible');
@@ -106,17 +107,27 @@ try {
 
       if (photo) {
         const media = await inspectOfficialMedia(page);
-        assert.equal(media.length, 13, `${variant} must hydrate exactly 13 official images`);
+        assert.equal(media.length, 8, `${variant} must hydrate exactly 8 retained official images`);
         const broken = media.filter((img) => !img.complete || !img.httpOk || img.width <= 1 || img.height <= 1);
         assert.deepEqual(broken, [], `${viewport.name}/${variant} has broken official media: ${JSON.stringify(broken)}`);
         const brokenRaster = media.filter((img) => !img.src.endsWith('.svg') && (img.naturalWidth <= 0 || img.naturalHeight <= 0));
         assert.deepEqual(brokenRaster, [], `${viewport.name}/${variant} has undecodable raster media: ${JSON.stringify(brokenRaster)}`);
-        assert(await page.locator('.official-hero-img').isVisible(), `${variant} must show official hero art`);
         assert.equal(await page.locator('.official-person').count(), 3, 'three official team portraits must be present');
         assert.equal(await page.locator('.official-case-art').count(), 5, 'five official case artworks must be present');
-        assert.equal(await page.locator('.plan-media').count(), 3, 'three official tariff cards must be present');
+        assert(await page.locator('.taiga-progress').isVisible(), `${variant} must show TAIGA 99% loading art`);
+        assert.equal(await page.locator('.taiga-progress-value strong').textContent(), '99');
+        assert.equal(await page.locator('.plan-visual').count(), 3, 'three generated tariff visuals must be present');
+        for (const node of await page.locator('.plan-visual').all()) {
+          assert(await node.isVisible(), `${variant} tariff visual must be visible`);
+        }
+        assert(await page.locator('.sputnik-signature').isVisible(), `${variant} must show native Sputnik agency signature`);
+        assert.equal(await page.locator('.official-hero-img').count(), 0, 'photo hero image must be removed');
+        assert.equal(await page.locator('.plan-media').count(), 0, 'source tariff screenshots must be removed');
+        assert.equal(await page.locator('.contact-brand').count(), 0, 'source agency-mark screenshot must be removed');
       } else {
-        assert(!(await page.locator('.official-hero-img').isVisible()), `${variant} must remain a pure art-direction preview`);
+        assert(!(await page.locator('.taiga-progress').isVisible()), `${variant} must keep original TAIGA art`);
+        assert(!(await page.locator('.plan-visual').first().isVisible()), `${variant} must keep original tariff rows`);
+        assert(!(await page.locator('.sputnik-signature').isVisible()), `${variant} must keep original contact treatment`);
       }
 
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -129,7 +140,7 @@ try {
   }
 
   await browser.close();
-  console.log('RIMA browser QA: OK — 10 variants × desktop/mobile');
+  console.log('RIMA browser QA: OK — 10 variants × desktop/mobile with native photo-mode replacements');
 } finally {
   server.kill('SIGTERM');
 }
