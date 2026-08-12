@@ -23,6 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Import pinned official imagery
+        run: python scripts/import_official_assets.py
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
@@ -36,6 +41,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: rima-five-concepts
+          name: rima-ten-concepts
           path: artifacts/browser-qa
           if-no-files-found: ignore
