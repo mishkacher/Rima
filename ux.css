@@ -1,6 +1,7 @@
 /* Shared UX layer — keeps all five visual concepts usable without flattening their identity. */
 :root{--tap:44px;--header-glass:color-mix(in srgb,var(--bg) 90%,transparent)}
-html{scroll-padding-top:108px}
+html{scroll-padding-top:108px;max-width:100%;overflow-x:clip}
+body{max-width:100%;overflow-x:clip}
 #about,#work,#team,#plans,#contact{scroll-margin-top:108px}
 .site-header{position:sticky;top:0;z-index:320;background:var(--header-glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .site-header nav{align-items:center}
