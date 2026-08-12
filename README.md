@@ -1,14 +1,14 @@
-# RIMA — ten client-ready redesign variants
+# RIMA — 15 client-ready redesign variants
 
-Пять арт-дирекшенов редизайна сайта дизайн-студии RIMA и пять их ФОТО-версий на одной адаптивной странице для сравнения и презентации заказчику.
+Пять арт-дирекшенов редизайна RIMA представлены в трёх уровнях — **ART / ФОТО / АНИМАЦИЯ** — на одной адаптивной странице для сравнения и презентации заказчику.
 
 Публичный preview: https://mishkacher.github.io/Rima/
 
 Исходный публичный сайт: https://xn--h1aehhjhg.agency/
 
-## 5 × 2 концепции
+## 5 × 3 концепции
 
-Первый ряд переключателя — **ART**:
+### ART
 
 - **A · Editorial** — светлая premium/editorial подача, крупная типографика и мягкая орбитальная метафора.
 - **B · Cosmos** — тёмная digital-система с космической глубиной и технологичной типографикой.
@@ -16,67 +16,76 @@
 - **D · Luxe** — тёплая premium editorial-система с serif-типографикой, мягкими формами и бордовым акцентом.
 - **E · Swiss** — строгая швейцарская сетка, монохром и функциональная типографика.
 
-Второй ряд — **ФОТО**: те же Editorial / Cosmos / Brutal / Luxe / Swiss, где реальная фотография используется только там, где она действительно нужна, а остальные source-карточки переработаны в нативные design modules конкретного стиля.
+### ФОТО
 
-В текущей версии:
+Те же пять дизайн-систем с реальным контентом официального сайта там, где фотография действительно добавляет ценность:
 
-- hero сохраняет собственную орбитальную композицию во всех 10 вариантах;
-- `Тайга Озеро` в ФОТО-режиме показана как красивое состояние готовности **99%**;
-- реальные фото остаются у трёх членов команды;
-- пять завершённых кейсов используют официальные case artworks;
-- `Старт / Орбита / Галактика` больше не показывают исходные скриншоты: информация из них перенесена в HTML и оформлена заново для каждого из пяти стилей;
-- нижний знак `Спутник — дизайнерское агентство` также пересобран нативно под Editorial / Cosmos / Brutal / Luxe / Swiss.
+- 3 портрета команды;
+- 5 artworks опубликованных кейсов;
+- hero сохраняет собственную орбитальную композицию;
+- `Тайга Озеро` показана как состояние готовности **99% / почти готово**;
+- `Старт / Орбита / Галактика` отрисованы нативными HTML/CSS-модулями в характере каждого стиля;
+- нижний `Спутник — дизайнерское агентство` пересобран нативно под каждый концепт.
 
-Любой вариант имеет отдельную shareable-ссылку:
+### АНИМАЦИЯ
+
+Пять `*-motion` вариантов используют тот же реальный content layer, но каждый получает собственный motion language:
+
+- **Editorial Motion** — мягкий clip/reveal, спокойное движение планеты и орбит, restrained lift;
+- **Cosmos Motion** — depth, glow, orbital rotation и pointer-parallax;
+- **Brutal Motion** — короткие snap/slam transitions, stepped easing и controlled jolt;
+- **Luxe Motion** — cinematic masks, медленный serif reveal и деликатный scale;
+- **Swiss Motion** — grid-locked directional reveal, line motion и axis-based transitions.
+
+Motion layer реализован без GSAP/Framer: `transform`, `opacity`, короткие `clip-path` reveal, `IntersectionObserver` и `requestAnimationFrame`. `prefers-reduced-motion: reduce` полностью отключает декоративное движение и не оставляет контент скрытым.
+
+## Deep links
 
 - `?concept=editorial` … `?concept=swiss`
 - `?concept=editorial-photo` … `?concept=swiss-photo`
+- `?concept=editorial-motion` … `?concept=swiss-motion`
 
-## Design / color audit
+## Design / motion audit
 
-Подробный аудит находится в [`DESIGN_AUDIT.md`](DESIGN_AUDIT.md).
+- [`DESIGN_AUDIT.md`](DESIGN_AUDIT.md) — композиция, цвет, контраст, image/content strategy.
+- [`MOTION_AUDIT.md`](MOTION_AUDIT.md) — Lead Design & Motion audit и отдельный motion language для пяти направлений.
 
-Ключевые изменения:
+Общий цветовой якорь исходного бренда: `#F1EDD2`, `#1A1B2C`, `#ED7709`. При этом Editorial / Cosmos / Brutal / Luxe / Swiss остаются самостоятельными арт-дирекшенами.
 
-- сокращён избыточный вертикальный воздух между секциями;
-- контент больше не скрывается через `opacity: 0` до IntersectionObserver;
-- кейсы, команда и тарифы собраны в более плотный ритм;
-- переключатель переработан в два понятных ряда;
-- на mobile добавлен safe-area под двухрядный fixed switcher;
-- палитры сохранили пять разных характеров, но получили общий брендовый якорь исходного сайта: `#F1EDD2`, `#1A1B2C`, `#ED7709`.
+## Mobile UX
 
-## UX действий
+На desktop selector показывает три строки **ART / ФОТО / АНИМАЦИЯ**. На mobile fixed selector по умолчанию свёрнут в компактную строку, чтобы не перекрывать hero CTA. По тапу он раскрывает все 15 вариантов и после выбора снова сворачивается.
 
-Во всех десяти вариантах используется одинаковая логика действий, а визуальный характер кнопок адаптируется под выбранную дизайн-систему:
-
-- главный CTA **«Обсудить проект»** доступен в шапке и hero;
-- на мобильном CTA находится внутри компактного меню;
-- второе действие hero — **«Смотреть кейсы»**;
-- **«Все проекты»** ведёт на Behance-профиль студии;
-- карточки опубликованных кейсов кликабельны целиком;
-- CTA тарифов ведут к контактному блоку;
-- sticky-header и scroll-offset не перекрывают заголовки секций;
-- интерактивные элементы имеют tap-target, focus и hover states.
+Автоматически проверяются ширины `320 / 360 / 375 / 390 / 430 px`, safe-area, отсутствие horizontal overflow и попадание всех 15 контролов внутрь viewport.
 
 ## Официальные изображения
 
-`./scripts/import_official_assets.py` скачивает **8** выбранных публичных assets с `static.tildacdn.com` в `assets/official/` и проверяет SHA-256 каждого файла:
+`./scripts/import_official_assets.py` скачивает **8** закреплённых публичных assets с `static.tildacdn.com` в `assets/official/` и проверяет SHA-256 каждого файла:
 
 - 3 фотографии команды;
 - 5 artworks опубликованных кейсов.
 
-Hero, TAIGA 99%, тарифные карточки и нижний `Спутник` больше не импортируются как изображения — они рендерятся нативно HTML/CSS в характере выбранной дизайн-системы.
-
-GitHub Pages импортирует только нужные assets перед созданием deployment artifact, поэтому публичный preview не hotlink-ит изображения во время просмотра.
+GitHub Pages импортирует assets перед созданием deployment artifact, поэтому публичный preview не hotlink-ит изображения во время просмотра.
 
 ## Качество
 
 GitHub Actions запускает два уровня проверки:
 
-1. **Static QA** — структура, 10 вариантов, CTA/navigation contracts, color-audit anchors, 8 official asset placements, source-derived tariff copy, native photo-mode modules, accessibility states и deployment config.
-2. **Browser QA** — все 10 вариантов реально открываются в Chromium на desktop `1440×1000` и mobile `390×844`.
+1. **Static QA** — структура 15 вариантов, CTA/navigation contracts, color-audit anchors, official assets, motion lifecycle, accessibility и deployment config.
+2. **Browser QA** — 15 вариантов реально открываются в Chromium на desktop `1440×1000` и mobile `390×844`.
 
-Browser QA проверяет active state, ART/ФОТО mode, сохранение орбитального hero, TAIGA 99%, три tariff visuals, native Sputnik signature, загрузку 8 официальных изображений, мобильное меню, отсутствие JS errors и горизонтального overflow. После прогона сохраняются **20 full-page screenshots** в artifact `rima-ten-concepts`.
+Дополнительно Browser QA проверяет:
+
+- active state и deep links;
+- ART / ФОТО / АНИМАЦИЯ state machine;
+- реальную инициализацию motion variants;
+- `prefers-reduced-motion` для всех пяти motion-направлений;
+- mobile selector на `320 / 360 / 375 / 390 / 430 px`;
+- 8 official assets;
+- TAIGA 99%, три tariff visuals и native Sputnik signature;
+- отсутствие JS errors и horizontal overflow.
+
+После прогона сохраняются full-page и mobile viewport screenshots в artifact `rima-fifteen-concepts`.
 
 ## Локальный preview
 
