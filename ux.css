@@ -46,6 +46,7 @@ body[data-concept='swiss'] .header-cta,body[data-concept='swiss'] .primary-btn{b
   html{scroll-padding-top:82px}
   #about,#work,#team,#plans,#contact{scroll-margin-top:82px}
   .site-header{height:74px}
+  .header-cta{display:none}
   .site-header nav{top:74px;padding:16px;border:1px solid var(--line);border-top:0;box-shadow:0 18px 40px rgba(0,0,0,.12);gap:4px}
   .site-header nav a{display:flex;min-height:46px;align-items:center;padding:0 12px;border-radius:12px}
   .site-header nav a:not(.nav-cta):hover{background:color-mix(in srgb,var(--fg) 7%,transparent);opacity:1}
