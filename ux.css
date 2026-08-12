@@ -1,0 +1,70 @@
+/* Shared UX layer — keeps all five visual concepts usable without flattening their identity. */
+:root{--tap:44px;--header-glass:color-mix(in srgb,var(--bg) 90%,transparent)}
+html{scroll-padding-top:108px}
+#about,#work,#team,#plans,#contact{scroll-margin-top:108px}
+.site-header{position:sticky;top:0;z-index:320;background:var(--header-glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.site-header nav{align-items:center}
+.header-cta,.primary-btn,.secondary-btn,.projects-btn,.nav-cta,.plan a,.contact-btn{min-height:var(--tap);display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:transform .2s ease,opacity .2s ease,background .2s ease,color .2s ease,border-color .2s ease}
+.header-cta,.primary-btn{background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:999px;padding:13px 19px;font-weight:700}
+.header-cta{font-size:12px;padding-inline:18px}
+.header-cta:hover,.primary-btn:hover,.projects-btn:hover,.nav-cta:hover,.contact-btn:hover{opacity:1;transform:translateY(-2px)}
+.secondary-btn,.projects-btn{border:1px solid var(--line);border-radius:999px;padding:13px 18px;font-size:13px;font-weight:700;background:color-mix(in srgb,var(--bg) 76%,transparent)}
+.secondary-btn:hover,.projects-btn:hover{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+.hero-actions{gap:10px;flex-wrap:wrap;align-items:center;margin-top:34px}
+.hero-actions .primary-btn,.hero-actions .secondary-btn{min-width:170px}
+.nav-cta{display:none}
+.section-heading{gap:18px}
+.section-heading .projects-btn{justify-self:end;align-self:end}
+.case[href]{position:relative}
+.case[href]::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 0 var(--accent);pointer-events:none;transition:box-shadow .2s ease}
+.case[href]:hover::after{box-shadow:inset 0 0 0 2px var(--accent)}
+.case-arrow{display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;border:1px solid currentColor;border-radius:999px;opacity:.72;transition:transform .2s ease,opacity .2s ease}
+.case[href]:hover .case-arrow{transform:translate(2px,-2px);opacity:1}
+.plan a{padding:10px 14px;border:1px solid var(--line);border-radius:999px}
+.plan a:hover{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+.contact-btn{position:relative;z-index:2;min-width:190px}
+.concept-switcher{max-width:calc(100vw - 36px)}
+.concept-switcher button{min-height:40px}
+:where(a,button):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* Theme-aware control finishing. */
+body[data-concept='cosmos'] .header-cta,body[data-concept='cosmos'] .primary-btn{box-shadow:0 8px 28px rgba(141,92,255,.28)}
+body[data-concept='brutal'] .header-cta,body[data-concept='brutal'] .primary-btn,body[data-concept='brutal'] .secondary-btn,body[data-concept='brutal'] .projects-btn,body[data-concept='brutal'] .plan a,body[data-concept='brutal'] .case-arrow{border-radius:0;border-width:2px;box-shadow:4px 4px 0 #111}
+body[data-concept='brutal'] .header-cta,body[data-concept='brutal'] .primary-btn{color:#111}
+body[data-concept='brutal'] .header-cta:hover,body[data-concept='brutal'] .primary-btn:hover,body[data-concept='brutal'] .secondary-btn:hover,body[data-concept='brutal'] .projects-btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #111}
+body[data-concept='luxe'] .header-cta,body[data-concept='luxe'] .primary-btn,body[data-concept='luxe'] .secondary-btn,body[data-concept='luxe'] .projects-btn,body[data-concept='luxe'] .plan a{font-family:Georgia,serif;font-weight:400;letter-spacing:.01em}
+body[data-concept='luxe'] .header-cta,body[data-concept='luxe'] .primary-btn{background:#8d1836;border-color:#8d1836}
+body[data-concept='swiss'] .header-cta,body[data-concept='swiss'] .primary-btn,body[data-concept='swiss'] .secondary-btn,body[data-concept='swiss'] .projects-btn,body[data-concept='swiss'] .plan a,body[data-concept='swiss'] .case-arrow{border-radius:0;border-width:2px;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
+body[data-concept='swiss'] .header-cta,body[data-concept='swiss'] .primary-btn{background:var(--accent);color:#0a0a0a;border-color:#0a0a0a}
+
+@media(max-width:1100px){
+  .site-header nav{gap:18px}
+  .header-cta{padding-inline:14px}
+}
+@media(max-width:900px){
+  html{scroll-padding-top:82px}
+  #about,#work,#team,#plans,#contact{scroll-margin-top:82px}
+  .site-header{height:74px}
+  .site-header nav{top:74px;padding:16px;border:1px solid var(--line);border-top:0;box-shadow:0 18px 40px rgba(0,0,0,.12);gap:4px}
+  .site-header nav a{display:flex;min-height:46px;align-items:center;padding:0 12px;border-radius:12px}
+  .site-header nav a:not(.nav-cta):hover{background:color-mix(in srgb,var(--fg) 7%,transparent);opacity:1}
+  .nav-cta{display:flex!important;margin-top:8px;background:var(--accent);color:#fff!important;border:1px solid var(--accent);justify-content:center!important;font-weight:700}
+  .menu-toggle{min-width:var(--tap);min-height:var(--tap);padding:0 10px;border:1px solid var(--line)!important;border-radius:999px!important}
+  .hero-copy{padding-top:54px}
+  .hero-actions{margin-top:28px}
+  .section-heading .projects-btn{justify-self:start}
+  .concept-switcher{left:12px;right:12px;max-width:none;overflow-x:auto;justify-content:flex-start;scrollbar-width:none;padding:5px}
+  .concept-switcher::-webkit-scrollbar{display:none}
+  .concept-switcher button{flex:0 0 auto!important;padding-inline:12px}
+}
+@media(max-width:560px){
+  .hero-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:8px}
+  .hero-actions .primary-btn,.hero-actions .secondary-btn{min-width:0;width:100%;padding-inline:10px}
+  .section-heading .projects-btn{width:100%;margin-top:4px}
+  .case-bottom{gap:12px}
+  .case-bottom p{max-width:none}
+  .plan a{min-height:42px}
+  .contact-btn{width:min(100% - 40px,320px)}
+  .concept-switcher{bottom:10px}
+}
+@media(prefers-reduced-motion:reduce){.header-cta,.primary-btn,.secondary-btn,.projects-btn,.nav-cta,.plan a,.contact-btn,.case-arrow{transition:none!important}}
