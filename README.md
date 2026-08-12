@@ -1,6 +1,6 @@
 # RIMA — ten client-ready redesign variants
 
-Пять арт-дирекшенов редизайна сайта дизайн-студии RIMA и пять их image-rich версий с официальными изображениями — на одной адаптивной странице для сравнения и презентации заказчику.
+Пять арт-дирекшенов редизайна сайта дизайн-студии RIMA и пять их ФОТО-версий на одной адаптивной странице для сравнения и презентации заказчику.
 
 Публичный preview: https://mishkacher.github.io/Rima/
 
@@ -16,7 +16,16 @@
 - **D · Luxe** — тёплая premium editorial-система с serif-типографикой, мягкими формами и бордовым акцентом.
 - **E · Swiss** — строгая швейцарская сетка, монохром и функциональная типографика.
 
-Второй ряд — **ФОТО**: те же Editorial / Cosmos / Brutal / Luxe / Swiss, но с импортированным публичным контентом официального сайта: hero-art, три фотографии команды, пять опубликованных case artworks, три тарифные карточки и фирменный знак.
+Второй ряд — **ФОТО**: те же Editorial / Cosmos / Brutal / Luxe / Swiss, где реальная фотография используется только там, где она действительно нужна, а остальные source-карточки переработаны в нативные design modules конкретного стиля.
+
+В текущей версии:
+
+- hero сохраняет собственную орбитальную композицию во всех 10 вариантах;
+- `Тайга Озеро` в ФОТО-режиме показана как красивое состояние готовности **99%**;
+- реальные фото остаются у трёх членов команды;
+- пять завершённых кейсов используют официальные case artworks;
+- `Старт / Орбита / Галактика` больше не показывают исходные скриншоты: информация из них перенесена в HTML и оформлена заново для каждого из пяти стилей;
+- нижний знак `Спутник — дизайнерское агентство` также пересобран нативно под Editorial / Cosmos / Brutal / Luxe / Swiss.
 
 Любой вариант имеет отдельную shareable-ссылку:
 
@@ -51,20 +60,23 @@
 
 ## Официальные изображения
 
-`./scripts/import_official_assets.py` скачивает 13 выбранных публичных assets с `static.tildacdn.com` в `assets/official/` и **проверяет SHA-256 каждого файла**. URL и checksums закреплены в скрипте, поэтому сборка не принимает неожиданно изменившийся контент.
+`./scripts/import_official_assets.py` скачивает **8** выбранных публичных assets с `static.tildacdn.com` в `assets/official/` и проверяет SHA-256 каждого файла:
 
-Это не копирование Tilda-разметки: HTML/CSS/JS редизайна независимы, а исходные изображения используются как отдельный контентный слой только в пяти `*-photo` вариантах.
+- 3 фотографии команды;
+- 5 artworks опубликованных кейсов.
 
-GitHub Pages импортирует assets перед созданием deployment artifact, поэтому публичный preview не hotlink-ит изображения во время просмотра.
+Hero, TAIGA 99%, тарифные карточки и нижний `Спутник` больше не импортируются как изображения — они рендерятся нативно HTML/CSS в характере выбранной дизайн-системы.
+
+GitHub Pages импортирует только нужные assets перед созданием deployment artifact, поэтому публичный preview не hotlink-ит изображения во время просмотра.
 
 ## Качество
 
 GitHub Actions запускает два уровня проверки:
 
-1. **Static QA** — структура, 10 вариантов, CTA/navigation contracts, color-audit anchors, official asset placements, accessibility states и deployment config.
+1. **Static QA** — структура, 10 вариантов, CTA/navigation contracts, color-audit anchors, 8 official asset placements, source-derived tariff copy, native photo-mode modules, accessibility states и deployment config.
 2. **Browser QA** — все 10 вариантов реально открываются в Chromium на desktop `1440×1000` и mobile `390×844`.
 
-Browser QA проверяет active state, ART/ФОТО mode, видимость CTA, мобильное меню, Behance destination, загрузку 13 официальных изображений, отсутствие JS errors и горизонтального overflow. После прогона сохраняются **20 full-page screenshots** в artifact `rima-ten-concepts`.
+Browser QA проверяет active state, ART/ФОТО mode, сохранение орбитального hero, TAIGA 99%, три tariff visuals, native Sputnik signature, загрузку 8 официальных изображений, мобильное меню, отсутствие JS errors и горизонтального overflow. После прогона сохраняются **20 full-page screenshots** в artifact `rima-ten-concepts`.
 
 ## Локальный preview
 
