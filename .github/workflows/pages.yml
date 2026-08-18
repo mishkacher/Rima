@@ -37,10 +37,7 @@ jobs:
           rm -rf BAD-HABITS /tmp/bad-habits-site
           git clone --depth 1 --branch gh-pages https://github.com/MishkaStrategy/BAD-HABITS.git /tmp/bad-habits-site
           mkdir -p BAD-HABITS
-          cp /tmp/bad-habits-site/index.html BAD-HABITS/index.html
-          cp /tmp/bad-habits-site/favicon.svg BAD-HABITS/favicon.svg
-          cp -R /tmp/bad-habits-site/assets BAD-HABITS/assets
-          cp -R /tmp/bad-habits-site/images BAD-HABITS/images
+          cp -R /tmp/bad-habits-site/. BAD-HABITS/
           touch BAD-HABITS/.nojekyll
 
       - name: Configure Pages
