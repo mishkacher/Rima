@@ -1,0 +1,275 @@
+.hero-orbit {
+  overflow: visible;
+}
+
+.planet {
+  overflow: hidden;
+  box-shadow:
+    inset -30px -34px 60px rgba(127, 34, 0, 0.12),
+    0 0 70px rgba(255, 79, 0, 0.14);
+}
+
+.planet::before {
+  content: "";
+  position: absolute;
+  inset: -34%;
+  background: linear-gradient(
+    105deg,
+    transparent 32%,
+    rgba(255, 255, 255, 0.3) 48%,
+    transparent 64%
+  );
+  transform: translateX(-48%) rotate(18deg);
+  animation: planet-light 8s ease-in-out infinite;
+}
+
+.planet::after {
+  animation: planet-meridian 9s ease-in-out infinite alternate;
+}
+
+.orbit {
+  --orbit-line: rgba(23, 23, 41, 0.92);
+  border-color: var(--orbit-line);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.orbit::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border: 1px dashed rgba(23, 23, 41, 0.26);
+  border-radius: inherit;
+  animation: orbit-dash 5s linear infinite;
+}
+
+.orbit-a {
+  transform: rotate(-16deg);
+  animation: orbit-a-flight 13s linear infinite;
+}
+
+.orbit-b {
+  transform: rotate(-29deg);
+  animation: orbit-b-flight 18s linear infinite;
+}
+
+.orbit-b::before {
+  animation-direction: reverse;
+  animation-duration: 7s;
+}
+
+.orbit-c {
+  transform: rotate(28deg);
+  animation: orbit-c-flight 24s linear infinite;
+}
+
+.orbit-c::before {
+  animation-duration: 9s;
+}
+
+.orbit i {
+  width: 28px;
+  height: 10px;
+  border-radius: 2px;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 0 4px rgba(241, 237, 220, 0.95));
+  z-index: 4;
+  animation: satellite-wobble 2.8s ease-in-out infinite;
+}
+
+.orbit i::before {
+  content: "";
+  position: absolute;
+  inset: 1px 0;
+  border: 1px solid var(--navy);
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--navy) 0 30%,
+    var(--cream) 30% 43%,
+    var(--orange) 43% 57%,
+    var(--cream) 57% 70%,
+    var(--navy) 70% 100%
+  );
+}
+
+.orbit i::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 12px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--navy);
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.orbit-a i:nth-child(2) {
+  right: -2%;
+  width: 34px;
+  height: 11px;
+  animation-delay: -1.4s;
+}
+
+.orbit-b i {
+  width: 25px;
+  height: 9px;
+  animation-delay: -0.7s;
+}
+
+.orbit-c i {
+  width: 30px;
+  height: 10px;
+  animation-delay: -2.1s;
+}
+
+.portrait-orbit {
+  transform-origin: 50% 50%;
+  animation: portrait-orbit-flight 18s linear infinite;
+}
+
+.person:nth-child(2) .portrait-orbit {
+  animation-direction: reverse;
+  animation-duration: 22s;
+}
+
+.person:nth-child(3) .portrait-orbit {
+  animation-duration: 15s;
+}
+
+.portrait-orbit::after {
+  width: 20px;
+  height: 7px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    currentColor 0 32%,
+    transparent 32% 68%,
+    currentColor 68% 100%
+  );
+}
+
+.contact-orbits {
+  transform-origin: 50% 50%;
+  animation: contact-system-flight 36s linear infinite;
+}
+
+.contact-orbits i {
+  border-style: dashed;
+  animation: contact-ring-pulse 7s ease-in-out infinite alternate;
+}
+
+.contact-orbits i:nth-child(2) {
+  animation-delay: -2s;
+}
+
+.contact-orbits i:nth-child(3) {
+  animation-delay: -4s;
+}
+
+.contact-orbits b {
+  width: 30px;
+  height: 10px;
+  border: 1px solid var(--cream);
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--cream) 0 32%,
+    var(--orange) 32% 68%,
+    var(--cream) 68% 100%
+  );
+  animation: satellite-wobble 3.4s ease-in-out infinite;
+}
+
+@keyframes planet-light {
+  0%,
+  18% {
+    transform: translateX(-48%) rotate(18deg);
+  }
+  58%,
+  100% {
+    transform: translateX(48%) rotate(18deg);
+  }
+}
+
+@keyframes planet-meridian {
+  from {
+    transform: rotate(-8deg) scale(0.98);
+  }
+  to {
+    transform: rotate(13deg) scale(1.04);
+  }
+}
+
+@keyframes orbit-a-flight {
+  from {
+    transform: rotate(-16deg);
+  }
+  to {
+    transform: rotate(344deg);
+  }
+}
+
+@keyframes orbit-b-flight {
+  from {
+    transform: rotate(-29deg);
+  }
+  to {
+    transform: rotate(-389deg);
+  }
+}
+
+@keyframes orbit-c-flight {
+  from {
+    transform: rotate(28deg);
+  }
+  to {
+    transform: rotate(388deg);
+  }
+}
+
+@keyframes orbit-dash {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes satellite-wobble {
+  0%,
+  100% {
+    transform: rotate(8deg) scale(0.96);
+  }
+  50% {
+    transform: rotate(22deg) scale(1.06);
+  }
+}
+
+@keyframes portrait-orbit-flight {
+  from {
+    transform: rotate(-18deg);
+  }
+  to {
+    transform: rotate(342deg);
+  }
+}
+
+@keyframes contact-system-flight {
+  to {
+    transform: rotate(-1turn);
+  }
+}
+
+@keyframes contact-ring-pulse {
+  from {
+    opacity: 0.35;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 0.78;
+    transform: scale(1.025);
+  }
+}
