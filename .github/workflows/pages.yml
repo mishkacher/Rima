@@ -28,8 +28,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          PAGE_ID="3aa6a49b-9d47-4c74-a3dd-2a05f393004c"
+          PAGE_URL="https://www.notion.so/3aa6a49b9d474c74a3dd2a05f393004c"
           python3 - <<'PY'
-          import hashlib
           import json
           import pathlib
           import urllib.request
@@ -46,11 +47,10 @@ jobs:
               "content-type": "application/json",
               "user-agent": "Mozilla/5.0",
           }
-          response = None
-          for endpoint in (
+          for index, endpoint in enumerate((
               "https://www.notion.so/api/v3/loadCachedPageChunk",
               "https://www.notion.so/api/v3/loadPageChunk",
-          ):
+          )):
               try:
                   request = urllib.request.Request(
                       endpoint,
@@ -58,44 +58,72 @@ jobs:
                       headers=headers,
                   )
                   with urllib.request.urlopen(request, timeout=60) as stream:
-                      response = json.load(stream)
-                  break
+                      pathlib.Path(f"/tmp/notion-api-{index}.json").write_bytes(stream.read())
+              except Exception as error:
+                  pathlib.Path(f"/tmp/notion-api-{index}.error").write_text(type(error).__name__)
+          PY
+          BROWSER="$(command -v google-chrome || command -v chromium-browser || command -v chromium || true)"
+          if [ -n "$BROWSER" ]; then
+            "$BROWSER" \
+              --headless=new \
+              --no-sandbox \
+              --disable-gpu \
+              --disable-dev-shm-usage \
+              --virtual-time-budget=20000 \
+              --dump-dom "$PAGE_URL" > /tmp/notion-page.html 2>/tmp/notion-browser.log || true
+          fi
+          python3 - <<'PY'
+          import hashlib
+          import html
+          import pathlib
+          import re
+          import urllib.parse
+          import urllib.request
+
+          expected = "0c541fd8f9da246425baa58e8ac3a16d5f43ec1c2990bbe93e8631568298524e"
+          corpus = ""
+          for path in list(pathlib.Path("/tmp").glob("notion-api-*.json")) + [pathlib.Path("/tmp/notion-page.html")]:
+              if path.exists():
+                  corpus += "\n" + path.read_text(errors="ignore")
+          variants = [corpus]
+          for _ in range(3):
+              current = variants[-1]
+              variants.append(
+                  html.unescape(current)
+                  .replace("\\u002F", "/")
+                  .replace("\\u002f", "/")
+                  .replace("\\u0026", "&")
+                  .replace("\\/", "/")
+              )
+              variants.append(urllib.parse.unquote(variants[-1]))
+          urls = []
+          for value in variants:
+              urls.extend(re.findall(r"https?://[^\s<>'\"\\]+", value))
+          candidates = []
+          for url in urls:
+              url = url.rstrip("),.;]")
+              if (
+                  ".zip" in url.lower()
+                  or "prod-files-secure" in url
+                  or "notion-static.com" in url
+                  or "file.notion.so" in url
+              ):
+                  if url not in candidates:
+                      candidates.append(url)
+          headers = {"user-agent": "Mozilla/5.0"}
+          for url in candidates:
+              try:
+                  request = urllib.request.Request(url, headers=headers)
+                  with urllib.request.urlopen(request, timeout=120) as source:
+                      payload = source.read()
+                  if hashlib.sha256(payload).hexdigest() == expected:
+                      pathlib.Path("/tmp/rima-one-site.zip").write_bytes(payload)
+                      print("Verified final RIMA bundle")
+                      break
               except Exception:
                   continue
-          if response is None:
-              raise SystemExit("Could not load the temporary public bundle page")
-
-          urls = []
-          def walk(value):
-              if isinstance(value, dict):
-                  for child in value.values():
-                      walk(child)
-              elif isinstance(value, list):
-                  for child in value:
-                      walk(child)
-              elif isinstance(value, str) and value.startswith("https://"):
-                  urls.append(value)
-          walk(response)
-          candidates = [
-              url for url in urls
-              if "rima-one-site.zip" in url
-              or "prod-files-secure" in url
-              or "notion-static.com" in url
-          ]
-          if not candidates:
-              raise SystemExit("Bundle URL was not present in the public page data")
-
-          target = pathlib.Path("/tmp/rima-one-site.zip")
-          request = urllib.request.Request(
-              candidates[0], headers={"user-agent": "Mozilla/5.0"}
-          )
-          with urllib.request.urlopen(request, timeout=120) as source:
-              target.write_bytes(source.read())
-          digest = hashlib.sha256(target.read_bytes()).hexdigest()
-          expected = "0c541fd8f9da246425baa58e8ac3a16d5f43ec1c2990bbe93e8631568298524e"
-          if digest != expected:
-              raise SystemExit(f"Bundle integrity check failed: {digest}")
-          print("Verified final RIMA bundle")
+          else:
+              raise SystemExit(f"Final bundle not resolved from {len(candidates)} candidates")
           PY
           unzip -tq /tmp/rima-one-site.zip
           rm -rf rima-one-20260910
