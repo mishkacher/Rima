@@ -275,10 +275,6 @@
 }
 
 /* Plans reflow after removing the source pricing poster. */
-.pricing-art {
-  display: none !important;
-}
-
 .plans-layout {
   --plans-gap: clamp(18px, 2vw, 32px);
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -367,9 +363,4 @@
   .plan-list {
     margin-top: 54px;
   }
-}
-
-/* The manifesto section was removed from the final composition. */
-.manifesto {
-  display: none !important;
 }

@@ -1,7 +1,4 @@
 (() => {
-  document.querySelector(".pricing-art")?.remove();
-  document.querySelector(".manifesto")?.remove();
-
   if (!document.querySelector('link[href*="orbit-motion.css"]')) {
     const motionStylesheet = document.createElement("link");
     motionStylesheet.rel = "stylesheet";
