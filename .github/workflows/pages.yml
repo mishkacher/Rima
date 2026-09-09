@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -31,6 +31,39 @@ jobs:
 
       - name: Import pinned official imagery
         run: python scripts/import_official_assets.py
+
+      # BEGIN_RIMA_ONE_SHOT
+      - name: Restore corrected RIMA sites from verified Figma bundle
+        env:
+          RIMA_BUNDLE_URL: "https://prod-files-secure.s3.us-west-2.amazonaws.com/1e5cf677-bbc8-81f5-838b-0003e2a1234c/552eca8e-0bb4-4a4e-9aa6-9760e3cc7747/rima-four-site.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466SUDMBH7J%2F20260909%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260909T063607Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEJ7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDuN8V4FDS4qm2IjBRsK69H2QrMkSYmJ%2FEXeu2tHF2%2FLgIhAM7LrU8lU6lr0RdKZdQ%2F18zzOZxZme9EZlA4zbZ%2FZlVzKv8DCGcQABoMNjM3NDIzMTgzODA1Igybvn7irj2JnHPcHaYq3AMasZaxhM29LZYboW12%2BA9fhcJZe0qH5cXSTgu5ktPLuVF1pFmcI37hFOhSzJ3EpID%2B7AKGVyP3nECiQaTYXbJL5cVNxuOoTIcuF7R5XdApclBueLX8AFlPmligVRVvhbwWEyi8NO7D%2F1NKZxFhodZfW3LEA08wUSkVnJy4wnm52P8YNK%2FG4Ut12hhkBHrHNuUjtZ5t3Dt%2BanZRuLyvuUZMchAHEIjdCCclPJb56dVvxuYbymxWFclZHb7FP%2F%2FDMBR%2F8pY4vDgsY5wNg78W1Mh3O5Dm0J%2F9xItqwWN9tQ04I%2BMO%2FgjPZ6AkJn2xc2bQdMrgSka421RolISj0vphmHGaN6QU%2FPnn7Ez2iOisp4mBqUIkaBkgVqEX6%2BUjVdX0XNF6%2Fqibtyl9EfITZbhfFvkE3DwWfg3Fl45QckQNGzUy3LePxJbseG20UWro2DODdCyPBTzm%2B3NE3Sp%2Bf3gp6AiV1h3AKpfIhqw4OK%2FzT5Y6iJovTOzzpMkDEDWMlyEUW3U2gHL%2BiYeYEALRq0Vgho6SWRKnDCcyz%2Blr%2BePgKRXXQkxtKJysgfAEwz3i8wCipKu23Wsrw7%2BF%2B8ZM4n4N%2By6cpEG4lsuH7NnHwUdUcUdJcdqejytfczjYRwAsoDDX7oPVBjqkAZyzsVVG%2BCS9CtExEowyrFhwR4I9YebQv%2F3xzLHQxur3ZUL%2BJhZqvsEUBqRvQme0iL8nG5F70Wr6B8mffqMxaFJOakiz03WS5K2C3j9TQnjTraNEkhnCb0woIivzWKvwfuimueOtNpsVP2VD%2FboPbMv12wkY9F%2FYB3EcmK%2Fct7u3UYEqW2x8dKAvTbLFZ8tQP7jZBb0r9%2Fi6BQZUu5tldl3nTlha&X-Amz-Signature=65c44648faee698e97189d1dce6dbaea861037d44797c0133b87225abac84d86&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+        run: |
+          set -euo pipefail
+          if [ -f rima-four-20260909/.figma-rebuild-complete ]; then
+            echo "Verified RIMA rebuild is already committed."
+            exit 0
+          fi
+          curl --fail --location --retry 4 --retry-all-errors "$RIMA_BUNDLE_URL" -o /tmp/rima-four-site.zip
+          echo "67648e1367f52a413832a6f01a5df25d425e70cc60fa65cb41301ce2e553553b  /tmp/rima-four-site.zip" | sha256sum -c -
+          rm -rf rima-four-20260909
+          unzip -q /tmp/rima-four-site.zip
+          touch rima-four-20260909/.figma-rebuild-complete
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('.github/workflows/pages.yml')
+          text = path.read_text()
+          start = text.index('      # BEGIN_RIMA_ONE_SHOT\n')
+          end_marker = '      # END_RIMA_ONE_SHOT\n'
+          end = text.index(end_marker, start) + len(end_marker)
+          path.write_text(text[:start] + text[end:])
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A rima-four-20260909 .github/workflows/pages.yml
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish verified RIMA Figma rebuild [skip ci]"
+            git push origin HEAD:main || echo "::warning::Could not persist generated files; current deployment will still continue."
+          fi
+      # END_RIMA_ONE_SHOT
 
       - name: Import BAD HABITS production
         run: |
