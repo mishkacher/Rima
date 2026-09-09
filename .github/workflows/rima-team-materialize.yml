@@ -1,0 +1,138 @@
+name: Materialize improved RIMA team
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/rima-team-materialize.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update-team:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download enhanced portraits
+        env:
+          ASSET_URL: 'https://prod-files-secure.s3.us-west-2.amazonaws.com/1e5cf677-bbc8-81f5-838b-0003e2a1234c/9383c716-dece-47e8-a0c5-720122fc1b16/rima-team-assets.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4664JH4S4A7%2F20260909%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260909T210156Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIG8bOtAjIIPnrra9TXe3iILWZikRFfZF2fOO4GItQvRpAiBD71kuMvYkFMh%2FrHN8bfi%2B8%2BKlvVu79LYx%2Bqm8zJQTCCr%2FAwh0EAAaDDYzNzQyMzE4MzgwNSIMTNJ4qap1UOuRfP2tKtwDSsir%2BzsN0IjVKYDL5Li0R%2FUjBbB3LqotvGU6Q481SWEruq0okukvk7roUzDBgcl3ghI3Xz9IvOusKFvTAtNya0%2B%2FiDqXdOBA10FfIceEKEcuK4QnIcX69KeNfnK2uQUEt0vW9ydTEUISH%2F6pdTkDjFAFubKxFeJ8bIy0dJ67Q4ntlK2sXIcHkfIrgFFfTystcT74vDYD11%2FL8AaJJfWPsQdhVrjjasRt%2Fi1mMW6GNqklv9ke2mj%2B%2BUYkhWCZ%2FYOSAvsfhiCEV6LG2CifMG977MUvpTj9Xbk2k1Q6TEZwhfQuLtLvhF9YeolE5sBW4sdvM8U3JQhXJ3ZWeBFqiua%2BJRt1tH35mXJQfsnuvVTmz0qT9XyKMwuSYRzUiAvfH2E1wNs1veewfRVrps7spmxsv%2BqTlaCJf5QgMuiPWyDefJ%2B%2BVvx11cOiNUVje%2Bwq9O2HMji0wmVqQXfSruZhsY0cZL0GGQ1T5pXzEK1te0Zl%2BPy0rzFzkz9TO2R32zycq64dJF2JlmH30fR3xj23AquIPHSEM%2BEe7tWvuhhr%2FqqxzPRa7H5P1ct0bicfUiv3oMSfjuHayRUFjW%2B3BUlCOhIboLESdQgO0F3tbgn39mUPY78xG1JW%2BI4FraXI4jwwoeCG1QY6pgGnTRpJWP2ZeC%2FYOKQnNA9P55CJMVyEtAtFW0h5ZllcB3g%2FJ2GGmG38vSLuTQ%2FdJKiP2c7MnTma%2FFg9tIEwezS3yaN2FZQUXVHcXbLrVM2oSY1jdcj11AI6Egzt0N%2BBgAiahrMiGO7OoTsNDQTr6zp%2FxwceuESoYbutRQU6d9ZLtfmb%2BFX8JRBV5CkZ2bmO45DOBeRSNQDxEgWOmIHKGIwPRb2uKUZH&X-Amz-Signature=ca0ce81563a0a3d214ce1dea7d71d2f34512a601fd64f7801acff1315e3dac52&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject'
+        run: |
+          curl --fail --location --retry 3 "$ASSET_URL" --output /tmp/rima-team-assets.zip
+          echo "3234c54ebfe821e320b28350fae14cfce7b08045380469f5a900d13ecf7984b0  /tmp/rima-team-assets.zip" | sha256sum -c -
+          rm -rf /tmp/rima-team-assets
+          mkdir -p /tmp/rima-team-assets
+          unzip -q /tmp/rima-team-assets.zip -d /tmp/rima-team-assets
+          mkdir -p rima-one-20260910/assets
+          cp /tmp/rima-team-assets/assets/*.webp rima-one-20260910/assets/
+          test -s rima-one-20260910/assets/rimma-upscaled.webp
+          test -s rima-one-20260910/assets/vitaliy-upscaled.webp
+          test -s rima-one-20260910/assets/dasha-upscaled.webp
+          test -s rima-one-20260910/assets/mikhail-upscaled.webp
+
+      - name: Update team cards
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('rima-one-20260910')
+          index_path = root / 'index.html'
+          html = index_path.read_text()
+
+          portrait_paths = {
+              '../rima-four-20260909/assets/rimma.webp': './assets/rimma-upscaled.webp',
+              '../rima-four-20260909/assets/vitaliy.webp': './assets/vitaliy-upscaled.webp',
+              '../rima-four-20260909/assets/dasha.webp': './assets/dasha-upscaled.webp',
+          }
+          for old, new in portrait_paths.items():
+              assert html.count(old) == 1, (old, html.count(old))
+              html = html.replace(old, new, 1)
+
+          michael_card = '''            <article class="person reveal">
+              <div class="portrait midnight">
+                <span class="portrait-orbit"></span
+                ><img
+                  src="./assets/mikhail-upscaled.webp"
+                  alt="Михаил — приходит когда другие не могут"
+                  loading="lazy"
+                />
+              </div>
+              <div>
+                <span>04</span>
+                <h3>Михаил</h3>
+                <p>Приходит когда другие не могут</p>
+              </div>
+            </article>'''
+          html, card_count = re.subn(
+              r'            <article class="person more reveal">\n.*?\n            </article>',
+              michael_card,
+              html,
+              count=1,
+              flags=re.S,
+          )
+          assert card_count == 1, card_count
+          assert 'И многие другие' not in html
+          assert '+∞' not in html
+          assert html.count('class="portrait-orbit"') == 4
+          assert html.count('-upscaled.webp') == 4
+          index_path.write_text(html)
+
+          app_path = root / 'app.js'
+          app = app_path.read_text()
+          old_version = './orbit-motion.css?v=20260910-3'
+          new_version = './orbit-motion.css?v=20260910-4'
+          assert app.count(old_version) == 1
+          app_path.write_text(app.replace(old_version, new_version, 1))
+
+          motion_path = root / 'orbit-motion.css'
+          motion = motion_path.read_text()
+          anchor = '''.person:nth-child(3) .portrait-orbit {
+            animation-duration: 15s;
+          }
+          '''
+          addition = '''.person:nth-child(3) .portrait-orbit {
+            animation-duration: 15s;
+          }
+
+          .person:nth-child(4) .portrait-orbit {
+            animation-direction: reverse;
+            animation-duration: 20s;
+          }
+
+          .portrait.midnight {
+            color: var(--cream);
+            background: radial-gradient(circle at 50% 14%, #484863 0%, #25253a 60%, #191929 100%);
+          }
+
+          .person:nth-child(4) .portrait img {
+            height: 98%;
+          }
+          '''
+          assert motion.count(anchor) == 1
+          assert '.person:nth-child(4) .portrait-orbit' not in motion
+          motion_path.write_text(motion.replace(anchor, addition, 1))
+          PY
+
+      - name: Validate updated source
+        run: |
+          grep -q 'Михаил' rima-one-20260910/index.html
+          grep -q 'Приходит когда другие не могут' rima-one-20260910/index.html
+          ! grep -q 'И многие другие' rima-one-20260910/index.html
+          test "$(grep -o 'class="portrait-orbit"' rima-one-20260910/index.html | wc -l)" -eq 4
+          test "$(find rima-one-20260910/assets -maxdepth 1 -name '*-upscaled.webp' | wc -l)" -eq 4
+
+      - name: Commit team update
+        run: |
+          rm -f .github/workflows/rima-team-materialize.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rima-one-20260910/index.html rima-one-20260910/app.js rima-one-20260910/orbit-motion.css rima-one-20260910/assets/*.webp .github/workflows/rima-team-materialize.yml
+          git commit -m "Upgrade team portraits and add Mikhail"
+          git push origin HEAD:main
