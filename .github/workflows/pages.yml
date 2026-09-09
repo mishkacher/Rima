@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -23,6 +23,92 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
+      - name: Materialize final single RIMA site
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import pathlib
+          import urllib.request
+
+          page_id = "3aa6a49b-9d47-4c74-a3dd-2a05f393004c"
+          payload = {
+              "pageId": page_id,
+              "limit": 100,
+              "cursor": {"stack": []},
+              "chunkNumber": 0,
+              "verticalColumns": False,
+          }
+          headers = {
+              "content-type": "application/json",
+              "user-agent": "Mozilla/5.0",
+          }
+          response = None
+          for endpoint in (
+              "https://www.notion.so/api/v3/loadCachedPageChunk",
+              "https://www.notion.so/api/v3/loadPageChunk",
+          ):
+              try:
+                  request = urllib.request.Request(
+                      endpoint,
+                      data=json.dumps(payload).encode(),
+                      headers=headers,
+                  )
+                  with urllib.request.urlopen(request, timeout=60) as stream:
+                      response = json.load(stream)
+                  break
+              except Exception:
+                  continue
+          if response is None:
+              raise SystemExit("Could not load the temporary public bundle page")
+
+          urls = []
+          def walk(value):
+              if isinstance(value, dict):
+                  for child in value.values():
+                      walk(child)
+              elif isinstance(value, list):
+                  for child in value:
+                      walk(child)
+              elif isinstance(value, str) and value.startswith("https://"):
+                  urls.append(value)
+          walk(response)
+          candidates = [
+              url for url in urls
+              if "rima-one-site.zip" in url
+              or "prod-files-secure" in url
+              or "notion-static.com" in url
+          ]
+          if not candidates:
+              raise SystemExit("Bundle URL was not present in the public page data")
+
+          target = pathlib.Path("/tmp/rima-one-site.zip")
+          request = urllib.request.Request(
+              candidates[0], headers={"user-agent": "Mozilla/5.0"}
+          )
+          with urllib.request.urlopen(request, timeout=120) as source:
+              target.write_bytes(source.read())
+          digest = hashlib.sha256(target.read_bytes()).hexdigest()
+          expected = "0c541fd8f9da246425baa58e8ac3a16d5f43ec1c2990bbe93e8631568298524e"
+          if digest != expected:
+              raise SystemExit(f"Bundle integrity check failed: {digest}")
+          print("Verified final RIMA bundle")
+          PY
+          unzip -tq /tmp/rima-one-site.zip
+          rm -rf rima-one-20260910
+          unzip -q /tmp/rima-one-site.zip -d .
+          test -f rima-one-20260910/index.html
+          test -f rima-one-20260910/AUDIT.md
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add rima-one-20260910
+          if ! git diff --cached --quiet; then
+            git commit -m "Deploy final single RIMA site [skip ci]"
+            git push
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v6
