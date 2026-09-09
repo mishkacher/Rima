@@ -25,110 +25,19 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Materialize final single RIMA site
+        env:
+          BUNDLE_URL: "https://prod-files-secure.s3.us-west-2.amazonaws.com/1e5cf677-bbc8-81f5-838b-0003e2a1234c/34ab9836-f7b4-4a6e-8bbf-2bfb470b9bca/rima-one-direct.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466U54KODTG%2F20260909%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260909T185310Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKn%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQC0pAobdSG4iZGnG5vgFLdoF1RDlKgOJcy2l1MfP0kJjQIhAMynwVxdxyqybuiVLQIrb59S5s63XtxPhVHuF%2FhQvaCWKv8DCHIQABoMNjM3NDIzMTgzODA1IgzkG4WsfN%2FNTfXF9jkq3ANxsZPue0Sk1UfT36huqw17RlueV2V%2BqV3GXSpkGDZod%2FxGiAR2wepcSc%2Bh09R5PmBauoAnP3M%2FORpoYjmFbTlagEmaAB7%2FNdiAzeDeXPXqKPwUnN8WASLpt2MhefKn02q6JBu2h3%2FPAJmKOzPEFydK4LnEiOQIepIzpWrLrwZ7tv5lH0uLBWBjeO%2FN19Mh6wFld%2BpngLbtVtXGyUSqZ4bQ8%2FvuBbk0dVhObJw1rJ4wdgaBvI5TzAUMth2Fr1INVHEfGoQVacgEo1IrC1gkqbV9lijYUVTdh7u9pLhqtJ8ITcr4FAgDbBZAKi%2FZi0UaJoYFBCQPMK%2BjHZJbdTEdIUVnNOlicsv5JW%2B3Hbu8Rif0djh%2BBc1jYR3DtO0Q%2FkQkri3RA7kkEAxgOpU6NVy%2FckQqpHiS1NlzyGgcDN3QhLrjK8tmcrExLd39k3uFhU%2B3KtGIgWQeoS77XFOtuaOLT2%2BPxZRry25E3hpkoFPNVgSHwmxcvvNpqZsAsc2QykZ9fUrTGZmwJgoABw%2BPFyw4l%2BBE83ZBGfvJQbzYf6e%2FqFIjZ7e9gtG%2BQMeStIGtYhUUd4njRwKx5y0LtoDQlsGMKoJa0lvzKADxQpNxdIhyC8VQHTcEshNbKRlJIRZ9JDDQo4bVBjqkAVUZ%2FgAz50w%2Be1i%2BfngAsQSt7oa3CmSwsX1CQ19heemceIxHIwaK3rrhHexeN9%2BytEBHYfLcSSwzPHLbTtPThaFJXdjQc9yIR3WZ8lnobD%2BkezgMMTZh0EIxBVx%2BXlzx9vOCky%2BPEJwRRIUmCsnbWQ%2FLxtyyXwgUD71QcIQk70HxxynVHyEQ07QHZeFSj6DleriJ4YGVi0Zpm11UlPK61SlvCukF&X-Amz-Signature=b72511527a7414c614352dde400713b8c842f1106447119af0ec22c1e705620c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
         shell: bash
         run: |
           set -euo pipefail
-          PAGE_ID="3aa6a49b-9d47-4c74-a3dd-2a05f393004c"
-          PAGE_URL="https://www.notion.so/3aa6a49b9d474c74a3dd2a05f393004c"
-          python3 - <<'PY'
-          import json
-          import pathlib
-          import urllib.request
-
-          page_id = "3aa6a49b-9d47-4c74-a3dd-2a05f393004c"
-          payload = {
-              "pageId": page_id,
-              "limit": 100,
-              "cursor": {"stack": []},
-              "chunkNumber": 0,
-              "verticalColumns": False,
-          }
-          headers = {
-              "content-type": "application/json",
-              "user-agent": "Mozilla/5.0",
-          }
-          for index, endpoint in enumerate((
-              "https://www.notion.so/api/v3/loadCachedPageChunk",
-              "https://www.notion.so/api/v3/loadPageChunk",
-          )):
-              try:
-                  request = urllib.request.Request(
-                      endpoint,
-                      data=json.dumps(payload).encode(),
-                      headers=headers,
-                  )
-                  with urllib.request.urlopen(request, timeout=60) as stream:
-                      pathlib.Path(f"/tmp/notion-api-{index}.json").write_bytes(stream.read())
-              except Exception as error:
-                  pathlib.Path(f"/tmp/notion-api-{index}.error").write_text(type(error).__name__)
-          PY
-          BROWSER="$(command -v google-chrome || command -v chromium-browser || command -v chromium || true)"
-          if [ -n "$BROWSER" ]; then
-            "$BROWSER" \
-              --headless=new \
-              --no-sandbox \
-              --disable-gpu \
-              --disable-dev-shm-usage \
-              --virtual-time-budget=20000 \
-              --dump-dom "$PAGE_URL" > /tmp/notion-page.html 2>/tmp/notion-browser.log || true
-          fi
-          python3 - <<'PY'
-          import hashlib
-          import html
-          import pathlib
-          import re
-          import urllib.parse
-          import urllib.request
-
-          expected = "0c541fd8f9da246425baa58e8ac3a16d5f43ec1c2990bbe93e8631568298524e"
-          corpus = ""
-          for path in list(pathlib.Path("/tmp").glob("notion-api-*.json")) + [pathlib.Path("/tmp/notion-page.html")]:
-              if path.exists():
-                  corpus += "\n" + path.read_text(errors="ignore")
-          variants = [corpus]
-          for _ in range(3):
-              current = variants[-1]
-              variants.append(
-                  html.unescape(current)
-                  .replace("\\u002F", "/")
-                  .replace("\\u002f", "/")
-                  .replace("\\u0026", "&")
-                  .replace("\\/", "/")
-              )
-              variants.append(urllib.parse.unquote(variants[-1]))
-          urls = []
-          for value in variants:
-              urls.extend(re.findall(r"https?://[^\s<>'\"\\]+", value))
-          candidates = []
-          for url in urls:
-              url = url.rstrip("),.;]")
-              if (
-                  ".zip" in url.lower()
-                  or "prod-files-secure" in url
-                  or "notion-static.com" in url
-                  or "file.notion.so" in url
-              ):
-                  if url not in candidates:
-                      candidates.append(url)
-          headers = {"user-agent": "Mozilla/5.0"}
-          for url in candidates:
-              try:
-                  request = urllib.request.Request(url, headers=headers)
-                  with urllib.request.urlopen(request, timeout=120) as source:
-                      payload = source.read()
-                  if hashlib.sha256(payload).hexdigest() == expected:
-                      pathlib.Path("/tmp/rima-one-site.zip").write_bytes(payload)
-                      print("Verified final RIMA bundle")
-                      break
-              except Exception:
-                  continue
-          else:
-              raise SystemExit(f"Final bundle not resolved from {len(candidates)} candidates")
-          PY
-          unzip -tq /tmp/rima-one-site.zip
+          curl --fail --location --retry 3 --retry-delay 2 "$BUNDLE_URL" -o /tmp/rima-one-direct.zip
+          echo "cb3d9bc002e323572d468d999023e18a26592752bc9deda5bb53ccbed949bb1c  /tmp/rima-one-direct.zip" | sha256sum --check -
+          unzip -tq /tmp/rima-one-direct.zip
           rm -rf rima-one-20260910
-          unzip -q /tmp/rima-one-site.zip -d .
+          unzip -q /tmp/rima-one-direct.zip -d .
           test -f rima-one-20260910/index.html
+          test -f rima-one-20260910/style.css
+          test -f rima-one-20260910/app.js
           test -f rima-one-20260910/AUDIT.md
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
