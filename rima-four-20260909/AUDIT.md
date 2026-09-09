@@ -1,27 +1,41 @@
-# RIMA four variants audit
+# Аудит RIMA — 4 варианта
 
-## Scope
-- Source: user-provided Figma export ZIP for this chat
-- Folder: `rima-four-20260909/`
-- Public pages: `signal.html`, `atelier.html`, `kinetic.html`, `catalog.html`
+## Источник
 
-## Content coverage
-All four variants include the shared core content from the extracted source: proposition, studio description, services, cases, San Valero result block, team, tariffs, and contact CTA.
+Сборка пересобрана из предоставленного экспорта проекта **RIMA — Editorial Motion**. Использованы исходные тексты, композиция «Сан Валеро», визуал «Тайга & Озеро», портреты Риммы, Виталия и Даши, постер «Мифы о дизайне», тарифный постер и герой макета. CSS-заглушки используются только там, где в исходнике были типографические карточки проектов без отдельных изображений.
 
-## Grid review
-- Signal: consistent outer gutters and modular card grid.
-- Atelier: alternating editorial rows keep aligned edges.
-- Kinetic: poster modules and project rail follow one column rhythm.
-- Catalog: side index and main flow stay inside a readable desktop/mobile grid.
+## Реальные отличия четырёх направлений
 
-## Responsive and interaction review
-- Mobile menu replaces inline navigation on narrow screens.
-- Primary actions remain reachable without horizontal scrolling.
-- Motion toggle disables transitions and animations.
-- Brief form validates required fields and downloads a local text brief.
+- **Сигнал:** кремово-космическая модульная композиция; орбитальная анимация и реакция планеты на курсор.
+- **Ателье:** бордово-розовые журнальные развороты; последовательное раскрытие сцен и тарифы через `details`.
+- **Кинетика:** оранжевая плакатная система; скролл-типографика, плавающая сфера и горизонтальная лента кейсов.
+- **Каталог:** светлый системный индекс; sticky-навигация, фильтры проектов и подсветка текущего раздела.
 
-## Motion distinction
-- Signal: orbit pulse and pointer response.
-- Atelier: staged reveal for case rows.
-- Kinetic: scroll-shift headline and horizontal rail.
-- Catalog: filters and active section highlighting.
+## Инструментальная проверка
+
+Проверено Playwright в двух режимах для каждой версии:
+
+- desktop: **1440 × 1100**;
+- mobile: **390 × 844**;
+- HTTP-статус всех страниц: **200**;
+- все подключённые изображения: **загружены**;
+- горизонтальное переполнение документа: **отсутствует**;
+- ошибки браузерной консоли: **0**;
+- мобильное меню открывается и закрывается клавишей Escape;
+- переключатель движения меняет состояние;
+- `prefers-reduced-motion` отключает автоматические анимации;
+- лента «Кинетики» прокручивается кнопками;
+- фильтр «Каталога» сокращает индекс с 7 до 2 печатных проектов;
+- форма не принимает пустой бриф и выводит сообщение валидации.
+
+## Проверка сетки
+
+- **Сигнал / Кинетика / Каталог:** единая внешняя ось 20 px на desktop и 14 px на mobile.
+- **Ателье:** центрированный контейнер 1280 px с полями 80 px на desktop; 14 px на mobile.
+- У всех повторяющихся секций совпадают левые и правые оси контейнера.
+- Карточки, таблицы, тарифы и портреты переходят в одноколоночный или двухколоночный мобильный режим без выхода за viewport.
+- Отдельно исправлены переполнение горизонтальной ленты и внутренняя ширина тарифных строк в «Кинетике».
+
+## Визуальная проверка
+
+Для всех четырёх сайтов просмотрены полноразмерные desktop- и mobile-скриншоты. Проверены наложения, обрезка изображений, интервалы секций, читаемость типографики, последовательность контента и различимость направлений.

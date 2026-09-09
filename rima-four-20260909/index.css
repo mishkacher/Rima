@@ -1,0 +1,125 @@
+:root {
+  --bg: #f3eedb;
+  --ink: #171728;
+  --accent: #ff7a18;
+  --line: rgba(23, 23, 40, 0.16);
+  --max: 1400px;
+}
+.index {
+  background: #f3eedb;
+}
+.index-main {
+  padding: 50px 0 90px;
+}
+.index-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 22px;
+}
+.index h1 {
+  font-size: clamp(62px, 9vw, 150px);
+  line-height: 0.82;
+  letter-spacing: -0.075em;
+  margin: 60px 0 26px;
+  font-weight: 500;
+  max-width: 10ch;
+}
+.index-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+.index-intro p {
+  font-size: 19px;
+  max-width: 42ch;
+}
+.variant-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.variant {
+  min-height: 480px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.variant:hover {
+  transform: translateY(-6px);
+}
+.variant h2 {
+  font-size: clamp(52px, 6vw, 92px);
+  letter-spacing: -0.065em;
+  line-height: 0.9;
+  margin: 0;
+}
+.variant p {
+  max-width: 34ch;
+}
+.variant.signal-card {
+  background: #2848ee;
+  color: #fff;
+}
+.variant.atelier-card {
+  background: #5d2339;
+  color: #f6e5e4;
+  font-family: Georgia, serif;
+}
+.variant.kinetic-card {
+  background: #ff6b19;
+  color: #15151f;
+}
+.variant.catalog-card {
+  background: #f7f6f1;
+  color: #165f4d;
+}
+.variant .orb {
+  position: absolute;
+  width: 260px;
+  aspect-ratio: 1;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  right: -50px;
+  bottom: -70px;
+}
+.variant .orb::after {
+  content: "";
+  position: absolute;
+  inset: 20%;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+.source-note {
+  margin-top: 42px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+.source-note img {
+  width: 100%;
+  border: 1px solid var(--line);
+}
+@media (max-width: 800px) {
+  .variant-grid,
+  .index-intro,
+  .source-note {
+    grid-template-columns: 1fr;
+  }
+  .variant {
+    min-height: 380px;
+  }
+  .index h1 {
+    font-size: 58px;
+  }
+}

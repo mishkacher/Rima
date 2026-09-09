@@ -1,1 +1,88 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RIMA — четыре сайта</title><link rel="stylesheet" href="./styles.css"></head><body data-page="index"><main class="wrap" style="padding:48px 0 80px"><div class="chip">RIMA / 2026</div><h1 style="font-size:clamp(42px,8vw,88px);line-height:.92;letter-spacing:-.06em;margin:16px 0">Четыре независимых сайта для «Спутника»</h1><p class="lead">Все варианты собраны на одном контенте из экспортированного Figma-макета, но отличаются ритмом, композицией, анимацией и логикой просмотра.</p><div class="grid"><a class="card" href="./signal.html"><span class="chip">радиальный</span><strong style="font-size:30px;letter-spacing:-.04em">Сигнал</strong><span>Сетка с орбитальным откликом и ярким синим героем.</span></a><a class="card" href="./atelier.html"><span class="chip">редакционный</span><strong style="font-size:30px;letter-spacing:-.04em">Ателье</strong><span>Журнальная подача с мягким поэтапным раскрытием сцен.</span></a><a class="card" href="./kinetic.html"><span class="chip">постерный</span><strong style="font-size:30px;letter-spacing:-.04em">Кинетика</strong><span>Плакатная система с подвижной лентой проектов и большим словом.</span></a><a class="card" href="./catalog.html"><span class="chip">системный</span><strong style="font-size:30px;letter-spacing:-.04em">Каталог</strong><span>Версия с фильтрами, индексом разделов и спокойной навигацией.</span></a></div><p style="margin-top:22px"><a class="btn alt" href="./AUDIT.md">Открыть аудит</a></p></main></body></html>
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>RIMA — четыре сайта из Figma</title>
+    <link rel="icon" href="./favicon.svg" />
+    <link rel="stylesheet" href="./base.css" />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body class="index">
+    <main class="shell index-main">
+      <div class="index-top">
+        <strong>✣ СПУТНИК</strong><span>RIMA / 2026 / 4 направления</span>
+      </div>
+      <h1>Четыре сайта. Один полный набор контента.</h1>
+      <div class="index-intro">
+        <p>
+          В каждом варианте использованы тексты, кейсы, изображения Сан Валеро и
+          Тайги, портреты команды, тарифы и постер «Мифы о дизайне» из
+          предоставленного Figma-экспорта.
+        </p>
+        <p>
+          Различаются не только цвета: у версий разная композиция, навигационная
+          логика и система движения.
+        </p>
+      </div>
+      <div class="variant-grid">
+        <a class="variant signal-card" href="./signal/"
+          ><div>
+            <span class="badge">01 · Радиальная редактура</span>
+            <h2>Сигнал</h2>
+          </div>
+          <p>
+            Самая близкая к исходному арт-направлению: кремовый фон, тёмный
+            космос, оранжевая орбита и модульные кейсы.
+          </p>
+          <i class="orb"></i></a
+        ><a class="variant atelier-card" href="./atelier/"
+          ><div>
+            <span class="badge">02 · Журнал</span>
+            <h2>Ателье</h2>
+          </div>
+          <p>
+            Редакционный сторителлинг, реальные Figma-визуалы в коллаже,
+            чередующиеся развороты и раскрывающиеся тарифы.
+          </p>
+          <i class="orb"></i></a
+        ><a class="variant kinetic-card" href="./kinetic/"
+          ><div>
+            <span class="badge">03 · Плакат</span>
+            <h2>Кинетика</h2>
+          </div>
+          <p>
+            Оранжевая плакатная система, горизонтальная лента кейсов и
+            анимированная сцена с устройствами Сан Валеро.
+          </p>
+          <i class="orb"></i></a
+        ><a class="variant catalog-card" href="./catalog/"
+          ><div>
+            <span class="badge">04 · Индекс</span>
+            <h2>Каталог</h2>
+          </div>
+          <p>
+            Системная версия с боковой навигацией, фильтруемым индексом проектов
+            и прямыми ссылками на источники.
+          </p>
+          <i class="orb"></i
+        ></a>
+      </div>
+      <div class="source-note">
+        <img src="./assets/source-hero.webp" alt="Исходный герой Figma" />
+        <div>
+          <span class="badge">Источник</span>
+          <h2 style="font-size: 48px; letter-spacing: -0.05em">
+            Контент не заменён заглушками.
+          </h2>
+          <p>
+            В сборке сохранены реальные изображения из PDF-экспорта,
+            восстановлена прозрачность портретов и перенесены названия, роли,
+            тарифы, метрики и проектные описания.
+          </p>
+          <a class="button secondary" href="./AUDIT.md">Открыть аудит →</a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

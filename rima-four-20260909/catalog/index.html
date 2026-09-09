@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Спутник — Каталог. Системный сайт по полному контенту Figma RIMA."
+    />
+    <title>Спутник — Каталог</title>
+    <link rel="icon" href="../favicon.svg" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="../app.js" defer></script>
+  </head>
+  <body class="catalog">
+    <a class="skip" href="#about">Перейти к содержанию</a>
+    <header class="header">
+      <div class="shell header-inner">
+        <a class="brand" href="../index.html"
+          ><span class="brand-star">✣</span>СПУТНИК</a
+        ><button
+          class="menu-toggle"
+          data-menu
+          aria-expanded="false"
+          aria-controls="site-nav"
+        >
+          Меню
+        </button>
+        <nav class="nav" id="site-nav" aria-label="Основная навигация">
+          <a href="#about">О нас</a><a href="#cases">Кейсы</a
+          ><a href="#team">Команда</a><a href="#plans">Тарифы</a
+          ><button data-motion type="button">Выключить движение</button>
+        </nav>
+        <a class="button header-cta" href="#contact">Обсудить проект →</a>
+      </div>
+    </header>
+    <main class="shell catalog-layout">
+      <aside class="side-nav" aria-label="Разделы">
+        <a href="#top">Начало <span>00</span></a
+        ><a href="#about">О студии <span>01</span></a
+        ><a href="#cases">Кейсы <span>02</span></a
+        ><a href="#team">Команда <span>03</span></a
+        ><a href="#plans">Тарифы <span>04</span></a
+        ><a href="#contact">Контакт <span>05</span></a>
+      </aside>
+      <div>
+        <section class="hero" id="top">
+          <div class="catalog-hero">
+            <div class="reveal">
+              <div class="eyebrow">RIMA / Design index</div>
+              <h1>Делаем бизнес заметным.</h1>
+              <p class="lead">
+                Помогаем подготовить бизнес к встрече со своими клиентами через
+                брендинг, сайты и дизайн-системы.
+              </p>
+              <div class="hero-actions">
+                <a class="button" href="#cases">Смотреть индекс ↓</a>
+              </div>
+            </div>
+            <div class="source-grid reveal">
+              <figure class="source-tile">
+                <span class="eyebrow">Источник / hero</span
+                ><img
+                  src="../assets/source-hero.webp"
+                  alt="Герой исходного Figma-макета"
+                  loading="eager"
+                />
+              </figure>
+              <figure class="source-tile">
+                <span class="eyebrow">Кейс / Сан Валеро</span
+                ><img
+                  src="../assets/san-valero-composition.webp"
+                  alt="Сан Валеро"
+                  loading="eager"
+                />
+              </figure>
+              <figure class="source-tile portrait">
+                <span class="eyebrow">Команда / Римма</span
+                ><img src="../assets/rimma.webp" alt="Римма" loading="eager" />
+              </figure>
+              <figure class="source-tile">
+                <span class="eyebrow">Кейс / Тайга</span
+                ><img
+                  src="../assets/taiga-sharp.webp"
+                  alt="Тайга и Озеро"
+                  loading="eager"
+                />
+              </figure>
+            </div>
+          </div>
+        </section>
+        <section class="section" id="about">
+          <div class="section-heading">
+            <div class="eyebrow">01 — О студии</div>
+            <h2 class="reveal">Спутник — товарищ в пути.</h2>
+          </div>
+          <div class="catalog-about">
+            <article class="reveal">
+              <h3>Кто мы</h3>
+              <p>
+                Мы — команда талантливых специалистов, которая любит своё дело,
+                ценит качественный сервис и создаёт сильные бренды.
+              </p>
+            </article>
+            <article class="reveal">
+              <h3>Как работаем</h3>
+              <p>
+                Мы — команда профессионалов, объединённых опытом и экспертизой,
+                вниманием к деталям и сильным визуальным мышлением. Создаём
+                продуманные бренды, которые выглядят уверенно и работают на
+                бизнес.
+              </p>
+            </article>
+            <article class="reveal">
+              <h3>Зачем</h3>
+              <p>
+                Наша миссия — быть рядом с брендом на каждом этапе: закрывать
+                визуальные задачи, создавать новое, обновлять существующее,
+                помогать выглядеть красиво и целостно.
+              </p>
+            </article>
+          </div>
+          <div class="catalog-services">
+            <div>01<br /><strong>Работы под ключ</strong></div>
+            <div>02<br /><strong>Брендинг</strong></div>
+            <div>03<br /><strong>Сайты</strong></div>
+            <div>04<br /><strong>Приложения</strong></div>
+            <div>05<br /><strong>Соцсети</strong></div>
+            <div>06<br /><strong>Иное</strong></div>
+          </div>
+        </section>
+        <section class="section" id="cases">
+          <div class="section-heading">
+            <div class="eyebrow">02 — Кейсы</div>
+            <h2 class="reveal">Индекс работ.</h2>
+          </div>
+          <div class="filters" aria-label="Фильтр проектов">
+            <button class="is-active" data-filter="all">Все</button
+            ><button data-filter="web">Сайты</button
+            ><button data-filter="brand">Айдентика</button
+            ><button data-filter="print">Печать</button
+            ><button data-filter="social">Соцсети</button>
+          </div>
+          <div class="catalog-table">
+            <article class="catalog-row reveal" data-kind="web brand">
+              <span class="eyebrow">01</span>
+              <div class="catalog-thumb" style="--case: #ddd">
+                <img
+                  src="../assets/san-valero-composition.webp"
+                  alt=""
+                  loading="eager"
+                />
+              </div>
+              <div>
+                <h3>Сан Валеро</h3>
+                <p>Академия парикмахерского искусства и красоты.</p>
+              </div>
+              <span class="meta">Сайт · редизайн бренда</span
+              ><a
+                class="case-link"
+                href="https://san-valero.ru/"
+                target="_blank"
+                rel="noreferrer"
+                >Открыть ↗</a
+              >
+            </article>
+            <article class="catalog-row reveal" data-kind="web brand">
+              <span class="eyebrow">02</span>
+              <div class="catalog-thumb" style="--case: #3037ff">
+                <span>D›</span>
+              </div>
+              <div>
+                <h3>Дизайнерская</h3>
+                <p>Мастерская digital-дизайна и коллектив профессионалов.</p>
+              </div>
+              <span class="meta">Сайт · айдентика · лого</span
+              ><a
+                class="case-link"
+                href="https://www.behance.net/gallery/241910957/razrabotka-brenda-dlja-masterskoj-dizajna"
+                target="_blank"
+                rel="noreferrer"
+                >Открыть ↗</a
+              >
+            </article>
+            <article class="catalog-row reveal" data-kind="web brand">
+              <span class="eyebrow">03</span>
+              <div class="catalog-thumb" style="--case: #1c1c1c">
+                <span>SBW</span>
+              </div>
+              <div>
+                <h3>Studio Blackwork</h3>
+                <p>Мебель из металла и интерьерные решения.</p>
+              </div>
+              <span class="meta">Айдентика · лендинг</span
+              ><a
+                class="case-link"
+                href="https://www.behance.net/gallery/234539475/Landing-page-Studio-Blackwork"
+                target="_blank"
+                rel="noreferrer"
+                >Открыть ↗</a
+              >
+            </article>
+            <article class="catalog-row reveal" data-kind="web brand">
+              <span class="eyebrow">04</span>
+              <div class="catalog-thumb" style="--case: #ffe06b">
+                <span>S✦</span>
+              </div>
+              <div>
+                <h3>Sofia School</h3>
+                <p>Онлайн-школа репетиторства.</p>
+              </div>
+              <span class="meta">Сайт · айдентика</span
+              ><a
+                class="case-link"
+                href="https://www.behance.net/gallery/232474425/Website-on-Tilda-Sofia-school"
+                target="_blank"
+                rel="noreferrer"
+                >Открыть ↗</a
+              >
+            </article>
+            <article class="catalog-row reveal" data-kind="brand print">
+              <span class="eyebrow">05</span>
+              <div class="catalog-thumb" style="--case: #e7eef1">
+                <span>+ DENTAL CAD</span>
+              </div>
+              <div>
+                <h3>DentalCAD</h3>
+                <p>Клиника КТ-исследований.</p>
+              </div>
+              <span class="meta">Айдентика · печать</span
+              ><a
+                class="case-link"
+                href="https://www.behance.net/gallery/243706249/DENTAL-CAD-logotip-firmennyj-stil"
+                target="_blank"
+                rel="noreferrer"
+                >Открыть ↗</a
+              >
+            </article>
+            <article class="catalog-row reveal" data-kind="brand print social">
+              <span class="eyebrow">06</span>
+              <div class="catalog-thumb" style="--case: #f6dcd8">
+                <span>◉</span>
+              </div>
+              <div>
+                <h3>Фокус Медиа</h3>
+                <p>Современное медиа о жизни студентов.</p>
+              </div>
+              <span class="meta">Лого · айдентика · печать</span
+              ><a
+                class="case-link"
+                href="https://www.behance.net/gallery/248397223/firmennyj-stil-dlja-mediacentra"
+                target="_blank"
+                rel="noreferrer"
+                >Открыть ↗</a
+              >
+            </article>
+            <article class="catalog-row reveal" data-kind="web">
+              <span class="eyebrow">07</span>
+              <div class="catalog-thumb" style="--case: #ddd">
+                <img src="../assets/taiga-sharp.webp" alt="" loading="eager" />
+              </div>
+              <div>
+                <h3>Тайга & Озеро</h3>
+                <p>Готовность кейса — 99%.</p>
+              </div>
+              <span class="meta">Сайт · кейс в подготовке</span><span>99%</span>
+            </article>
+          </div>
+        </section>
+        <section class="section">
+          <div class="catalog-result">
+            <article class="story reveal">
+              <div class="eyebrow">Сан Валеро / Результат</div>
+              <h2>Новая аудитория и узнаваемый образ.</h2>
+              <p>
+                Благодаря обновлению визуального образа академии мы усилили
+                коммуникацию с молодой аудиторией и сделали бренд более
+                современным и узнаваемым. Мы прописали новый Tone of voice, что
+                помогло регулярно делать продающий контент. По статистике
+                Инстаграм с марта прирост новой аудитории составил 23%,
+                количество поступающих в этом году увеличилось на 4%, охваты
+                превысили 350 тыс. новых человек.
+              </p>
+            </article>
+            <div class="numbers reveal">
+              <div class="number">
+                <strong>23%</strong><span>прирост аудитории</span>
+              </div>
+              <div class="number">
+                <strong>4%</strong><span>рост поступающих</span>
+              </div>
+              <div class="number">
+                <strong>350 тыс.</strong><span>новых охватов</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section catalog-source">
+          <figure class="reveal">
+            <figcaption class="eyebrow">Исходный герой макета</figcaption>
+            <img
+              src="../assets/source-hero.webp"
+              alt="Исходный герой из Figma"
+              loading="eager"
+            />
+          </figure>
+          <figure class="reveal">
+            <figcaption class="eyebrow">Исходный постер</figcaption>
+            <img
+              src="../assets/myths-poster.webp"
+              alt="Мифы о дизайне"
+              loading="eager"
+            />
+          </figure>
+        </section>
+        <section class="section" id="team">
+          <div class="section-heading">
+            <div class="eyebrow">03 — Команда</div>
+            <h2 class="reveal">Люди за проектами.</h2>
+          </div>
+          <div class="catalog-team">
+            <article class="catalog-person reveal">
+              <div class="portrait">
+                <img
+                  class="team-img"
+                  src="../assets/rimma.webp"
+                  alt="Римма"
+                  loading="eager"
+                />
+              </div>
+              <div class="copy">
+                <h3>Римма</h3>
+                <p>Бренд-дизайнер и основатель студии</p>
+              </div>
+            </article>
+            <article class="catalog-person reveal">
+              <div class="portrait">
+                <img
+                  class="team-img"
+                  src="../assets/vitaliy.webp"
+                  alt="Виталий"
+                  loading="eager"
+                />
+              </div>
+              <div class="copy">
+                <h3>Виталий</h3>
+                <p>UX/UI-дизайнер и Tilda-разработчик</p>
+              </div>
+            </article>
+            <article class="catalog-person reveal">
+              <div class="portrait">
+                <img
+                  class="team-img"
+                  src="../assets/dasha.webp"
+                  alt="Даша"
+                  loading="eager"
+                />
+              </div>
+              <div class="copy">
+                <h3>Даша</h3>
+                <p>Digital- и графический дизайнер</p>
+              </div>
+            </article>
+            <article class="catalog-person reveal">
+              <div class="portrait more-orbit">
+                <span
+                  style="
+                    font-size: 68px;
+                    display: grid;
+                    place-items: center;
+                    height: 100%;
+                  "
+                  >+∞</span
+                >
+              </div>
+              <div class="copy">
+                <h3>И многие другие</h3>
+                <p>Подключаем сильных специалистов под задачу.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+        <section class="section" id="plans">
+          <div class="section-heading">
+            <div class="eyebrow">04 — Форматы работы</div>
+            <h2 class="reveal">Старт, Орбита, Галактика.</h2>
+          </div>
+          <div class="plan-table">
+            <article class="plan reveal">
+              <span class="eyebrow">01</span>
+              <div>
+                <h3>Старт</h3>
+                <p>Подходит, если вы — стартап или новый бизнес в нише.</p>
+              </div>
+              <p>
+                Базовая визуальная система, с которой можно развивать бренд на
+                любых площадках.
+              </p>
+              <ul>
+                <li>Логотип</li>
+                <li>Фирменный стиль</li>
+                <li>Цветовая палитра</li>
+                <li>Шрифтовая система</li>
+                <li>Графические элементы</li>
+                <li>Руководство</li>
+              </ul>
+              <strong>от 90 000 ₽</strong>
+            </article>
+            <article class="plan reveal">
+              <span class="eyebrow">02</span>
+              <div>
+                <h3>Орбита</h3>
+                <p>
+                  Подходит, если вы — малый или средний бизнес, желающий
+                  перемен.
+                </p>
+              </div>
+              <p>
+                Всё из «Старта» плюс площадка, которая расскажет и покажет вас
+                покупателю.
+              </p>
+              <ul>
+                <li>Всё из «Старт»</li>
+                <li>Сайт / лендинг под ключ</li>
+                <li>Посты-знакомства</li>
+                <li>Печатная продукция</li>
+              </ul>
+              <strong>от 150 000 ₽</strong>
+            </article>
+            <article class="plan reveal">
+              <span class="eyebrow">03</span>
+              <div>
+                <h3>Галактика</h3>
+                <p>
+                  Подходит, если вы — бизнес с опытом и потребностью в
+                  комплексной работе.
+                </p>
+              </div>
+              <p>
+                Бережём бренд на всех этапах и приводим его в порядок — от идеи
+                до каждого носителя.
+              </p>
+              <ul>
+                <li>Всё из «Орбита»</li>
+                <li>Мерчендайз</li>
+                <li>Презентации</li>
+                <li>Шаблоны для соцсетей</li>
+                <li>Долгосрочное сопровождение</li>
+              </ul>
+              <strong>от 280 000 ₽</strong>
+            </article>
+          </div>
+        </section>
+        <section class="section" id="contact">
+          <div class="catalog-contact">
+            <div>
+              <div class="eyebrow">05 — Контакт</div>
+              <h2>Расскажите о своём деле.</h2>
+              <p>
+                А мы поможем понять, с чего начать, и предложим оптимальное
+                решение.
+              </p>
+              <a
+                class="button"
+                href="mailto:mishkacher@gmail.com?subject=Спутник — проект"
+                >Написать по почте →</a
+              >
+            </div>
+            <form class="brief-form" data-brief>
+              <label
+                >Ваше имя<input
+                  name="name"
+                  placeholder="Например, Михаил" /></label
+              ><label
+                >Контакт<input
+                  name="contact"
+                  placeholder="Почта или Telegram" /></label
+              ><label
+                >Что нужно сделать<textarea
+                  name="task"
+                  placeholder="Коротко опишите задачу"
+                ></textarea></label
+              ><label
+                >Формат<input
+                  name="format"
+                  placeholder="Брендинг, сайт, сопровождение" /></label
+              ><button class="button" type="submit">Скачать бриф →</button>
+              <div class="form-status" aria-live="polite"></div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="shell footer">
+      <span>© RIMA · СПУТНИК · 2026</span><span>Каталог</span
+      ><a href="../index.html">Все четыре варианта ↑</a>
+    </footer>
+  </body>
+</html>

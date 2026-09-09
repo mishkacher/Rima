@@ -1,0 +1,410 @@
+:root {
+  --bg: #f6e5e4;
+  --ink: #54233a;
+  --accent: #ff3e92;
+  --accentInk: #fff7f2;
+  --line: rgba(84, 35, 58, 0.22);
+  --lineStrong: #54233a;
+  --max: 1280px;
+}
+.atelier {
+  background: var(--bg);
+}
+.atelier .header {
+  background: #f6e5e4;
+}
+.atelier .brand {
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+.atelier .hero {
+  padding: 72px 0 120px;
+}
+.atelier-hero {
+  display: grid;
+  grid-template-columns: 0.88fr 1.12fr;
+  gap: 44px;
+  align-items: center;
+}
+.atelier h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(58px, 7vw, 110px);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  font-weight: 400;
+  margin: 14px 0 28px;
+}
+.atelier .hero-copy {
+  padding-right: 5vw;
+}
+.collage {
+  min-height: 660px;
+  position: relative;
+}
+.collage .poster {
+  position: absolute;
+  width: 48%;
+  right: 3%;
+  top: 0;
+  transform: rotate(5deg);
+  box-shadow: 0 24px 70px rgba(84, 35, 58, 0.18);
+}
+.collage .screen {
+  position: absolute;
+  width: 68%;
+  left: 0;
+  bottom: 0;
+  transform: rotate(-4deg);
+  box-shadow: 0 24px 70px rgba(84, 35, 58, 0.22);
+}
+.collage::before {
+  content: "EDITORIAL / 01";
+  position: absolute;
+  left: 8%;
+  top: 8%;
+  font-size: 11px;
+  letter-spacing: 0.17em;
+  transform: rotate(-90deg);
+  transform-origin: left top;
+}
+.manifesto {
+  background: #54233a;
+  color: #f6e5e4;
+}
+.manifesto-layout {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 80px;
+}
+.manifesto h2 {
+  font-family: Georgia, serif;
+  font-size: clamp(52px, 7vw, 100px);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  font-weight: 400;
+  margin: 0;
+}
+.manifesto-text {
+  display: grid;
+  gap: 20px;
+  font-size: 18px;
+}
+.manifesto-quote {
+  padding-top: 40px;
+  border-top: 1px solid rgba(246, 229, 228, 0.35);
+  font-family: Georgia, serif;
+  font-size: 34px;
+  font-style: italic;
+}
+.services-editorial {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 48px;
+  border-top: 1px solid rgba(246, 229, 228, 0.35);
+  border-left: 1px solid rgba(246, 229, 228, 0.35);
+}
+.services-editorial div {
+  padding: 18px;
+  border-right: 1px solid rgba(246, 229, 228, 0.35);
+  border-bottom: 1px solid rgba(246, 229, 228, 0.35);
+}
+.editorial-cases {
+  display: grid;
+  gap: 80px;
+}
+.spread {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  min-height: 560px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.spread:nth-child(even) {
+  grid-template-columns: 0.85fr 1.15fr;
+}
+.spread:nth-child(even) .spread-copy {
+  order: 2;
+}
+.spread-visual {
+  min-height: 480px;
+  position: relative;
+  overflow: hidden;
+  background: var(--surface, #f2cbd4);
+}
+.spread-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.spread-copy {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.spread-copy h3 {
+  font-family: Georgia, serif;
+  font-size: clamp(44px, 5vw, 80px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+  margin: 10px 0 18px;
+}
+.spread-copy .desc {
+  font-size: 18px;
+  max-width: 32ch;
+}
+.spread-copy .number {
+  font-family: Georgia, serif;
+  font-size: 100px;
+  line-height: 0.8;
+  opacity: 0.13;
+}
+.mark-scene {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: clamp(80px, 12vw, 180px);
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  background: var(--scene);
+  color: var(--sceneInk, #fff);
+}
+.mini-cases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.mini-case {
+  min-height: 330px;
+  border: 1px solid var(--line);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #f9eeee;
+}
+.mini-case h3 {
+  font-family: Georgia, serif;
+  font-size: 34px;
+  font-weight: 400;
+  margin: 0;
+}
+.atelier-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #ff3e92;
+  color: #54233a;
+}
+.atelier-result .copy {
+  padding: 56px;
+}
+.atelier-result .copy h2 {
+  font-family: Georgia, serif;
+  font-size: clamp(46px, 5vw, 84px);
+  line-height: 0.94;
+  font-weight: 400;
+}
+.atelier-result .numbers {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: stretch;
+  border-left: 1px solid #54233a;
+}
+.atelier-result .number {
+  padding: 28px;
+  border-bottom: 1px solid #54233a;
+}
+.atelier-result .number strong {
+  font-family: Georgia, serif;
+  font-size: 62px;
+}
+.atelier-team {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 28px;
+}
+.atelier-person {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.atelier-person .portrait {
+  height: 430px;
+  background: #efcdd1;
+}
+.atelier-person:nth-child(2) {
+  margin-top: 100px;
+}
+.atelier-person:nth-child(3) {
+  margin-top: 40px;
+}
+.atelier-person h3 {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  font-weight: 400;
+  margin: 14px 0 4px;
+}
+.atelier-more {
+  margin-top: 48px;
+  border: 1px solid var(--line);
+  padding: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.atelier-more strong {
+  font-family: Georgia, serif;
+  font-size: 52px;
+}
+.atelier-plans {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.atelier-plans details {
+  border-bottom: 1px solid var(--line);
+}
+.atelier-plans summary {
+  list-style: none;
+  padding: 24px 0;
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  cursor: pointer;
+}
+.atelier-plans summary::-webkit-details-marker {
+  display: none;
+}
+.atelier-plans summary h3 {
+  font-family: Georgia, serif;
+  font-size: 54px;
+  font-weight: 400;
+  margin: 0;
+}
+.atelier-plans .details-body {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr 1fr;
+  gap: 32px;
+  padding: 0 0 36px 84px;
+}
+.atelier-plans ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.atelier-contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--line);
+}
+.atelier-contact .contact-copy {
+  padding: 56px;
+  background: #54233a;
+  color: #f6e5e4;
+}
+.atelier-contact h2 {
+  font-family: Georgia, serif;
+  font-size: clamp(50px, 6vw, 92px);
+  line-height: 0.92;
+  font-weight: 400;
+}
+.atelier-contact .brief-form {
+  padding: 40px;
+}
+.atelier-source {
+  display: grid;
+  grid-template-columns: 0.65fr 1.35fr;
+  gap: 28px;
+  align-items: center;
+}
+.atelier-source img {
+  width: 100%;
+  max-height: 720px;
+  object-fit: contain;
+}
+.atelier-source blockquote {
+  font-family: Georgia, serif;
+  font-size: clamp(34px, 4vw, 62px);
+  line-height: 1.04;
+  font-style: italic;
+}
+@media (max-width: 900px) {
+  .atelier-hero,
+  .manifesto-layout,
+  .spread,
+  .spread:nth-child(even),
+  .atelier-result,
+  .atelier-contact,
+  .atelier-source {
+    grid-template-columns: 1fr;
+  }
+  .collage {
+    min-height: 580px;
+  }
+  .spread:nth-child(even) .spread-copy {
+    order: initial;
+  }
+  .services-editorial,
+  .mini-cases,
+  .atelier-team {
+    grid-template-columns: 1fr 1fr;
+  }
+  .atelier-result .numbers {
+    border-left: 0;
+    border-top: 1px solid #54233a;
+  }
+  .atelier-person:nth-child(2),
+  .atelier-person:nth-child(3) {
+    margin-top: 0;
+  }
+  .atelier-plans .details-body {
+    grid-template-columns: 1fr;
+    padding-left: 84px;
+  }
+}
+@media (max-width: 600px) {
+  .atelier .hero {
+    padding-top: 44px;
+  }
+  .atelier h1 {
+    font-size: 52px;
+  }
+  .collage {
+    min-height: 460px;
+  }
+  .collage .poster {
+    width: 56%;
+  }
+  .collage .screen {
+    width: 82%;
+  }
+  .services-editorial,
+  .mini-cases,
+  .atelier-team {
+    grid-template-columns: 1fr;
+  }
+  .spread {
+    min-height: auto;
+  }
+  .spread-visual {
+    min-height: 320px;
+  }
+  .spread-copy {
+    padding: 28px 0;
+  }
+  .atelier-plans summary {
+    grid-template-columns: 34px 1fr;
+  }
+  .atelier-plans summary .price {
+    grid-column: 2;
+  }
+  .atelier-plans .details-body {
+    padding-left: 58px;
+  }
+  .atelier-contact .contact-copy,
+  .atelier-contact .brief-form {
+    padding: 32px 22px;
+  }
+}
