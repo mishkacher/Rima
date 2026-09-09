@@ -140,6 +140,20 @@
   animation-duration: 15s;
 }
 
+.person:nth-child(4) .portrait-orbit {
+  animation-direction: reverse;
+  animation-duration: 20s;
+}
+
+.portrait.midnight {
+  color: var(--cream);
+  background: radial-gradient(circle at 50% 14%, #484863 0%, #25253a 60%, #191929 100%);
+}
+
+.person:nth-child(4) .portrait img {
+  height: 98%;
+}
+
 .portrait-orbit::after {
   width: 20px;
   height: 7px;

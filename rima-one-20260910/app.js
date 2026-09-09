@@ -2,7 +2,7 @@
   if (!document.querySelector('link[href*="orbit-motion.css"]')) {
     const motionStylesheet = document.createElement("link");
     motionStylesheet.rel = "stylesheet";
-    motionStylesheet.href = "./orbit-motion.css?v=20260910-3";
+    motionStylesheet.href = "./orbit-motion.css?v=20260910-4";
     document.head.append(motionStylesheet);
   }
 
