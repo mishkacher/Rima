@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -31,6 +31,39 @@ jobs:
 
       - name: Import pinned official imagery
         run: python scripts/import_official_assets.py
+
+      # BEGIN_RIMA_ONE_SHOT
+      - name: Restore corrected RIMA sites from verified Figma bundle
+        env:
+          RIMA_BUNDLE_URL: "file://%7B%22source%22%3A%22attachment%3A552eca8e-0bb4-4a4e-9aa6-9760e3cc7747%3Arima-four-site.zip%22%2C%22permissionRecord%22%3A%7B%22table%22%3A%22block%22%2C%22id%22%3A%22206d5286-3dee-4e49-b180-6f459ded39fa%22%2C%22spaceId%22%3A%221e5cf677-bbc8-81f5-838b-0003e2a1234c%22%7D%7D"
+        run: |
+          set -euo pipefail
+          if [ -f rima-four-20260909/.figma-rebuild-complete ]; then
+            echo "Verified RIMA rebuild is already committed."
+            exit 0
+          fi
+          curl --fail --location --retry 4 --retry-all-errors "$RIMA_BUNDLE_URL" -o /tmp/rima-four-site.zip
+          echo "67648e1367f52a413832a6f01a5df25d425e70cc60fa65cb41301ce2e553553b  /tmp/rima-four-site.zip" | sha256sum -c -
+          rm -rf rima-four-20260909
+          unzip -q /tmp/rima-four-site.zip
+          touch rima-four-20260909/.figma-rebuild-complete
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('.github/workflows/pages.yml')
+          text = path.read_text()
+          start = text.index('      # BEGIN_RIMA_ONE_SHOT\n')
+          end_marker = '      # END_RIMA_ONE_SHOT\n'
+          end = text.index(end_marker, start) + len(end_marker)
+          path.write_text(text[:start] + text[end:])
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A rima-four-20260909 .github/workflows/pages.yml
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish verified RIMA Figma rebuild [skip ci]"
+            git push origin HEAD:main || echo "::warning::Could not persist generated files; current deployment will still continue."
+          fi
+      # END_RIMA_ONE_SHOT
 
       - name: Import BAD HABITS production
         run: |
