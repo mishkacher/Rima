@@ -1,10 +1,11 @@
 (() => {
   document.querySelector(".pricing-art")?.remove();
+  document.querySelector(".manifesto")?.remove();
 
   if (!document.querySelector('link[href*="orbit-motion.css"]')) {
     const motionStylesheet = document.createElement("link");
     motionStylesheet.rel = "stylesheet";
-    motionStylesheet.href = "./orbit-motion.css?v=20260910-2";
+    motionStylesheet.href = "./orbit-motion.css?v=20260910-3";
     document.head.append(motionStylesheet);
   }
 

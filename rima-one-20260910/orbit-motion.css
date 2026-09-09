@@ -368,3 +368,8 @@
     margin-top: 54px;
   }
 }
+
+/* The manifesto section was removed from the final composition. */
+.manifesto {
+  display: none !important;
+}
