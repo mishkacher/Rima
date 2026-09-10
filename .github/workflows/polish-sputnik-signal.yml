@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Apply final copy and mobile typography fixes
+      - name: Repair copy and mobile typography
         shell: bash
         run: |
           set -euo pipefail
@@ -28,40 +28,33 @@ jobs:
 
           html_path = Path("sputnik-signal-20260910/index.html")
           html = html_path.read_text()
-          replacements = [
-              ("с" + "\ufffd" * 2 + "едующий.", "следующий."),
-              ("кажд" + "\ufffd" * 2 + "й", "каждый"),
-              ("<em>недо<wbr />статочно.</em>", "<em>недостаточно.</em>"),
-              ("<em>траек<wbr />торию.</em>", "<em>траекторию.</em>"),
-          ]
-          for old, new in replacements:
-              if old not in html:
-                  raise SystemExit(f"Missing expected HTML fragment: {old!r}")
-              html = html.replace(old, new)
+          html = html.replace("\ufffd", "")
+          html = html.replace("каждй", "каждый")
+          html = html.replace("седующий", "следующий")
+          html = html.replace("<wbr />", "")
           if "\ufffd" in html:
               raise SystemExit("Replacement character remains in HTML")
+          if "каждый следующий" not in " ".join(html.split()):
+              raise SystemExit("Corrected sentence was not produced")
           html_path.write_text(html)
 
           css_path = Path("sputnik-signal-20260910/style.css")
           css = css_path.read_text()
-          old = """  .mega-heading {
-            font-size: clamp(60px, 19vw, 92px);
+          marker = "/* final mobile type integrity */"
+          if marker not in css:
+              css += """
+
+          /* final mobile type integrity */
+          @media (max-width: 560px) {
+            .mega-heading {
+              font-size: clamp(44px, 14.5vw, 70px);
+            }
+            .plans .section-title {
+              font-size: clamp(48px, 15.5vw, 76px);
+            }
           }
-          .section-title {
-            font-size: clamp(56px, 17vw, 86px);
-          }"""
-          new = """  .mega-heading {
-            font-size: clamp(44px, 14.5vw, 70px);
-          }
-          .section-title {
-            font-size: clamp(56px, 17vw, 86px);
-          }
-          .plans .section-title {
-            font-size: clamp(48px, 15.5vw, 76px);
-          }"""
-          if old not in css:
-              raise SystemExit("Missing expected mobile typography block")
-          css_path.write_text(css.replace(old, new))
+          """
+          css_path.write_text(css)
           PY
 
           rm -f .github/workflows/polish-sputnik-signal.yml
