@@ -1,0 +1,72 @@
+name: Polish Sputnik Signal site
+
+"on":
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/polish-sputnik-signal.yml
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply final copy and mobile typography fixes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          html_path = Path("sputnik-signal-20260910/index.html")
+          html = html_path.read_text()
+          replacements = [
+              ("с" + "\ufffd" * 2 + "едующий.", "следующий."),
+              ("кажд" + "\ufffd" * 2 + "й", "каждый"),
+              ("<em>недо<wbr />статочно.</em>", "<em>недостаточно.</em>"),
+              ("<em>траек<wbr />торию.</em>", "<em>траекторию.</em>"),
+          ]
+          for old, new in replacements:
+              if old not in html:
+                  raise SystemExit(f"Missing expected HTML fragment: {old!r}")
+              html = html.replace(old, new)
+          if "\ufffd" in html:
+              raise SystemExit("Replacement character remains in HTML")
+          html_path.write_text(html)
+
+          css_path = Path("sputnik-signal-20260910/style.css")
+          css = css_path.read_text()
+          old = """  .mega-heading {
+            font-size: clamp(60px, 19vw, 92px);
+          }
+          .section-title {
+            font-size: clamp(56px, 17vw, 86px);
+          }"""
+          new = """  .mega-heading {
+            font-size: clamp(44px, 14.5vw, 70px);
+          }
+          .section-title {
+            font-size: clamp(56px, 17vw, 86px);
+          }
+          .plans .section-title {
+            font-size: clamp(48px, 15.5vw, 76px);
+          }"""
+          if old not in css:
+              raise SystemExit("Missing expected mobile typography block")
+          css_path.write_text(css.replace(old, new))
+          PY
+
+          rm -f .github/workflows/polish-sputnik-signal.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "Fix Sputnik Signal copy and mobile type"
+          git push
