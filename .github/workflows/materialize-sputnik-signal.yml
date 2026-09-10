@@ -1,0 +1,39 @@
+name: Materialize Sputnik Signal site
+
+"on":
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/materialize-sputnik-signal.yml
+      - .sputnik-signal-payload.part-*
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Materialize audited site
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .sputnik-signal-payload.part-* | base64 --decode > /tmp/sputnik-signal.tar.gz
+          test "$(sha256sum /tmp/sputnik-signal.tar.gz | cut -d' ' -f1)" = "18ea9323df8443e05149d5447ff5f3cee0515b5139b47b819244e0c75b6783b4"
+          rm -rf sputnik-signal-20260910
+          tar -xzf /tmp/sputnik-signal.tar.gz
+          test -f sputnik-signal-20260910/index.html
+          test -f sputnik-signal-20260910/AUDIT.md
+          rm -f .sputnik-signal-payload.part-*
+          rm -f .github/workflows/materialize-sputnik-signal.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "Create standalone Sputnik Signal site"
+          git push
