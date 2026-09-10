@@ -2398,3 +2398,14 @@ canvas {
     transform: none !important;
   }
 }
+
+
+/* final mobile type integrity */
+@media (max-width: 560px) {
+  .mega-heading {
+    font-size: clamp(44px, 14.5vw, 70px);
+  }
+  .plans .section-title {
+    font-size: clamp(48px, 15.5vw, 76px);
+  }
+}
