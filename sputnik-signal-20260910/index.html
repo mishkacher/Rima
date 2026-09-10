@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Спутник — дизайн-бюро, которое настраивает притяжение между бизнесом и людьми. Брендинг, сайты и дизайн-системы."
+    />
+    <meta name="theme-color" content="#0c0c12" />
+    <title>Спутник — дизайн с гравитацией</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">К содержанию</a>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+    <header class="site-header" data-header>
+      <a class="brand magnetic" href="#top" aria-label="Спутник — наверх">
+        <svg viewBox="0 0 44 44" aria-hidden="true">
+          <circle cx="22" cy="22" r="6"></circle>
+          <ellipse
+            cx="22"
+            cy="22"
+            rx="19"
+            ry="8"
+            transform="rotate(-24 22 22)"
+          ></ellipse>
+          <circle class="brand-dot" cx="38" cy="14" r="2.5"></circle>
+        </svg>
+        <span>СПУТНИК</span>
+      </a>
+      <p class="header-coordinate">55°02′ N / 82°55′ E</p>
+      <nav class="desktop-nav" aria-label="Основная навигация">
+        <a href="#approach" data-nav="approach">Подход</a>
+        <a href="#capabilities" data-nav="capabilities">Возможности</a>
+        <a href="#process" data-nav="process">Маршрут</a>
+        <a href="#contact" data-nav="contact">Связь</a>
+      </nav>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span><span></span><span class="sr-only">Открыть меню</span>
+      </button>
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <a href="#approach">Подход</a>
+        <a href="#capabilities">Возможности</a>
+        <a href="#signals">Сигналы</a>
+        <a href="#process">Маршрут</a>
+        <a href="#contact">Связь</a>
+        <p>Дизайн-бюро полного цикла<br />Работаем из Сибири — везде</p>
+      </div>
+    </header>
+
+    <main id="content">
+      <section class="hero" id="top" data-section="top">
+        <canvas id="gravity-field" aria-hidden="true"></canvas>
+        <div class="hero-grid shell">
+          <p class="eyebrow reveal">ДИЗАЙН-БЮРО / СИБИРЬ / 2026</p>
+          <p class="hero-index reveal">МОДУЛЬ 001<br />СИГНАЛ СТАБИЛЬНЫЙ</p>
+
+          <h1 class="hero-title" aria-label="Спутник">
+            <span class="title-row title-row-a" data-scramble="СПУТ">СПУТ</span>
+            <span class="title-row title-row-b" data-scramble="НИК">НИК</span>
+          </h1>
+
+          <div class="hero-copy reveal">
+            <p>
+              Не просто делаем дизайн.<br />
+              <strong>Настраиваем притяжение</strong><br />
+              между бизнесом и людьми.
+            </p>
+            <a class="signal-button magnetic" href="#contact">
+              <span>Выйти на связь</span>
+              <i aria-hidden="true">↗</i>
+            </a>
+          </div>
+
+          <div class="hero-system" data-orbit-system aria-hidden="true">
+            <div class="system-ring ring-a"></div>
+            <div class="system-ring ring-b"></div>
+            <div class="system-ring ring-c"></div>
+            <div class="system-core"><span>С</span></div>
+            <i class="system-satellite sat-a"></i>
+            <i class="system-satellite sat-b"></i>
+            <div class="system-readout">GRAVITY<br />ACTIVE</div>
+          </div>
+
+          <div class="hero-footer reveal">
+            <span>Брендинг</span><span>Сайты</span><span>Интерфейсы</span
+            ><span>Системы</span>
+          </div>
+          <a class="scroll-cue" href="#approach"
+            ><span>Прокрутить</span><i>↓</i></a
+          >
+        </div>
+      </section>
+
+      <div class="signal-tape" aria-label="Направления работы">
+        <div class="signal-tape-track">
+          <span>СТРАТЕГИЯ</span><i>✦</i><span>АЙДЕНТИКА</span><i>✦</i
+          ><span>САЙТЫ</span><i>✦</i><span>ДИЗАЙН-СИСТЕМЫ</span><i>✦</i
+          ><span>КОНТЕНТ</span><i>✦</i><span>СТРАТЕГИЯ</span><i>✦</i
+          ><span>АЙДЕНТИКА</span><i>✦</i><span>САЙТЫ</span><i>✦</i
+          ><span>ДИЗАЙН-СИСТЕМЫ</span><i>✦</i><span>КОНТЕНТ</span><i>✦</i>
+        </div>
+      </div>
+
+      <section class="approach section" id="approach" data-section="approach">
+        <div class="shell approach-grid">
+          <p class="section-code reveal">01 / ПРИТЯЖЕНИЕ</p>
+          <h2 class="mega-heading reveal">
+            Красивого<br />
+            <em>недо<wbr />статочно.</em>
+          </h2>
+          <div class="approach-copy reveal">
+            <p class="lead">
+              Дизайн должен не украшать бизнес, а менять его траекторию: делать
+              понятнее, заметнее и ближе к тем, ради кого он существует.
+            </p>
+            <p>
+              Мы собираем смысл, голос, визуальный язык и цифровой опыт в одну
+              систему. Она узнаваема с первого контакта и выдерживает каждый
+              с��едующий.
+            </p>
+          </div>
+          <blockquote class="gravity-quote reveal">
+            <span>«</span>
+            <p>
+              Хороший бренд не просит внимания.<br />Он создаёт собственную
+              гравитацию.
+            </p>
+            <small>ПРИНЦИП СПУТНИКА / 01</small>
+          </blockquote>
+          <div class="approach-metric reveal">
+            <b data-count="360">000</b><sup>°</sup>
+            <p>видим весь путь бренда,<br />а не отдельный макет</p>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="capabilities section"
+        id="capabilities"
+        data-section="capabilities"
+      >
+        <div class="shell">
+          <div class="section-intro">
+            <p class="section-code reveal">02 / ВОЗМОЖНОСТИ</p>
+            <h2 class="section-title reveal">
+              Собираем систему.<br /><em>Не набор файлов.</em>
+            </h2>
+            <p class="section-note reveal">
+              Подключаем ровно те модули, которые двигают задачу.
+            </p>
+          </div>
+
+          <div class="capability-grid">
+            <article class="capability-card card-acid reveal" data-tilt>
+              <header><span>01</span><i>↗</i></header>
+              <div class="card-glyph glyph-identity" aria-hidden="true">
+                <b>С</b><span></span><span></span><span></span>
+              </div>
+              <h3>Айдентика</h3>
+              <p>
+                Стратегия, характер, логотип и визуальный язык, который
+                невозможно спутать.
+              </p>
+              <ul>
+                <li>Позиционирование</li>
+                <li>Логотип</li>
+                <li>Фирменный стиль</li>
+              </ul>
+            </article>
+
+            <article class="capability-card card-cobalt reveal" data-tilt>
+              <header><span>02</span><i>↗</i></header>
+              <div class="card-glyph glyph-interface" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><b>+</b>
+              </div>
+              <h3>Цифровой опыт</h3>
+              <p>
+                Сайты и интерфейсы, которые ведут человека по короткой и ясной
+                траектории.
+              </p>
+              <ul>
+                <li>UX / UI</li>
+                <li>Разработка</li>
+                <li>Анимация</li>
+              </ul>
+            </article>
+
+            <article class="capability-card card-ivory reveal" data-tilt>
+              <header><span>03</span><i>↗</i></header>
+              <div class="card-glyph glyph-system" aria-hidden="true">
+                <span>А</span><span>Б</span><span>В</span><span>Г</span><i></i>
+              </div>
+              <h3>Дизайн-система</h3>
+              <p>
+                Правила и компоненты, которые сохраняют качество, когда бренд
+                растёт.
+              </p>
+              <ul>
+                <li>Компоненты</li>
+                <li>Гайдлайны</li>
+                <li>Масштабирование</li>
+              </ul>
+            </article>
+
+            <article class="capability-card card-orange reveal" data-tilt>
+              <header><span>04</span><i>↗</i></header>
+              <div class="card-glyph glyph-signal" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <h3>Контент</h3>
+              <p>
+                Голос и визуальные форматы, благодаря которым бренд остаётся в
+                эфире.
+              </p>
+              <ul>
+                <li>Tone of voice</li>
+                <li>Соцсети</li>
+                <li>Кампании</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="signals section" id="signals" data-section="signals">
+        <div class="shell">
+          <div class="section-intro signals-intro">
+            <p class="section-code reveal">03 / СИГНАЛЫ</p>
+            <h2 class="section-title reveal">
+              Три способа<br /><em>стать заметнее.</em>
+            </h2>
+            <p class="section-note reveal">
+              Не кейсы-картинки, а модели результата.
+            </p>
+          </div>
+
+          <div class="signal-stack">
+            <article class="signal-card reveal">
+              <div class="signal-meta">
+                <span>СИГНАЛ 01</span><span>БРЕНД / ЗАПУСК</span>
+              </div>
+              <div class="signal-content">
+                <h3>Узнают<br />до логотипа.</h3>
+                <p>
+                  Настраиваем характер и голос так, чтобы бренд считывался в
+                  любом формате.
+                </p>
+              </div>
+              <div class="signal-visual visual-a" aria-hidden="true">
+                <div class="letter-orbit"><b>С</b><i></i><i></i><i></i></div>
+                <span class="visual-label">IDENTITY FIELD</span>
+              </div>
+              <footer>
+                <span>СТРАТЕГИЯ</span><span>АЙДЕНТИКА</span><span>ТОН</span>
+              </footer>
+            </article>
+
+            <article class="signal-card reveal">
+              <div class="signal-meta">
+                <span>СИГНАЛ 02</span><span>DIGITAL / КОНВЕРСИЯ</span>
+              </div>
+              <div class="signal-content">
+                <h3>Понимают<br />без инструкции.</h3>
+                <p>
+                  Строим маршрут, где каждое действие логично, а интерфейс не
+                  мешает решению.
+                </p>
+              </div>
+              <div class="signal-visual visual-b" aria-hidden="true">
+                <svg viewBox="0 0 620 320">
+                  <path
+                    class="route-shadow"
+                    d="M20 262 C112 50 212 320 302 132 C395 -60 465 300 602 42"
+                  ></path>
+                  <path
+                    class="route-line"
+                    d="M20 262 C112 50 212 320 302 132 C395 -60 465 300 602 42"
+                  ></path>
+                  <circle cx="20" cy="262" r="7"></circle>
+                  <circle cx="302" cy="132" r="7"></circle>
+                  <circle cx="602" cy="42" r="7"></circle>
+                </svg>
+                <span class="visual-label">USER TRAJECTORY</span>
+              </div>
+              <footer>
+                <span>UX</span><span>UI</span><span>РАЗРАБОТКА</span>
+              </footer>
+            </article>
+
+            <article class="signal-card reveal">
+              <div class="signal-meta">
+                <span>СИГНАЛ 03</span><span>СИСТЕМА / РОСТ</span>
+              </div>
+              <div class="signal-content">
+                <h3>Растут<br />без хаоса.</h3>
+                <p>
+                  Создаём живую систему, в которой команда быстро делает новое и
+                  не теряет себя.
+                </p>
+              </div>
+              <div class="signal-visual visual-c" aria-hidden="true">
+                <div class="module-grid">
+                  <span>01</span><span>02</span><span>03</span><span>04</span
+                  ><span>05</span><span>06</span><span>07</span><span>08</span
+                  ><span>09</span>
+                </div>
+                <span class="visual-label">SCALABLE SYSTEM</span>
+              </div>
+              <footer>
+                <span>ТОКЕНЫ</span><span>КОМПОНЕНТЫ</span><span>ГАЙД</span>
+              </footer>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="process section" id="process" data-section="process">
+        <div class="shell process-layout">
+          <div class="process-sticky">
+            <p class="section-code reveal">04 / МАРШРУТ</p>
+            <h2 class="section-title reveal">Четыре<br /><em>манёвра.</em></h2>
+            <div class="route-dial reveal" data-route-dial aria-hidden="true">
+              <span class="dial-ring"></span><span class="dial-ring"></span
+              ><span class="dial-ring"></span> <b>01</b><i></i>
+            </div>
+          </div>
+          <ol class="process-list">
+            <li class="process-step reveal" data-step="01">
+              <span>01</span>
+              <div>
+                <h3>Поймать сигнал</h3>
+                <p>
+                  Разбираемся в бизнесе, людях и контексте. Находим настоящую
+                  задачу за формулировкой.
+                </p>
+              </div>
+              <small>ИССЛЕДОВАНИЕ / ФОКУС</small>
+            </li>
+            <li class="process-step reveal" data-step="02">
+              <span>02</span>
+              <div>
+                <h3>Рассчитать курс</h3>
+                <p>
+                  Формулируем идею и критерии успеха. Договариваемся, куда летим
+                  и зачем.
+                </p>
+              </div>
+              <small>СТРАТЕГИЯ / КОНЦЕПТ</small>
+            </li>
+            <li class="process-step reveal" data-step="03">
+              <span>03</span>
+              <div>
+                <h3>Собрать аппарат</h3>
+                <p>
+                  Проектируем систему, проверяем её в реальных сценариях и
+                  доводим каждую деталь.
+                </p>
+              </div>
+              <small>ДИЗАЙН / ПРОТОТИП</small>
+            </li>
+            <li class="process-step reveal" data-step="04">
+              <span>04</span>
+              <div>
+                <h3>Остаться на орбите</h3>
+                <p>
+                  Запускаем, передаём инструменты команде и остаёмся рядом для
+                  следующего витка.
+                </p>
+              </div>
+              <small>ЗАПУСК / ПОДДЕРЖКА</small>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="crew section" aria-labelledby="crew-title">
+        <div class="shell crew-grid">
+          <p class="section-code reveal">05 / ЭКИПАЖ</p>
+          <h2 class="crew-title reveal" id="crew-title">
+            Не штат.<br /><em>Созвездие.</em>
+          </h2>
+          <p class="crew-lead reveal">
+            Под задачу собирается точная конфигурация специалистов. Без лишних
+            звеньев и потерянных сообщений.
+          </p>
+          <div class="crew-map reveal" aria-hidden="true">
+            <span class="crew-node node-a"><i></i><b>СТРАТЕГ</b></span>
+            <span class="crew-node node-b"><i></i><b>ДИЗАЙНЕР</b></span>
+            <span class="crew-node node-c"><i></i><b>РАЗРАБОТЧИК</b></span>
+            <span class="crew-node node-d"><i></i><b>РЕДАКТОР</b></span>
+            <span class="crew-node node-core"><i>С</i><b>СПУТНИК</b></span>
+            <svg viewBox="0 0 800 520">
+              <path
+                d="M110 110 Q390 20 670 120 T685 410 Q400 500 105 405 T110 110"
+              ></path>
+              <path d="M118 410 Q385 50 680 410"></path>
+            </svg>
+          </div>
+          <div class="crew-fact reveal">
+            <b>1</b><span>ответственный<br />за весь маршрут</span>
+          </div>
+          <div class="crew-fact reveal">
+            <b>0</b><span>случайных<br />исполнителей</span>
+          </div>
+          <div class="crew-fact reveal">
+            <b>∞</b><span>масштаб<br />под задачу</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="plans section" aria-labelledby="plans-title">
+        <div class="shell">
+          <div class="section-intro">
+            <p class="section-code reveal">06 / ФОРМАТЫ</p>
+            <h2 class="section-title reveal" id="plans-title">
+              Выберите<br /><em>траек<wbr />торию.</em>
+            </h2>
+            <p class="section-note reveal">
+              Стоимость уточняется после короткой диагностики задачи.
+            </p>
+          </div>
+          <div class="plan-grid">
+            <article class="plan-card reveal">
+              <div class="plan-orbit" aria-hidden="true"><i></i></div>
+              <span>01 / ИМПУЛЬС</span>
+              <h3>Запуск</h3>
+              <b>от 90 000 ₽</b>
+              <p>Сильная точка старта для нового продукта или бизнеса.</p>
+              <ul>
+                <li>Стратегический фокус</li>
+                <li>Айдентика</li>
+                <li>Базовый гайд</li>
+              </ul>
+              <a href="#contact">Обсудить ↗</a>
+            </article>
+            <article class="plan-card plan-featured reveal">
+              <div class="plan-orbit" aria-hidden="true"><i></i></div>
+              <span>02 / ОРБИТА</span>
+              <h3>Система</h3>
+              <b>от 180 000 ₽</b>
+              <p>Бренд и цифровая площадка, работающие как одно целое.</p>
+              <ul>
+                <li>Всё из «Запуска»</li>
+                <li>Сайт или интерфейс</li>
+                <li>Контент-система</li>
+              </ul>
+              <a href="#contact">Обсудить ↗</a>
+            </article>
+            <article class="plan-card reveal">
+              <div class="plan-orbit" aria-hidden="true"><i></i></div>
+              <span>03 / ГРАВИТАЦИЯ</span>
+              <h3>Партнёрство</h3>
+              <b>по запросу</b>
+              <p>Долгая работа с брендом, который постоянно развивается.</p>
+              <ul>
+                <li>Дизайн-направление</li>
+                <li>Регулярные запуски</li>
+                <li>Поддержка команды</li>
+              </ul>
+              <a href="#contact">Обсудить ↗</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact section" id="contact" data-section="contact">
+        <canvas id="contact-field" aria-hidden="true"></canvas>
+        <div class="shell contact-grid">
+          <p class="section-code reveal">07 / КАНАЛ ОТКРЫТ</p>
+          <h2 class="contact-title reveal">
+            Запустим<br /><em>что-то сильное?</em>
+          </h2>
+          <p class="contact-lead reveal">
+            Опишите задачу несколькими словами. Ответим, зададим правильные
+            вопросы и предложим первый манёвр.
+          </p>
+          <form class="contact-form reveal" data-contact-form novalidate>
+            <label
+              ><span>Как к вам обращаться</span
+              ><input
+                name="name"
+                autocomplete="name"
+                required
+                placeholder="Имя"
+            /></label>
+            <label
+              ><span>Где ответить</span
+              ><input
+                name="contact"
+                autocomplete="email"
+                required
+                placeholder="Почта или Telegram"
+            /></label>
+            <label class="wide"
+              ><span>Что нужно запустить</span
+              ><textarea
+                name="brief"
+                required
+                rows="4"
+                placeholder="Расскажите о задаче"
+              ></textarea>
+            </label>
+            <label class="consent wide"
+              ><input type="checkbox" name="consent" required /><i></i
+              ><span>Согласен на обработку данных</span></label
+            >
+            <div class="form-actions wide">
+              <button class="signal-button magnetic" type="submit">
+                <span>Подготовить сигнал</span><i>↗</i></button
+              ><button class="copy-brief" type="button" hidden>
+                Скопировать бриф
+              </button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <a class="brand" href="#top"
+          ><svg viewBox="0 0 44 44" aria-hidden="true">
+            <circle cx="22" cy="22" r="6"></circle>
+            <ellipse
+              cx="22"
+              cy="22"
+              rx="19"
+              ry="8"
+              transform="rotate(-24 22 22)"
+            ></ellipse></svg
+          ><span>СПУТНИК</span></a
+        >
+        <p>Дизайн с собственной гравитацией.</p>
+        <div>
+          <a
+            href="https://www.behance.net/sputnikagency"
+            target="_blank"
+            rel="noreferrer"
+            >Behance ↗</a
+          ><a
+            href="https://xn--h1aehhjhg.agency/"
+            target="_blank"
+            rel="noreferrer"
+            >Основной сайт ↗</a
+          >
+        </div>
+        <small>© <span data-year>2026</span> / СИГНАЛ НЕ ПРЕРЫВАЕТСЯ</small>
+      </div>
+    </footer>
+  </body>
+</html>
