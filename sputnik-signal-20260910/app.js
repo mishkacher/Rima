@@ -233,8 +233,8 @@ document.documentElement.classList.add("js");
       this.options = {
         count: options.count || 54,
         linkDistance: options.linkDistance || 135,
-        color: options.color || "241,239,229",
-        accent: options.accent || "200,255,25",
+        color: options.color || "23,23,41",
+        accent: options.accent || "255,112,0",
         orbit: options.orbit !== false,
       };
       this.points = [];
@@ -366,8 +366,8 @@ document.documentElement.classList.add("js");
     new GravityField(contactCanvas, {
       count: 36,
       linkDistance: 165,
-      color: "241,239,229",
-      accent: "200,255,25",
+      color: "241,237,220",
+      accent: "255,112,0",
       orbit: false,
     });
   }
